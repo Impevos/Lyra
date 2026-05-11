@@ -1,0 +1,128 @@
+export const defaultPosts = [
+  {
+    title: 'Yeni Ay Enerjisiyle Niyet Belirleme',
+    excerpt: 'Yeni ayın sunduğu taze enerjileri kullanarak niyetlerimizi nasıl tezahür ettirebiliriz?',
+    date: '12 Mayıs 2026',
+    category: 'Ritüel',
+    image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    title: 'Çakra Dengeleme Teknikleri',
+    excerpt: 'Gündelik hayatın stresinden arınmak için kullanabileceğiniz basit and etkili çakra çalışmaları.',
+    date: '8 Mayıs 2026',
+    category: 'Farkındalık',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800',
+  },
+  {
+    title: 'Kolektif Bilinç ve Şifa',
+    excerpt: 'Birlikte yapılan meditasyonların bireysel ve toplumsal şifalanma üzerindeki gücü.',
+    date: '5 Mayıs 2026',
+    category: 'Bilinç',
+    image: 'https://images.unsplash.com/photo-1518191766664-98442223789b?auto=format&fit=crop&q=80&w=800',
+  },
+];
+
+export const defaultServices = [
+  {
+    title: 'Birebir Yayınlar',
+    description: 'Ruhsal yolculuğunuzda size özel rehberlik ve derinlemesine bilinç çalışmaları.',
+    icon: 'HiOutlineMoon',
+    link: '/hizmetler',
+    tag: 'Bilinç',
+  },
+  {
+    title: 'Grup Yayınları',
+    description: 'Kolektif bilinç çalışmaları ve ortak enerji alanında ruhsal deneyimler.',
+    icon: 'HiOutlineUserGroup',
+    link: '/hizmetler',
+    tag: 'Kolektif',
+  },
+  {
+    title: 'Spiritüel Danışmanlık',
+    description: 'Farkındalık ve içsel huzura giden yolda uzman danışmanlık hizmetleri.',
+    icon: 'HiOutlineSparkles',
+    link: '/hizmetler',
+    tag: 'Rehberlik',
+  },
+  {
+    title: 'Özel Eğitimler',
+    description: 'Spiritüel gelişiminiz için özenle hazırlanmış kapsamlı eğitim programları.',
+    icon: 'HiOutlineBookOpen',
+    link: '/hizmetler',
+    tag: 'Akademi',
+  },
+];
+
+export const defaultProducts = [
+  {
+    title: 'Spiritüel Uyanış Rehberi',
+    description: 'Spiritüel uyanış sürecini adım adım anlatan kapsamlı PDF rehber.',
+    price: '149 ₺',
+    category: 'PDF Rehberler',
+    icon: 'HiOutlineDocumentText',
+    gradient: 'from-burgundy/8 to-pink/12',
+    iconGrad: 'from-burgundy to-wine',
+    badge: 'Çok Satan',
+  },
+  {
+    title: 'Enerji Temizliği Meditasyonları',
+    description: '7 günlük enerji temizliği meditasyon programı. Güne temiz başlayın.',
+    price: '99 ₺',
+    category: 'Video Eğitimler',
+    icon: 'HiOutlinePlay',
+    gradient: 'from-gold/8 to-beige/20',
+    iconGrad: 'from-gold to-gold-dark',
+    badge: null,
+  },
+  {
+    title: 'Bilinç Dönüşümü Çalışma Kitabı',
+    description: 'Bilinç seviyenizi yükseltecek pratik egzersizler ve refleksiyonlar.',
+    price: '129 ₺',
+    category: 'PDF Rehberler',
+    icon: 'HiOutlineBookOpen',
+    gradient: 'from-pink/10 to-rose/8',
+    iconGrad: 'from-rose to-pink-muted',
+    badge: null,
+  },
+  {
+    title: 'Mastersoul Tanıtım Semineri',
+    description: 'Mastersoul eğitim programının tanıtım seansı kayıt erişimi.',
+    price: '79 ₺',
+    category: 'Yayın Kayıtları',
+    icon: 'HiOutlinePlay',
+    gradient: 'from-plum/6 to-pink/8',
+    iconGrad: 'from-plum to-burgundy-dark',
+    badge: null,
+  },
+  {
+    title: 'Çakra Dengeleme Rehberi',
+    description: '7 ana çakranızı dengelemek için kapsamlı uygulama rehberi.',
+    price: '119 ₺',
+    category: 'PDF Rehberler',
+    icon: 'HiOutlineDocumentText',
+    gradient: 'from-gold/6 to-beige/15',
+    iconGrad: 'from-gold to-gold-dark',
+    badge: 'Yeni',
+  },
+  {
+    title: 'Nefes Teknikleri Atölyesi',
+    description: 'Pranayama ve bilinçli nefes teknikleri video eğitim serisi.',
+    price: '89 ₺',
+    category: 'Video Eğitimler',
+    icon: 'HiOutlinePlay',
+    gradient: 'from-burgundy/5 to-pink/10',
+    iconGrad: 'from-burgundy to-wine',
+    badge: null,
+  },
+];
+
+export const defaultImages = [
+  { name: 'Meditasyon', url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800' },
+  { name: 'Kristal', url: 'https://images.unsplash.com/photo-1567225557594-88d73e55f2cb?auto=format&fit=crop&q=80&w=800' },
+  { name: 'Doğa ve Huzur', url: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&q=80&w=800' },
+  { name: 'Mistik Atmosfer', url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=800' },
+  { name: 'Tütsü ve Ritüel', url: 'https://images.unsplash.com/photo-1595981234058-a9302fb97229?auto=format&fit=crop&q=80&w=800' },
+  { name: 'Mum Işığı', url: 'https://images.unsplash.com/photo-1602874801007-bd458bb1b8b6?auto=format&fit=crop&q=80&w=800' },
+  { name: 'Astroloji', url: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&q=80&w=800' },
+  { name: 'Doğal Yaşam', url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800' },
+];
