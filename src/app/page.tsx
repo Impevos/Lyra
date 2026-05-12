@@ -11,16 +11,17 @@ export default function HomePage() {
       {/* ✦ Ethereal Fire Wings Background ✦ */}
       <div className="absolute top-0 left-0 w-full h-[140vh] pointer-events-none z-0 overflow-hidden">
         
-        {/* The Wings — Pushed down slightly to frame the bottom, scaled for impact */}
-        <div className="relative w-full h-full flex items-center justify-center animate-float translate-y-[15vh]">
+        {/* The Wings — Responsive positioning and scaling to look organic, not like a pasted photo */}
+        <div className="relative w-full h-full flex items-center justify-center animate-float translate-y-[10vh] md:translate-y-[15vh]">
           <div className="relative w-full max-w-[2400px] h-full flex items-center justify-center">
             <img
               src="/wings_golden_fire.png"
               alt="Ethereal Wings"
-              className="w-full h-full object-contain scale-[1.6] mix-blend-screen opacity-[0.85]"
+              className="w-full h-full object-cover md:object-contain scale-[2.5] md:scale-[1.6] mix-blend-screen opacity-[0.75]"
               style={{
-                maskImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, black 40%, transparent 80%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, black 40%, transparent 80%)'
+                /* Extremely soft mask to ensure the rectangular bounds of the image are never seen */
+                maskImage: 'radial-gradient(circle at 50% 50%, black 20%, transparent 70%)',
+                WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 20%, transparent 70%)'
               }}
             />
           </div>
