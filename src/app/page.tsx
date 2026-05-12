@@ -8,23 +8,37 @@ import CTASection from '@/components/CTASection';
 export default function HomePage() {
   return (
     <main className="relative min-h-screen bg-ivory">
-      {/* Ethereal Golden Wings - Spread and Blended */}
-      <div className="absolute top-0 left-0 w-full h-[120vh] pointer-events-none z-0 overflow-hidden">
-        <div className="relative w-full h-full flex items-center justify-center animate-float opacity-[0.4]">
-          <div className="relative w-full max-w-[2000px] h-full flex items-center justify-center">
-            <img 
-              src="/ethereal_wings.png" 
-              alt="Ethereal Angel Wings" 
-              className="w-full h-full object-contain scale-150 blur-[2px]"
+      {/* ✦ Ethereal Fire Wings Background ✦ */}
+      <div className="absolute top-0 left-0 w-full h-[140vh] pointer-events-none z-0 overflow-hidden">
+        
+        {/* The Wings — Pushed down slightly to frame the bottom, scaled for impact */}
+        <div className="relative w-full h-full flex items-center justify-center animate-float translate-y-[15vh]">
+          <div className="relative w-full max-w-[2400px] h-full flex items-center justify-center">
+            <img
+              src="/wings_golden_fire.png"
+              alt="Ethereal Wings"
+              className="w-full h-full object-contain scale-[1.6] mix-blend-screen opacity-[0.85]"
               style={{
-                maskImage: 'radial-gradient(circle, black 40%, transparent 85%)',
-                WebkitMaskImage: 'radial-gradient(circle, black 40%, transparent 85%)'
+                maskImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, black 40%, transparent 80%)',
+                WebkitMaskImage: 'radial-gradient(ellipse 60% 60% at 50% 50%, black 40%, transparent 80%)'
               }}
             />
           </div>
-          {/* Central Radiance Glow */}
-          <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/15 rounded-full blur-[120px] animate-pulse-glow" />
         </div>
+
+        {/* Professional Blend Gradients */}
+        {/* Strong top-down gradient ensures the text area is clean and readable */}
+        <div className="absolute top-0 left-0 w-full h-[60%] bg-gradient-to-b from-ivory via-ivory/95 to-transparent" />
+        
+        {/* Bottom fade into the next section */}
+        <div className="absolute bottom-0 left-0 w-full h-[40%] bg-gradient-to-t from-ivory via-ivory/80 to-transparent" />
+        
+        {/* Subtle side fades */}
+        <div className="absolute top-0 left-0 w-[15%] h-full bg-gradient-to-r from-ivory to-transparent" />
+        <div className="absolute top-0 right-0 w-[15%] h-full bg-gradient-to-l from-ivory to-transparent" />
+
+        {/* Deep background ambient glow to enrich the ivory behind the text */}
+        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[#C8943A]/5 rounded-full blur-[200px]" />
       </div>
 
       <div className="relative z-10">

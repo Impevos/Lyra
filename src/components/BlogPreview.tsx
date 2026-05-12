@@ -21,7 +21,7 @@ export default function BlogPreview() {
         <div className="flex flex-col items-center text-center mb-24">
           <span className="text-gold font-bold tracking-[0.5em] text-[0.65rem] uppercase mb-6">Kütüphane</span>
           <h2 className="font-serif text-5xl md:text-7xl text-wine mb-8">
-            Spiritüel <span className="italic font-light">Yazılar</span>
+            Spiritüel <span className="font-light text-[#a79d99]">Yazılar</span>
           </h2>
           <p className="body-md text-taupe/50 max-w-xl mx-auto leading-loose">
             Ruhsal gelişiminize ışık tutacak, derin farkındalıklar barındıran haftalık makalelerimiz.
@@ -51,7 +51,7 @@ export default function BlogPreview() {
                 </div>
                 
                 <div className="px-4">
-                  <p className="text-taupe/60 text-sm leading-relaxed mb-6 line-clamp-2 italic">
+                  <p className="text-taupe/60 text-sm leading-relaxed mb-6 line-clamp-2">
                     "{post.excerpt}"
                   </p>
                   <div className="flex items-center justify-between">

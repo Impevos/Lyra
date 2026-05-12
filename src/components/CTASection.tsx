@@ -9,7 +9,7 @@ export default function CTASection() {
   return (
     <section className="py-24 relative bg-ivory overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        <div className="premium-card bg-wine p-12 md:p-20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12">
+        <div className="premium-card p-12 md:p-20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12" style={{ background: 'linear-gradient(135deg, #a79d99, #8a7f7b)' }}>
           {/* Subtle Background Wings in CTA */}
           <div className="absolute inset-0 pointer-events-none opacity-[0.05] mix-blend-screen">
             <img 
@@ -53,7 +53,7 @@ export default function CTASection() {
               <span className="inline-block text-gold font-bold tracking-[0.4em] text-[0.6rem] uppercase mb-6">Dönüşüm Vakti</span>
               <h2 className="font-serif text-4xl md:text-5xl text-ivory mb-6 leading-tight">
                 Ruhsal Yolculuğunuza <br />
-                <span className="italic font-light text-gold-light">Birlikte Adım Atalım</span>
+                <span className="font-light text-gold-light">Birlikte Adım Atalım</span>
               </h2>
               <p className="text-ivory/60 text-sm md:text-base leading-relaxed max-w-md">
                 Size en uygun spiritüel yolu bulmak ve içsel huzura ve gerçek potansiyelinize ulaşmanız için ilk adımı bugün atın.

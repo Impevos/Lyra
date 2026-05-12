@@ -38,16 +38,13 @@ export default function TestimonialSection() {
 
   return (
     <section id="deneyimler" className="py-40 relative overflow-hidden bg-ivory">
-      {/* Background Decorative Text */}
-      <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 opacity-[0.02] pointer-events-none select-none overflow-hidden whitespace-nowrap">
-        <span className="font-serif text-[25vw] leading-none uppercase text-wine">Deneyimler Deneyimler</span>
-      </div>
+
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <AnimatedSection className="text-center mb-24">
           <span className="text-gold font-bold tracking-[0.5em] text-[0.6rem] uppercase mb-6 block">Referanslar</span>
-          <h2 className="font-serif text-5xl md:text-6xl text-wine italic font-light">
-            Katılımcılarımız <span className="not-italic font-normal">Ne Diyor?</span>
+          <h2 className="font-serif text-5xl md:text-6xl text-wine font-light">
+            Katılımcılarımız <span className="font-normal">Ne Diyor?</span>
           </h2>
           <div className="w-16 h-px bg-gold/30 mx-auto mt-8" />
         </AnimatedSection>
@@ -75,12 +72,12 @@ export default function TestimonialSection() {
                     ))}
                   </div>
 
-                  <p className="font-serif text-2xl md:text-4xl text-wine leading-[1.6] italic mb-16 max-w-3xl">
+                  <p className="font-serif text-2xl md:text-4xl text-wine leading-[1.6] mb-16 max-w-3xl">
                     {testimonials[activeIndex].text}
                   </p>
 
                   <div className="flex flex-col items-center">
-                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-burgundy to-wine flex items-center justify-center text-ivory font-serif text-2xl mb-6 shadow-2xl">
+                    <div className="w-20 h-20 rounded-full bg-[#a79d99] flex items-center justify-center text-ivory font-serif text-2xl mb-6 shadow-2xl">
                       {testimonials[activeIndex].name[0]}
                     </div>
                     <h4 className="font-serif text-2xl text-wine mb-2">{testimonials[activeIndex].name}</h4>

@@ -90,10 +90,10 @@ export default function HeroSection() {
     <section className="relative min-h-[90vh] flex items-center justify-center pt-24 overflow-hidden">
       {/* Background Particles Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-30" />
-      
+
       {/* Subtle Light Rays */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,rgba(218,193,124,0.1),transparent_70%)]" />
-      
+
       {/* Floating Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
@@ -162,18 +162,18 @@ export default function HeroSection() {
           </motion.span>
           
           <motion.h1 
-            className="heading-display mb-10 text-balance drop-shadow-sm"
+            className="heading-display mb-10 text-balance"
             variants={{
               hidden: { opacity: 0, y: 30, filter: 'blur(4px)' },
               visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: [0.23, 1, 0.32, 1] } },
             }}
           >
             Ruhsal Yolculuğunuzda <br />
-            <span className="gradient-text italic font-light drop-shadow-md">Işığa Dönün</span>
+            <span className="gradient-text font-light drop-shadow-sm">Işığa Dönün</span>
           </motion.h1>
 
           <motion.p 
-            className="body-lg max-w-2xl mb-14 text-wine/70 text-balance leading-relaxed font-medium"
+            className="body-lg max-w-2xl mb-14 text-[#2A2A2A] text-balance leading-relaxed font-medium"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] } },
@@ -182,14 +182,14 @@ export default function HeroSection() {
             Lyra On Earth, kadim bilgiler ve modern farkındalık teknikleriyle içsel huzura ve gerçek potansiyelinize ulaşmanız için yanınızda.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             className="flex flex-col sm:flex-row items-center gap-8"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] } },
             }}
           >
-            <Link href="/iletisim" className="btn-primary group !px-12 !py-5 !rounded-full shadow-lg shadow-burgundy/10">
+            <Link href="/iletisim" className="btn-primary group !px-12 !py-5 !rounded-full shadow-lg shadow-[#a79d99]/20">
               <span>YOLCULUĞA BAŞLA</span>
               <HiOutlineArrowRight className="transition-transform duration-500 group-hover:translate-x-2" />
             </Link>

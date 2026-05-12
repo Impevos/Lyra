@@ -36,7 +36,7 @@
     font-size: clamp(2.5rem, 8vw, 5.5rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
-    color: var(--color-wine);
+    color: #2A2A2A;
   }
 
   .heading-lg {
@@ -106,13 +106,13 @@
     @apply relative overflow-hidden px-8 py-4 text-ivory rounded-full 
            text-[0.85rem] font-bold uppercase transition-all duration-500
            flex items-center gap-3 justify-center cursor-pointer;
-    background: linear-gradient(to right, var(--color-burgundy), var(--color-wine));
+    background: linear-gradient(to right, #a79d99, #8a7f7b);
     letter-spacing: 0.15em;
   }
 
   .btn-primary:hover {
     transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(110, 21, 37, 0.3);
+    box-shadow: 0 15px 35px rgba(167, 157, 153, 0.3);
   }
 
   .btn-secondary {
@@ -196,7 +196,7 @@
 
 .gradient-text {
   @apply bg-clip-text text-transparent;
-  background-image: linear-gradient(to right, var(--color-burgundy), var(--color-gold), var(--color-burgundy));
+  background-image: linear-gradient(to right, #5a4e49, #8C6D45, #5a4e49);
   background-size: 200% auto;
   animation: shine 8s linear infinite;
 }
