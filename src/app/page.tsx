@@ -17,7 +17,7 @@ export default function HomePage() {
             <img
               src="/wings_golden_fire.png"
               alt="Ethereal Wings"
-              className="w-full h-full object-cover md:object-contain scale-[2.5] md:scale-[1.6] mix-blend-screen opacity-[0.75]"
+              className="w-full h-full object-contain scale-[1.5] md:scale-[1.6] mix-blend-screen opacity-[0.75]"
               style={{
                 /* Extremely soft mask to ensure the rectangular bounds of the image are never seen */
                 maskImage: 'radial-gradient(circle at 50% 50%, black 20%, transparent 70%)',

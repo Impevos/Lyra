@@ -12,9 +12,9 @@ export default function Footer() {
           <div className="lg:col-span-1">
             <Link href="/" className="flex flex-col items-center mb-2 group">
               <div className="w-56 h-56 transition-transform duration-500 group-hover:scale-110">
-                <img 
-                  src="/Lyra-Logo.png" 
-                  alt="Lyra Logo" 
+                <img
+                  src="/Lyra-Logo.png"
+                  alt="Lyra Logo"
                   className="w-full h-full object-contain"
                 />
               </div>
@@ -72,11 +72,22 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-12 border-t border-gold/5 flex flex-col md:flex-row justify-between items-center gap-6">
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="bg-beige py-8 mt-12 border-t border-gold/5">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[0.65rem] text-taupe/40 tracking-[0.2em] font-medium uppercase">
             © 2026 LYRA ON EARTH. TÜM HAKLARI SAKLIDIR.
           </p>
+
+          <div className="flex items-center gap-2">
+            <span className="text-[0.65rem] text-taupe/40 tracking-[0.2em] font-medium uppercase">MADE BY</span>
+            <Link href="https://impevos.com" target="_blank" rel="noopener noreferrer" className="bg-taupe/10 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gold/15 inline-flex items-center hover:bg-taupe/15 transition-colors">
+              <img src="/impevos-logo.png" alt="impevos" className="h-3 w-auto" />
+            </Link>
+          </div>
+
           <div className="flex gap-8">
             <span className="text-[0.65rem] text-gold/60 tracking-widest cursor-pointer hover:text-gold transition-colors">KVKK</span>
             <span className="text-[0.65rem] text-gold/60 tracking-widest cursor-pointer hover:text-gold transition-colors">ÇEREZ POLİTİKASI</span>
