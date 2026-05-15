@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     description: "Spiritüel danışmanlık, birebir seanslar, grup yayınları ve eğitimlerle içsel dönüşümünüzü destekliyoruz.",
   },
   robots: { index: true, follow: true },
+  icons: {
+    icon: '/Lyra-Logo.png',
+  },
 };
 
 export default function RootLayout({
