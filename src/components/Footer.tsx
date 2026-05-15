@@ -83,13 +83,13 @@ export default function Footer() {
 
           <div className="flex items-center gap-2">
             <span className="text-[0.65rem] text-taupe/40 tracking-[0.2em] font-medium uppercase">MADE BY</span>
-            <Link href="https://impevos.com" target="_blank" rel="noopener noreferrer" className="bg-taupe/10 backdrop-blur-sm px-3 py-1.5 rounded-full border border-gold/15 inline-flex items-center hover:bg-taupe/15 transition-colors">
-              <img src="/impevos-logo.png" alt="impevos" className="h-3 w-auto" />
+            <Link href="https://impevos.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-3 py-1.5 rounded-full border border-transparent hover:bg-taupe/10 hover:border-gold/15 transition-all duration-300">
+              <img src="/impevossiyahseffaf.png" alt="impevos" className="h-20 w-auto" />
             </Link>
           </div>
 
           <div className="flex gap-8">
-            <span className="text-[0.65rem] text-gold/60 tracking-widest cursor-pointer hover:text-gold transition-colors">KVKK</span>
+            <Link href="/kvkk" className="text-[0.65rem] text-gold/60 tracking-widest cursor-pointer hover:text-gold transition-colors">KVKK</Link>
             <span className="text-[0.65rem] text-gold/60 tracking-widest cursor-pointer hover:text-gold transition-colors">ÇEREZ POLİTİKASI</span>
           </div>
         </div>
