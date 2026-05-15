@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   icons: {
-    icon: '/Lyra-Logo.png',
+    icon: '/Lyra-Logo-White.png',
   },
 };
 
