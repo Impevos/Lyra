@@ -33,7 +33,7 @@ export default function IletisimPage() {
           <AnimatedSection delay={0.15}>
             <h1 className="font-serif text-5xl md:text-7xl text-wine mb-6 text-center leading-tight">
               Ruhsal Yolculuğunuzda<br />
-              <span className="gradient-text italic">Sizinle Birlikteyiz</span>
+              <span className="gradient-text">Sizinle Birlikteyiz</span>
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>

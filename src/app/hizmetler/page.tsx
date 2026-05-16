@@ -68,7 +68,7 @@ export default function HizmetlerPage() {
             <h1 className="heading-display mb-7">
               Dönüşüm Yolculuğunuz
               <br />
-              <span className="gradient-text italic">Burada Başlıyor</span>
+              <span className="gradient-text">Burada Başlıyor</span>
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
@@ -147,7 +147,7 @@ export default function HizmetlerPage() {
               <span className="label-line justify-center mb-8">Başlayın</span>
               <h2 className="heading-lg mb-6">
                 Hangi Hizmet Size<br />
-                <span className="gradient-text italic">Uygun?</span>
+                <span className="gradient-text">Uygun?</span>
               </h2>
               <p className="body-lg text-taupe/70 max-w-lg mx-auto mb-10 text-center">
                 Size en uygun hizmeti birlikte belirleyelim. İlk görüşme ücretsizdir.

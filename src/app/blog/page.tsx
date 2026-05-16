@@ -94,7 +94,7 @@ export default function BlogPage() {
             <h1 className="heading-display mb-7">
               Spiritüel
               <br />
-              <span className="gradient-text italic">Yazılar</span>
+              <span className="gradient-text">Yazılar</span>
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
@@ -139,7 +139,7 @@ export default function BlogPage() {
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="relative">
                           <div className="w-20 h-20 rounded-full bg-ivory/30 backdrop-blur-sm flex items-center justify-center animate-float-slow">
-                            <span className="font-serif text-3xl text-gold/40 italic">L</span>
+                            <span className="font-serif text-3xl text-gold/40">L</span>
                           </div>
                           <div className="absolute -inset-6 rounded-full border border-gold/[0.06] animate-breathe" />
                         </div>
@@ -189,7 +189,7 @@ export default function BlogPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-ivory/80 via-ivory/10 to-transparent z-10" />
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-14 h-14 rounded-full bg-ivory/25 backdrop-blur-sm flex items-center justify-center animate-float-slow">
-                          <span className="font-serif text-xl text-gold/35 italic">L</span>
+                          <span className="font-serif text-xl text-gold/35">L</span>
                         </div>
                       </div>
                       <div className="absolute top-4 left-4 z-20">
@@ -234,7 +234,7 @@ export default function BlogPage() {
               <div className="relative z-10">
                 <span className="label-line justify-center mb-6">Bülten</span>
                 <h2 className="heading-md mb-4 text-center">
-                  Spiritüel İçeriklerden <span className="gradient-text italic">Haberdar Olun</span>
+                  Spiritüel İçeriklerden <span className="gradient-text">Haberdar Olun</span>
                 </h2>
                 <p className="body-md text-center max-w-md mx-auto mb-8">
                   Yeni yazılar, etkinlikler ve özel içeriklerden ilk siz haberdar olun.

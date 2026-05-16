@@ -50,7 +50,7 @@ export default function UrunlerPage() {
             <h1 className="heading-display mb-7">
               Spiritüel
               <br />
-              <span className="gradient-text italic">İçerikler</span>
+              <span className="gradient-text">İçerikler</span>
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>

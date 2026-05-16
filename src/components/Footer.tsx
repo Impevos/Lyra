@@ -20,10 +20,10 @@ export default function Footer() {
               </div>
               <div className="flex flex-col items-center -mt-4">
                 <span className="font-serif text-lg tracking-[0.1em] text-wine font-bold leading-tight text-center">LYRA</span>
-                <span className="text-[0.5rem] tracking-[0.4em] text-gold font-bold -mt-0.5 uppercase text-center">On Earth</span>
+                <span className="text-[0.44rem] tracking-[0.31em] text-[#a79d99] font-bold -mt-0.5 uppercase text-center">On Earth</span>
               </div>
             </Link>
-            <p className="text-taupe/60 text-sm leading-loose max-w-xs mb-4 italic text-center mx-auto">
+            <p className="text-taupe/60 text-sm leading-loose max-w-xs mb-4 text-center mx-auto">
               "Ruhsal farkındalık ve dönüşüm yolculuğunuzda ışığınızı keşfetmeniz için rehberlik ediyoruz."
             </p>
           </div>

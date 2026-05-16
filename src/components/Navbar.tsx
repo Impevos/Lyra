@@ -32,20 +32,33 @@ export default function Navbar() {
     <nav className={`glass-nav ${scrolled ? 'scrolled' : ''}`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full h-full flex items-center">
         <div className="flex items-center justify-between w-full relative">
-          {/* Logo - Left */}
-          <Link href="/" className="flex items-center gap-3 group relative z-50">
-            <div className="w-32 h-32 transition-transform duration-500 group-hover:scale-110">
-              <img 
-                src="/Lyra-Logo.png" 
-                alt="Lyra Logo" 
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-serif text-xl tracking-[0.1em] text-wine font-bold">LYRA</span>
-              <span className="text-[0.55rem] tracking-[0.4em] text-gold font-bold -mt-1 uppercase">On Earth</span>
-            </div>
-          </Link>
+          {/* Logo & Mobile Menu Wrapper */}
+          <div className="flex items-center justify-between w-full lg:w-auto relative z-50">
+            {/* Logo Image */}
+            <Link href="/" className="group">
+              <div className="w-24 h-24 lg:w-32 lg:h-32 transition-transform duration-500 group-hover:scale-110">
+                <img
+                  src="/Lyra-Logo.png"
+                  alt="Lyra Logo"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </Link>
+
+            {/* Logo Text - Centered on Mobile, Left on Desktop */}
+            <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 flex flex-col items-center lg:ml-3 group">
+              <span className="font-serif text-3xl tracking-[0.1em] text-wine font-bold">LYRA</span>
+              <span className="text-[0.72rem] tracking-[0.33em] text-[#a79d99] font-bold -mt-1 uppercase">On Earth</span>
+            </Link>
+
+            {/* Mobile Toggle */}
+            <button
+              className="lg:hidden p-2 text-wine z-50"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <HiX size={28} /> : <HiMenu size={28} />}
+            </button>
+          </div>
 
           {/* Desktop Nav - Centered */}
           <div className="hidden lg:flex items-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 gap-8">
@@ -66,14 +79,6 @@ export default function Navbar() {
               RANDEVU AL
             </Link>
           </div>
-
-          {/* Mobile Toggle */}
-          <button
-            className="lg:hidden relative z-50 p-2 text-wine"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <HiX size={28} /> : <HiMenu size={28} />}
-          </button>
         </div>
 
         {/* Mobile Menu */}
@@ -90,7 +95,7 @@ export default function Navbar() {
                 backgroundImage: 'radial-gradient(circle at 2px 2px, #6E1525 1px, transparent 0)',
                 backgroundSize: '40px 40px'
               }} />
-              
+
               {navLinks.map((link, i) => (
                 <motion.div
                   key={link.name}
@@ -107,7 +112,7 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
               ))}
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

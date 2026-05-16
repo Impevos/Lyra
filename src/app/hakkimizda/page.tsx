@@ -38,7 +38,7 @@ export default function HakkimizdaPage() {
             <h1 className="heading-display mb-7">
               Ruhsal Yolculukta
               <br />
-              <span className="gradient-text italic">Rehberiniz</span>
+              <span className="gradient-text">Rehberiniz</span>
             </h1>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
@@ -61,7 +61,7 @@ export default function HakkimizdaPage() {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative">
                       <div className="w-28 h-28 rounded-full bg-ivory/50 backdrop-blur-sm flex items-center justify-center animate-float-slow">
-                        <span className="font-serif text-5xl text-gold/30 italic">L</span>
+                        <span className="font-serif text-5xl text-gold/30">L</span>
                       </div>
                       <div className="absolute -inset-6 rounded-full border border-gold/[0.08] animate-breathe" />
                       <div className="absolute -inset-12 rounded-full border border-gold/[0.04] animate-breathe" style={{ animationDelay: '2s' }} />
@@ -95,7 +95,7 @@ export default function HakkimizdaPage() {
                   insanların içsel potansiyellerini keşfetmelerine yardımcı olmaktır.
                   Her bir seans, her bir eğitim, sevgi ve farkındalıkla tasarlanmıştır.
                 </p>
-                <p className="italic text-charcoal/50 border-l-2 border-gold/30 pl-5 mt-6">
+                <p className="text-charcoal/50 border-l-2 border-gold/30 pl-5 mt-6">
                   &ldquo;Spiritüel ama kitsch olmayan, lüks ama boğucu olmayan, minimal
                   ama hissiz olmayan&rdquo; — Lyra On Earth Manifestosu
                 </p>
@@ -119,7 +119,7 @@ export default function HakkimizdaPage() {
             <h2 className="heading-lg mb-5">
               Yolumuzu Aydınlatan
               <br />
-              <span className="gradient-text italic">Değerler</span>
+              <span className="gradient-text">Değerler</span>
             </h2>
             <div className="section-divider mt-6" />
           </AnimatedSection>
@@ -146,7 +146,7 @@ export default function HakkimizdaPage() {
           <AnimatedSection className="text-center mb-20">
             <span className="label-line justify-center mb-6">Yolculuğumuz</span>
             <h2 className="heading-lg">
-              Zaman <span className="gradient-text italic">Çizelgesi</span>
+              Zaman <span className="gradient-text">Çizelgesi</span>
             </h2>
           </AnimatedSection>
 
@@ -178,7 +178,7 @@ export default function HakkimizdaPage() {
               <div className="absolute -top-10 left-1/2 -translate-x-1/2 font-serif text-[10rem] leading-none text-gold/[0.04] pointer-events-none select-none">
                 &ldquo;
               </div>
-              <blockquote className="font-serif text-[1.8rem] md:text-[2.2rem] text-wine/75 leading-[1.45] italic font-light relative z-10">
+              <blockquote className="font-serif text-[1.8rem] md:text-[2.2rem] text-wine/75 leading-[1.45] font-light relative z-10">
                 Spiritüel ama kitsch olmayan,
                 <br />
                 lüks ama boğucu olmayan,
