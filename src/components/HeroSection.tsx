@@ -64,13 +64,15 @@ export default function HeroSection() {
       particles.push(new Particle());
     }
 
+    let animationFrameId: number;
     const animate = () => {
+      if (!canvasRef.current) return;
       ctx.clearRect(0, 0, width, height);
       particles.forEach(p => {
         p.update();
         p.draw();
       });
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
     animate();
@@ -83,7 +85,10 @@ export default function HeroSection() {
     };
 
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (
@@ -164,8 +169,8 @@ export default function HeroSection() {
           <motion.h1 
             className="heading-display mb-10 text-balance"
             variants={{
-              hidden: { opacity: 0, y: 30, filter: 'blur(4px)' },
-              visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 1, ease: [0.23, 1, 0.32, 1] } },
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.23, 1, 0.32, 1] } },
             }}
           >
             Ruhsal Yolculuğunuzda <br />

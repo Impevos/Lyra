@@ -54,9 +54,9 @@ export default function TestimonialSection() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeIndex}
-                initial={{ opacity: 0, x: 20, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, x: -20, filter: 'blur(10px)' }}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
                 className="premium-card p-16 md:p-24 bg-white/60 backdrop-blur-3xl border-gold/10 relative"
               >

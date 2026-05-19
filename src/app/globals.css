@@ -232,3 +232,16 @@
   animation: pulse-glow 6s ease-in-out infinite;
 }
 
+.ambient-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(184, 149, 106, 0.04) 0%, rgba(184, 149, 106, 0) 70%);
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: plus-lighter;
+  will-change: transform;
+}
+
