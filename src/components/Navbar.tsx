@@ -46,9 +46,9 @@ export default function Navbar() {
             </Link>
 
             {/* Logo Text - Centered on Mobile, Left on Desktop */}
-            <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 flex flex-col items-center lg:ml-3 group">
-              <span className="font-serif text-3xl tracking-[0.1em] text-wine font-bold">LYRA</span>
-              <span className="text-[0.72rem] tracking-[0.33em] text-[#a79d99] font-bold -mt-1 uppercase">On Earth</span>
+            <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 flex flex-col items-start lg:ml-4 group">
+              <span className="font-serif text-xl tracking-[0.1em] text-wine font-bold">LYRA</span>
+              <span className="text-[0.55rem] tracking-[0.4em] text-gold font-bold -mt-1 uppercase">On Earth</span>
             </Link>
 
             {/* Mobile Toggle */}

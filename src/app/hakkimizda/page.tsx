@@ -57,25 +57,23 @@ export default function HakkimizdaPage() {
             {/* Image area */}
             <AnimatedSection direction="left">
               <div className="relative">
-                <div className="aspect-[4/5] rounded-2xl bg-gradient-to-br from-beige via-pink/15 to-cream overflow-hidden relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative">
-                      <div className="w-28 h-28 rounded-full bg-ivory/50 backdrop-blur-sm flex items-center justify-center animate-float-slow">
-                        <span className="font-serif text-5xl text-gold/30">L</span>
-                      </div>
-                      <div className="absolute -inset-6 rounded-full border border-gold/[0.08] animate-breathe" />
-                      <div className="absolute -inset-12 rounded-full border border-gold/[0.04] animate-breathe" style={{ animationDelay: '2s' }} />
-                    </div>
-                  </div>
+                <div className="aspect-[4/5] rounded-2xl overflow-hidden relative group shadow-2xl">
+                  <img
+                    src="/deniz_bayraktar.jpeg"
+                    alt="Deniz Bayraktar"
+                    className="w-full h-full object-cover object-[center_35%] transition-transform duration-1000 group-hover:scale-105"
+                  />
+                  {/* Subtle overlay to fit the premium design aesthetic */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-wine/25 via-transparent to-transparent opacity-60 pointer-events-none" />
                   {/* Corner accent */}
-                  <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-gold/10 to-transparent" />
-                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-burgundy/5 to-transparent" />
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-bl from-gold/10 to-transparent pointer-events-none" />
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-burgundy/5 to-transparent pointer-events-none" />
                 </div>
 
                 {/* Stats card */}
-                <div className="absolute -bottom-8 -right-4 lg:-right-8 glass-dark rounded-2xl p-6 w-44">
-                  <p className="font-serif text-4xl text-ivory font-light gradient-text">5+</p>
-                  <p className="text-[0.72rem] text-ivory/50 mt-1 uppercase tracking-wider font-medium">Yıllık Deneyim</p>
+                <div className="absolute -bottom-8 -right-4 lg:-right-8 bg-ivory/90 backdrop-blur-md border border-gold/15 rounded-2xl p-6 w-44 shadow-[0_15px_45px_rgba(184,149,106,0.12)]">
+                  <p className="font-serif text-4xl text-gold font-light leading-none">5+</p>
+                  <p className="text-[0.68rem] text-taupe/70 mt-2.5 uppercase tracking-[0.18em] font-bold">Yıllık Deneyim</p>
                 </div>
               </div>
             </AnimatedSection>
