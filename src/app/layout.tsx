@@ -4,6 +4,20 @@ import FloatingContact from "@/components/FloatingContact";
 import SmoothScroll from "@/components/SmoothScroll";
 import AmbientGlow from "@/components/AmbientGlow";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import { Cormorant_Garamond, Inter } from "next/font/google";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "latin-ext"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-cormorant",
+});
+
+const inter = Inter({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -42,11 +56,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="tr" className="antialiased" data-scroll-behavior="smooth">
+    <html lang="tr" className={`${cormorant.variable} ${inter.variable} antialiased`} data-scroll-behavior="smooth">
       <body className="min-h-screen flex flex-col bg-ivory text-charcoal">
         <SmoothScroll>
           <AmbientGlow />
-          <div className="noise-overlay" />
           <LayoutWrapper>
             <main className="flex-grow">{children}</main>
           </LayoutWrapper>

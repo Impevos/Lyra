@@ -2,33 +2,52 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { HiOutlineArrowRight, HiOutlineSparkles, HiOutlineUserGroup, HiOutlineBookOpen, HiOutlineMoon } from 'react-icons/hi';
 import AnimatedSection from './AnimatedSection';
 import { defaultServices } from '@/data/defaults';
 import { motion } from 'framer-motion';
 
-const iconMap: { [key: string]: any } = {
+interface ServiceItem {
+  title: string;
+  description: string;
+  icon: string | React.ComponentType<{ className?: string }>;
+  link: string;
+  tag?: string;
+  image?: string;
+}
+
+const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
   HiOutlineMoon: HiOutlineMoon,
   HiOutlineUserGroup: HiOutlineUserGroup,
   HiOutlineSparkles: HiOutlineSparkles,
   HiOutlineBookOpen: HiOutlineBookOpen,
 };
 
-const mappedDefaults = defaultServices.map((item: any) => ({
+interface MappedService {
+  title: string;
+  description: string;
+  icon: React.ComponentType<{ className?: string }>;
+  link: string;
+  tag?: string;
+  image?: string;
+}
+
+const mappedDefaults: MappedService[] = defaultServices.map((item) => ({
   ...item,
   icon: iconMap[item.icon] || HiOutlineSparkles,
 }));
 
 export default function ServicesSection() {
-  const [services, setServices] = useState(mappedDefaults);
+  const [services, setServices] = useState<MappedService[]>(mappedDefaults);
 
   useEffect(() => {
     const saved = localStorage.getItem('custom_services');
     if (saved) {
       const custom = JSON.parse(saved);
-      const mappedCustom = custom.map((item: any) => ({
+      const mappedCustom = custom.map((item: ServiceItem) => ({
         ...item,
-        icon: iconMap[item.icon] || HiOutlineSparkles,
+        icon: iconMap[item.icon as string] || HiOutlineSparkles,
       }));
       setServices(mappedCustom);
     }
@@ -74,7 +93,14 @@ export default function ServicesSection() {
 
                 {service.image && (
                   <div className="relative h-40 overflow-hidden rounded-t-2xl">
-                    <img src={service.image} alt={service.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <Image
+                      src={service.image}
+                      alt={service.title}
+                      fill
+                      sizes="(min-width: 1024px) 25vw, 100vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      loading="lazy"
+                    />
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/20" />
                   </div>
                 )}

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -11,11 +11,14 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex flex-col items-center mb-2 group">
-              <div className="w-56 h-56 transition-transform duration-500 group-hover:scale-110">
-                <img
+              <div className="w-56 h-56 transition-transform duration-500 group-hover:scale-110 relative">
+                <Image
                   src="/Lyra-Logo.png"
                   alt="Lyra Logo"
-                  className="w-full h-full object-contain"
+                  fill
+                  sizes="224px"
+                  className="object-contain"
+                  loading="lazy"
                 />
               </div>
               <div className="flex flex-col items-center -mt-4">
@@ -24,7 +27,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-taupe/60 text-sm leading-loose max-w-xs mb-4 text-center mx-auto">
-              "Ruhsal farkındalık ve dönüşüm yolculuğunuzda ışığınızı keşfetmeniz için rehberlik ediyoruz."
+              &ldquo;Ruhsal farkındalık ve dönüşüm yolculuğunuzda ışığınızı keşfetmeniz için rehberlik ediyoruz.&rdquo;
             </p>
           </div>
 
@@ -84,7 +87,7 @@ export default function Footer() {
           <div className="flex items-center gap-2">
             <span className="text-[0.65rem] text-taupe/40 tracking-[0.2em] font-medium uppercase">MADE BY</span>
             <Link href="https://impevos.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-3 py-1.5 rounded-full border border-transparent hover:bg-taupe/10 hover:border-gold/15 transition-all duration-300">
-              <img src="/impevossiyahseffaf.png" alt="impevos" className="h-20 w-auto" />
+              <Image src="/impevossiyahseffaf.png" alt="impevos" width={80} height={80} className="h-20 w-auto" loading="lazy" />
             </Link>
           </div>
 

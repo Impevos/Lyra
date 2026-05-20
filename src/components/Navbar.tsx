@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiMenu, HiX } from 'react-icons/hi';
@@ -36,11 +37,14 @@ export default function Navbar() {
           <div className="flex items-center justify-between w-full lg:w-auto relative z-50">
             {/* Logo Image */}
             <Link href="/" className="group">
-              <div className="w-24 h-24 lg:w-32 lg:h-32 transition-transform duration-500 group-hover:scale-110">
-                <img
+              <div className="w-24 h-24 lg:w-32 lg:h-32 transition-transform duration-500 group-hover:scale-110 relative">
+                <Image
                   src="/Lyra-Logo.png"
                   alt="Lyra Logo"
-                  className="w-full h-full object-contain"
+                  fill
+                  sizes="(min-width: 1024px) 128px, 96px"
+                  className="object-contain"
+                  priority
                 />
               </div>
             </Link>
@@ -48,7 +52,7 @@ export default function Navbar() {
             {/* Logo Text - Centered on Mobile, Left on Desktop */}
             <Link href="/" className="absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 flex flex-col items-start lg:ml-4 group">
               <span className="font-serif text-xl tracking-[0.1em] text-wine font-bold">LYRA</span>
-              <span className="text-[0.55rem] tracking-[0.4em] text-gold font-bold -mt-1 uppercase">On Earth</span>
+              <span className="text-[0.55rem] tracking-[0.4em] text-[#a79d99] font-bold -mt-1 uppercase">On Earth</span>
             </Link>
 
             {/* Mobile Toggle */}

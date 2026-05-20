@@ -13,8 +13,8 @@
   --color-taupe: #4A443F;
   --color-rose: #E8C4C8;
 
-  --font-serif: "Cormorant Garamond", serif;
-  --font-sans: "Inter", sans-serif;
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", serif;
+  --font-sans: var(--font-inter), "Inter", sans-serif;
 }
 
 @layer base {

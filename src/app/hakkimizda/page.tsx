@@ -2,6 +2,7 @@
 
 import AnimatedSection from '@/components/AnimatedSection';
 import Link from 'next/link';
+import Image from 'next/image';
 import { HiOutlineHeart, HiOutlineEye, HiOutlineLightBulb, HiOutlineGlobe } from 'react-icons/hi';
 
 const values = [
@@ -58,10 +59,13 @@ export default function HakkimizdaPage() {
             <AnimatedSection direction="left">
               <div className="relative">
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden relative group shadow-2xl">
-                  <img
+                  <Image
                     src="/deniz_bayraktar.jpeg"
                     alt="Deniz Bayraktar"
-                    className="w-full h-full object-cover object-[center_35%] transition-transform duration-1000 group-hover:scale-105"
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover object-[center_35%] transition-transform duration-1000 group-hover:scale-105"
+                    loading="lazy"
                   />
                   {/* Subtle overlay to fit the premium design aesthetic */}
                   <div className="absolute inset-0 bg-gradient-to-t from-wine/25 via-transparent to-transparent opacity-60 pointer-events-none" />

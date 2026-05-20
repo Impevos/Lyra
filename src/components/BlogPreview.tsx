@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import AnimatedSection from './AnimatedSection';
 import { useState, useEffect } from 'react';
@@ -33,10 +34,13 @@ export default function BlogPreview() {
             <AnimatedSection key={post.title} delay={index * 0.15}>
               <Link href="/blog" className="group block">
                 <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden mb-8 shadow-2xl">
-                  <img
+                  <Image
                     src={post.image}
                     alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-wine/80 via-wine/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
                   
@@ -52,7 +56,7 @@ export default function BlogPreview() {
                 
                 <div className="px-4">
                   <p className="text-taupe/60 text-sm leading-relaxed mb-6 line-clamp-2">
-                    "{post.excerpt}"
+                    &ldquo;{post.excerpt}&rdquo;
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-[0.65rem] font-bold text-gold/60 uppercase tracking-widest">{post.date}</span>

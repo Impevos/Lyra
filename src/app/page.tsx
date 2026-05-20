@@ -4,6 +4,7 @@ import FeaturedContent from '@/components/FeaturedContent';
 import TestimonialSection from '@/components/TestimonialSection';
 import BlogPreview from '@/components/BlogPreview';
 import CTASection from '@/components/CTASection';
+import Image from 'next/image';
 
 export default function HomePage() {
   return (
@@ -14,16 +15,21 @@ export default function HomePage() {
         {/* The Wings — Responsive positioning and scaling to look organic, not like a pasted photo */}
         <div className="relative w-full h-full flex items-center justify-center animate-float translate-y-[10vh] md:translate-y-[15vh]">
           <div className="relative w-full max-w-[2400px] h-full flex items-center justify-center">
-            <img
-              src="/wings_golden_fire.png"
-              alt="Ethereal Wings"
-              className="w-full h-full object-contain scale-[1.5] md:scale-[1.6] mix-blend-screen opacity-[0.75]"
+            <div className="relative w-full h-full scale-[1.5] md:scale-[1.6] mix-blend-screen opacity-[0.75]"
               style={{
-                /* Extremely soft mask to ensure the rectangular bounds of the image are never seen */
                 maskImage: 'radial-gradient(circle at 50% 50%, black 20%, transparent 70%)',
                 WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 20%, transparent 70%)'
               }}
-            />
+            >
+              <Image
+                src="/wings_golden_fire.png"
+                alt="Ethereal Wings"
+                fill
+                sizes="100vw"
+                className="object-contain"
+                loading="lazy"
+              />
+            </div>
           </div>
         </div>
 

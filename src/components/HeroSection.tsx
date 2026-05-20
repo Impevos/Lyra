@@ -3,15 +3,16 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { HiOutlineArrowRight } from 'react-icons/hi';
-import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const section = sectionRef.current;
+    if (!canvas || !section) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -21,60 +22,59 @@ export default function HeroSection() {
     canvas.width = width;
     canvas.height = height;
 
-    const particles: Particle[] = [];
-    const particleCount = 40;
+    // Reduce particle count on mobile for better performance
+    const isMobile = width < 768;
+    const particleCount = isMobile ? 20 : 40;
 
-    class Particle {
-      x: number;
-      y: number;
-      size: number;
-      speedX: number;
-      speedY: number;
-      opacity: number;
-
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.size = Math.random() * 2 + 0.5;
-        this.speedX = Math.random() * 0.3 - 0.15;
-        this.speedY = Math.random() * 0.3 - 0.15;
-        this.opacity = Math.random() * 0.5 + 0.1;
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x > width) this.x = 0;
-        if (this.x < 0) this.x = width;
-        if (this.y > height) this.y = 0;
-        if (this.y < 0) this.y = height;
-      }
-
-      draw() {
-        if (!ctx) return;
-        ctx.fillStyle = `rgba(184, 149, 106, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
+    const particles: { x: number; y: number; size: number; speedX: number; speedY: number; opacity: number }[] = [];
 
     for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 2 + 0.5,
+        speedX: Math.random() * 0.3 - 0.15,
+        speedY: Math.random() * 0.3 - 0.15,
+        opacity: Math.random() * 0.5 + 0.1,
+      });
     }
 
     let animationFrameId: number;
+    let isVisible = true;
+
     const animate = () => {
-      if (!canvasRef.current) return;
+      if (!isVisible || !canvasRef.current) return;
       ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
+      for (const p of particles) {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        if (p.x > width) p.x = 0;
+        if (p.x < 0) p.x = width;
+        if (p.y > height) p.y = 0;
+        if (p.y < 0) p.y = height;
+
+        ctx.fillStyle = `rgba(184, 149, 106, ${p.opacity})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
       animationFrameId = requestAnimationFrame(animate);
     };
 
+    // Only animate when section is visible in viewport
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          animationFrameId = requestAnimationFrame(animate);
+        } else {
+          cancelAnimationFrame(animationFrameId);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(section);
     animate();
 
     const handleResize = () => {
@@ -88,11 +88,12 @@ export default function HeroSection() {
     return () => {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animationFrameId);
+      observer.disconnect();
     };
   }, []);
 
   return (
-    <section className="relative min-h-[90vh] flex items-center justify-center pt-24 overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-[90vh] flex items-center justify-center pt-24 overflow-hidden">
       {/* Background Particles Canvas */}
       <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-30" />
 

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import AnimatedSection from './AnimatedSection';
@@ -12,10 +13,13 @@ export default function CTASection() {
         <div className="premium-card p-12 md:p-20 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12" style={{ background: 'linear-gradient(135deg, #a79d99, #8a7f7b)' }}>
           {/* Subtle Background Wings in CTA */}
           <div className="absolute inset-0 pointer-events-none opacity-[0.05] mix-blend-screen">
-            <img 
+            <Image 
               src="/majestic_wings.png" 
               alt="" 
-              className="w-full h-full object-cover scale-150 grayscale invert"
+              fill
+              sizes="100vw"
+              className="object-cover scale-150 grayscale invert"
+              loading="lazy"
             />
           </div>
 
