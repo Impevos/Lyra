@@ -16,7 +16,7 @@ export default function BlogPostPage() {
   useEffect(() => {
     const allPosts = getBlogPosts();
     
-    const found = allPosts.find(p => p.slug === slug);
+    const found = allPosts.find((p: any) => p.slug === slug);
     setPost(found);
     setLoading(false);
   }, [slug]);
