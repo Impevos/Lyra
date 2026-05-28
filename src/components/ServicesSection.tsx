@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { HiOutlineArrowRight, HiOutlineSparkles, HiOutlineUserGroup, HiOutlineBookOpen, HiOutlineMoon } from 'react-icons/hi';
 import AnimatedSection from './AnimatedSection';
-import { defaultServices } from '@/data/defaults';
+import { defaultServices, defaultPageContent } from '@/data/defaults';
 import { motion } from 'framer-motion';
 
 interface ServiceItem {
@@ -40,8 +40,14 @@ const mappedDefaults: MappedService[] = defaultServices.map((item) => ({
 
 export default function ServicesSection() {
   const [services, setServices] = useState<MappedService[]>(mappedDefaults);
+  const [content, setContent] = useState(defaultPageContent);
 
   useEffect(() => {
+    const savedContent = localStorage.getItem('custom_page_content');
+    if (savedContent) {
+      setContent({ ...defaultPageContent, ...JSON.parse(savedContent) });
+    }
+
     const saved = localStorage.getItem('custom_services');
     if (saved) {
       const custom = JSON.parse(saved);
@@ -60,17 +66,17 @@ export default function ServicesSection() {
           <AnimatedSection>
             <div className="flex items-center justify-center gap-4 mb-6">
               <div className="w-12 h-px bg-gold/40" />
-              <span className="text-gold font-bold tracking-[0.4em] text-[0.65rem] uppercase">Seçenekler</span>
+              <span className="text-gold font-bold tracking-[0.4em] text-[0.65rem] uppercase">{content.servicesLabel}</span>
               <div className="w-12 h-px bg-gold/40" />
             </div>
             
             <h2 className="font-serif text-5xl md:text-7xl text-wine leading-[1.1] mb-8">
-              Size Özel <br />
-              <span className="font-light text-[#7d7572]">Spiritüel</span> Hizmetlerimiz
+              {content.servicesTitleLine1} <br />
+              <span className="font-light text-[#7d7572]">{content.servicesTitleLine2}</span>
             </h2>
             
             <p className="body-md text-center text-taupe/50 leading-relaxed mx-auto max-w-2xl">
-              Ruhunuzun derinliklerine yapacağınız yolculukta, size en uygun rehberliği profesyonel bir yaklaşımla sunuyoruz.
+              {content.servicesDescription}
             </p>
           </AnimatedSection>
         </div>

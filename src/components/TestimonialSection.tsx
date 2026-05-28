@@ -5,36 +5,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { HiStar } from 'react-icons/hi';
 import AnimatedSection from './AnimatedSection';
 
-const testimonials = [
-  {
-    name: 'Merve A.',
-    role: 'Mastersoul Eğitim Katılımcısı',
-    text: 'Mastersoul eğitimi beklentilerimin çok üzerindeydi. Derinlemesine bilinç çalışmalarıyla kendimi yeniden keşfettim. Bu deneyimi herkese tavsiye ederim.',
-    rating: 5,
-  },
-  {
-    name: 'Caner B.',
-    role: 'Birebir Yayın Danışanı',
-    text: 'Lyra On Earth ile tanıştığımdan beri hayatımdaki farkındalık seviyesi inanılmaz arttı. Enerji temizliği seansları çok etkili.',
-    rating: 5,
-  },
-  {
-    name: 'Elif Y.',
-    role: 'Grup Yayını Katılımcısı',
-    text: 'Her hafta sabırsızlıkla beklediğim bir topluluk. Kolektif bilinç çalışmalarında kendimi çok huzurlu ve dengeli hissediyorum.',
-    rating: 5,
-  },
-];
+import { defaultPageContent, getTestimonials } from '@/data/defaults';
 
 export default function TestimonialSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [content, setContent] = useState(defaultPageContent);
+  const [testimonials, setTestimonials] = useState<any[]>([]);
 
   useEffect(() => {
+    const savedContent = localStorage.getItem('custom_page_content');
+    if (savedContent) {
+      setContent({ ...defaultPageContent, ...JSON.parse(savedContent) });
+    }
+    
+    const loadedTestimonials = getTestimonials();
+    setTestimonials(loadedTestimonials);
+
     const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+      setActiveIndex((prev) => (prev + 1) % loadedTestimonials.length);
     }, 8000);
     return () => clearInterval(timer);
   }, []);
+
+  if (testimonials.length === 0) return null;
 
   return (
     <section id="deneyimler" className="py-40 relative overflow-hidden bg-ivory">
@@ -42,9 +35,9 @@ export default function TestimonialSection() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <AnimatedSection className="text-center mb-24">
-          <span className="text-gold font-bold tracking-[0.5em] text-[0.6rem] uppercase mb-6 block">Referanslar</span>
+          <span className="text-gold font-bold tracking-[0.5em] text-[0.6rem] uppercase mb-6 block">{content.testimonialsLabel}</span>
           <h2 className="font-serif text-5xl md:text-6xl text-wine font-light">
-            Katılımcılarımız <span className="font-normal">Ne Diyor?</span>
+            {content.testimonialsTitleLine1} <span className="font-normal">{content.testimonialsTitleLine2}</span>
           </h2>
           <div className="w-16 h-px bg-gold/30 mx-auto mt-8" />
         </AnimatedSection>

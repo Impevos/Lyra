@@ -5,24 +5,29 @@ import Image from 'next/image';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import AnimatedSection from './AnimatedSection';
 import { useState, useEffect } from 'react';
-import { defaultPosts, getBlogPosts } from '@/data/defaults';
+import { defaultPosts, getBlogPosts, defaultPageContent } from '@/data/defaults';
 
 export default function BlogPreview() {
   const [posts, setPosts] = useState(defaultPosts);
+  const [content, setContent] = useState(defaultPageContent);
 
   useEffect(() => {
+    const savedContent = localStorage.getItem('custom_page_content');
+    if (savedContent) {
+      setContent({ ...defaultPageContent, ...JSON.parse(savedContent) });
+    }
     setPosts(getBlogPosts());
   }, []);
   return (
     <section id="blog" className="py-40 bg-ivory relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex flex-col items-center text-center mb-24">
-          <span className="text-gold font-bold tracking-[0.5em] text-[0.65rem] uppercase mb-6">Kütüphane</span>
+          <span className="text-gold font-bold tracking-[0.5em] text-[0.65rem] uppercase mb-6">{content.blogLabel}</span>
           <h2 className="font-serif text-5xl md:text-7xl text-wine mb-8">
-            Spiritüel <span className="font-light text-[#7d7572]">Yazılar</span>
+            {content.blogTitleLine1} <span className="font-light text-[#7d7572]">{content.blogTitleLine2}</span>
           </h2>
           <p className="body-md text-taupe/50 max-w-xl mx-auto leading-loose">
-            Ruhsal gelişiminize ışık tutacak, derin farkındalıklar barındıran haftalık makalelerimiz.
+            {content.blogDescription}
           </p>
         </div>
 

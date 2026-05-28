@@ -183,6 +183,26 @@ export const defaultPageContent = {
   heroTitleLine1: 'Ruhsal Yolculuğunuzda',
   heroTitleLine2: 'Işığa Dönün',
   heroDescription: 'Lyra On Earth, kadim bilgiler ve modern farkındalık teknikleriyle içsel huzura ve gerçek potansiyelinize ulaşmanız için yanınızda.',
+  
+  servicesLabel: 'Kadim Öğretiler',
+  servicesTitleLine1: 'Ruhsal',
+  servicesTitleLine2: 'Rehberlik',
+  servicesDescription: 'Farklı ihtiyaçlara yönelik tasarlanmış hizmetlerimizle içsel dengenizi bulun.',
+  
+  featuredLabel: 'Kolektif Bilinç',
+  featuredTitleLine1: 'Güncel İçerikler &',
+  featuredTitleLine2: 'Etkinlikler',
+  featuredDescription: 'Spiritüel yolculuğunuzu destekleyecek en yeni yayınlarımızı ve gelecek etkinliklerimizi buradan takip edebilirsiniz.',
+  
+  testimonialsLabel: 'Referanslar',
+  testimonialsTitleLine1: 'Katılımcılarımız',
+  testimonialsTitleLine2: 'Ne Diyor?',
+  
+  blogLabel: 'Kütüphane',
+  blogTitleLine1: 'Spiritüel',
+  blogTitleLine2: 'Yazılar',
+  blogDescription: 'Ruhsal gelişiminize ışık tutacak, derin farkındalıklar barındıran haftalık makalelerimiz.',
+
   ctaLabel: 'Dönüşüm Vakti',
   ctaTitleLine1: 'Ruhsal Yolculuğunuzda',
   ctaTitleLine2: 'Birlikte Adım Atalım',
@@ -221,4 +241,69 @@ export const getBlogPosts = () => {
   }
   
   return parsed;
+};
+
+export const defaultFeatured = [
+  {
+    icon: 'HiOutlinePlay',
+    tag: 'Son Yayın',
+    title: 'Enerji Temizliği ve Farkındalık Çalışması',
+    description: 'Haftalık enerji temizliği seansımızda kolektif bilinç çalışması gerçekleştirdik. Yayın kaydına erişebilirsiniz.',
+    date: '3 Mayıs 2026',
+    color: 'from-burgundy to-wine',
+    link: '/blog',
+  },
+  {
+    icon: 'HiOutlineStar',
+    tag: 'Öne Çıkan Eğitim',
+    title: 'Mastersoul Eğitimi — Bilinç Dönüşümü',
+    description: 'Kapsamlı spiritüel gelişim programımız ile derinlemesine bilinç çalışması. Sınırlı kontenjan.',
+    date: 'Kayıtlar Açık',
+    color: 'from-gold to-gold-dark',
+    link: '/hizmetler',
+  },
+  {
+    icon: 'HiOutlineCalendar',
+    tag: 'Yaklaşan Etkinlik',
+    title: 'Yeni Ay Meditasyonu — Haziran 2026',
+    description: 'Yeni ay enerjisiyle niyet belirleme ve manifestasyon çalışması. Toplu meditasyon deneyimi.',
+    date: '15 Haziran 2026',
+    color: 'from-rose to-pink-muted',
+    link: '/iletisim',
+  },
+];
+
+export const defaultTestimonials = [
+  {
+    name: 'Merve A.',
+    role: 'Mastersoul Eğitim Katılımcısı',
+    text: 'Mastersoul eğitimi beklentilerimin çok üzerindeydi. Derinlemesine bilinç çalışmalarıyla kendimi yeniden keşfettim. Bu deneyimi herkese tavsiye ederim.',
+    rating: 5,
+  },
+  {
+    name: 'Caner B.',
+    role: 'Birebir Yayın Danışanı',
+    text: 'Lyra On Earth ile tanıştığımdan beri hayatımdaki farkındalık seviyesi inanılmaz arttı. Enerji temizliği seansları çok etkili.',
+    rating: 5,
+  },
+  {
+    name: 'Elif Y.',
+    role: 'Grup Yayını Katılımcısı',
+    text: 'Her hafta sabırsızlıkla beklediğim bir topluluk. Kolektif bilinç çalışmalarında kendimi çok huzurlu ve dengeli hissediyorum.',
+    rating: 5,
+  },
+];
+
+export const getFeaturedItems = () => {
+  if (typeof window === 'undefined') return defaultFeatured;
+  const saved = localStorage.getItem('custom_featured_items');
+  if (saved) return JSON.parse(saved);
+  return defaultFeatured;
+};
+
+export const getTestimonials = () => {
+  if (typeof window === 'undefined') return defaultTestimonials;
+  const saved = localStorage.getItem('custom_testimonials');
+  if (saved) return JSON.parse(saved);
+  return defaultTestimonials;
 };
