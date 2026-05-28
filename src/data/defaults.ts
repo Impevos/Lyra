@@ -1,25 +1,76 @@
 export const defaultPosts = [
   {
-    title: 'Yeni Ay Enerjisiyle Niyet Belirleme',
-    excerpt: 'Yeni ayın sunduğu taze enerjileri kullanarak niyetlerimizi nasıl tezahür ettirebiliriz?',
-    date: '12 Mayıs 2026',
-    category: 'Ritüel',
-    image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    title: 'Çakra Dengeleme Teknikleri',
-    excerpt: 'Gündelik hayatın stresinden arınmak için kullanabileceğiniz basit and etkili çakra çalışmaları.',
-    date: '8 Mayıs 2026',
-    category: 'Farkındalık',
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800',
-  },
-  {
-    title: 'Kolektif Bilinç ve Şifa',
-    excerpt: 'Birlikte yapılan meditasyonların bireysel ve toplumsal şifalanma üzerindeki gücü.',
+    category: 'Spiritüel Gelişim',
+    title: 'Bilinç Dönüşümü: İçsel Yolculuğun 5 Evresi',
+    slug: 'bilinc-donusumu-icsel-yolculugun-5-evresi',
+    excerpt: 'Spiritüel uyanış sürecinde bilinç nasıl dönüşür? Farkındalık seviyenizi derinleştirmek için bilmeniz gereken beş temel evre ve her bir evrede yaşanabilecek deneyimler.',
+    content: 'Spiritüel uyanış süreci, hayatımızın pek çok alanında köklü değişimleri beraberinde getirir. İçsel yolculuğunuzda karşılaşabileceğiniz beş temel evre şunlardır:\n\n1. Uyanış ve Farkındalık\n2. Arınma Süreci\n3. Aydınlanma ve İçgörü\n4. Bütünleşme\n5. Yüksek Benlikle Uyumlanma\n\nBu evrelerin her biri, kişisel gelişiminizde önemli bir kilometre taşıdır.',
     date: '5 Mayıs 2026',
-    category: 'Bilinç',
-    image: 'https://images.unsplash.com/photo-1518191766664-98442223789b?auto=format&fit=crop&q=80&w=800',
+    readTime: '8 dk',
+    gradient: 'from-burgundy/8 to-pink/15',
+    featured: true,
+    image: 'https://images.unsplash.com/photo-1518191766664-98442223789b?auto=format&fit=crop&q=80&w=800'
   },
+  {
+    category: 'Enerji Çalışmaları',
+    title: 'Günlük Enerji Temizliği Ritüelleri',
+    slug: 'gunluk-enerji-temizligi-rituelleri',
+    excerpt: 'Her gün uygulayabileceğiniz basit ama etkili enerji temizliği teknikleri. Auranızı güçlendirin ve negatif enerjilerden arının.',
+    content: 'Gün içinde farkında olmadan pek çok dış enerjiye maruz kalırız. İşte her gün uygulayabileceğiniz bazı enerji temizliği ritüelleri:\n\n- Sabah meditasyonu ve topraklanma\n- Deniz tuzu veya Himalaya tuzu ile duş alma\n- Adaçayı veya palo santo tütsülemek\n- Ses frekanslarıyla alan temizliği',
+    date: '1 Mayıs 2026',
+    readTime: '6 dk',
+    gradient: 'from-gold/8 to-beige/20',
+    featured: false,
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800'
+  },
+  {
+    category: 'Meditasyon',
+    title: 'Yeni Başlayanlar İçin Farkındalık Meditasyonu',
+    slug: 'yeni-baslayanlar-icin-farkindalik-meditasyonu',
+    excerpt: 'Meditasyona yeni başlıyorsanız, bu rehber tam size göre. Adım adım farkındalık meditasyonu pratiği ve ipuçları.',
+    content: 'Farkındalık (mindfulness) meditasyonu, anı yaşamak ve zihni sakinleştirmek için mükemmel bir yöntemdir. Başlamak için:\n\n1. Sessiz bir yer bulun\n2. Rahat bir oturuş pozisyonu alın\n3. Nefesinize odaklanın\n4. Düşünceler geldiğinde onları sadece gözlemleyip geçmelerine izin verin.',
+    date: '28 Nisan 2026',
+    readTime: '5 dk',
+    gradient: 'from-pink/10 to-rose/8',
+    featured: false,
+    image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=800'
+  },
+  {
+    category: 'Kristaller',
+    title: 'Şifa Taşları: Ametist ve Roze Kuvars',
+    slug: 'sifa-taslari-ametist-ve-roze-kuvars',
+    excerpt: 'İki güçlü şifa taşının enerjik özellikleri, kullanım alanları ve günlük yaşamda nasıl faydalanabileceğiniz.',
+    content: 'Ametist ve Roze Kuvars, şifa çalışmalarında en çok tercih edilen iki güçlü kristaldir. Ametist, zihni sakinleştirip sezgileri güçlendirirken; Roze Kuvars, koşulsuz sevgi ve kalp çakrası şifasında kullanılır.\n\nTaşlarınızı dolunay ışığında arındırabilir ve niyetlerinizle programlayabilirsiniz.',
+    date: '22 Nisan 2026',
+    readTime: '7 dk',
+    gradient: 'from-plum/6 to-pink/10',
+    featured: false,
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800'
+  },
+  {
+    category: 'Astroloji',
+    title: 'Yükselen Burcunuz ve Yaşam Amacınız',
+    slug: 'yukselen-burcunuz-ve-yasam-amaciniz',
+    excerpt: 'Doğum haritanızdaki yükselen burcun spiritüel anlamı ve yaşam yolculuğunuza etkisi hakkında derinlemesine bir bakış.',
+    content: 'Doğum haritamızda yükselen burç, ruhumuzun bu dünyada deneyimlemek istediği yolu ve dış dünyaya sunduğumuz maskeyi temsil eder. Yaşam amacınızı bulma yolculuğunda yükselen burcunuz size büyük ipuçları verir.',
+    date: '18 Nisan 2026',
+    readTime: '9 dk',
+    gradient: 'from-gold/6 to-beige/15',
+    featured: false,
+    image: 'https://images.unsplash.com/photo-1518191766664-98442223789b?auto=format&fit=crop&q=80&w=800'
+  },
+  {
+    category: 'Nefes Çalışmaları',
+    title: 'Pranayama: Bilinçli Nefes Sanatı',
+    slug: 'pranayama-bilincli-nefes-sanati',
+    excerpt: 'Kadim nefes tekniklerinin modern yaşamda uygulanması. Stresi azaltın, enerjinizi yükseltin.',
+    content: 'Pranayama, yaşam enerjisini (prana) nefes yoluyla kontrol etme sanatıdır. Düzenli pranayama pratiği sinir sistemini dengeler, zihni sakinleştirir ve bedenin kendi kendini şifalandırma kapasitesini artırır. Nadi Shodhana (Dönüşümlü Burun Nefesi) başlamak için harika bir tekniktir.',
+    date: '12 Nisan 2026',
+    readTime: '6 dk',
+    gradient: 'from-burgundy/5 to-pink/10',
+    featured: false,
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800'
+  }
 ];
 
 export const defaultServices = [
@@ -126,3 +177,48 @@ export const defaultImages = [
   { name: 'Astroloji', url: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&q=80&w=800' },
   { name: 'Doğal Yaşam', url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800' },
 ];
+
+export const defaultPageContent = {
+  heroLabel: 'Spiritüel Bilincin Kapısı',
+  heroTitleLine1: 'Ruhsal Yolculuğunuzda',
+  heroTitleLine2: 'Işığa Dönün',
+  heroDescription: 'Lyra On Earth, kadim bilgiler ve modern farkındalık teknikleriyle içsel huzura ve gerçek potansiyelinize ulaşmanız için yanınızda.',
+  ctaLabel: 'Dönüşüm Vakti',
+  ctaTitleLine1: 'Ruhsal Yolculuğunuzda',
+  ctaTitleLine2: 'Birlikte Adım Atalım',
+  ctaDescription: 'Size en uygun spiritüel yolu bulmak ve içsel huzura ve gerçek potansiyelinize ulaşmanız için ilk adımı bugün atın.'
+};
+
+export const getBlogPosts = () => {
+  if (typeof window === 'undefined') return defaultPosts;
+  const saved = localStorage.getItem('custom_blog_posts');
+  if (!saved) return defaultPosts;
+
+  let parsed = JSON.parse(saved);
+  let needsUpdate = false;
+  
+  parsed = parsed.map((p: any) => {
+    if (!p.slug || !p.content) {
+      needsUpdate = true;
+      const defaultMatch = defaultPosts.find(d => d.title === p.title);
+      
+      const generateSlug = (text: string) => {
+        if (!text) return '';
+        return text.toLowerCase().replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+      };
+      
+      return {
+        ...p,
+        slug: p.slug || defaultMatch?.slug || generateSlug(p.title),
+        content: p.content || defaultMatch?.content || 'Bu yazının detayı henüz girilmemiştir.'
+      };
+    }
+    return p;
+  });
+
+  if (needsUpdate) {
+    localStorage.setItem('custom_blog_posts', JSON.stringify(parsed));
+  }
+  
+  return parsed;
+};

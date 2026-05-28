@@ -1,13 +1,22 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { defaultPageContent } from '@/data/defaults';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import { motion } from 'framer-motion';
 
 export default function HeroSection() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const [content, setContent] = useState(defaultPageContent);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('custom_page_content');
+    if (saved) {
+      setContent(JSON.parse(saved));
+    }
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -164,7 +173,7 @@ export default function HeroSection() {
               visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] } },
             }}
           >
-            Spiritüel Bilincin Kapısı
+            {content.heroLabel}
           </motion.span>
           
           <motion.h1 
@@ -174,8 +183,8 @@ export default function HeroSection() {
               visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.23, 1, 0.32, 1] } },
             }}
           >
-            Ruhsal Yolculuğunuzda <br />
-            <span className="gradient-text font-light drop-shadow-sm">Işığa Dönün</span>
+            {content.heroTitleLine1} <br />
+            <span className="gradient-text font-light drop-shadow-sm">{content.heroTitleLine2}</span>
           </motion.h1>
 
           <motion.p 
@@ -185,7 +194,7 @@ export default function HeroSection() {
               visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] } },
             }}
           >
-            Lyra On Earth, kadim bilgiler ve modern farkındalık teknikleriyle içsel huzura ve gerçek potansiyelinize ulaşmanız için yanınızda.
+            {content.heroDescription}
           </motion.p>
 
           <motion.div

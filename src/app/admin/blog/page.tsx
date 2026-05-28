@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { defaultPosts, defaultImages } from '@/data/defaults';
+import { defaultPosts, defaultImages, getBlogPosts } from '@/data/defaults';
 import CustomSelect from '@/components/CustomSelect';
 import { compressImage } from '@/utils/image';
 
@@ -10,6 +10,7 @@ const categories = ['Spiritüel Gelişim', 'Enerji Çalışmaları', 'Meditasyon
 export default function AdminBlog() {
   const [title, setTitle] = useState('');
   const [excerpt, setExcerpt] = useState('');
+  const [content, setContent] = useState('');
   const [category, setCategory] = useState('Spiritüel Gelişim');
   const [readTime, setReadTime] = useState('');
   const [image, setImage] = useState(defaultImages[0].url);
@@ -17,13 +18,7 @@ export default function AdminBlog() {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem('custom_blog_posts');
-    if (saved) {
-      setPosts(JSON.parse(saved));
-    } else {
-      setPosts(defaultPosts);
-      localStorage.setItem('custom_blog_posts', JSON.stringify(defaultPosts));
-    }
+    setPosts(getBlogPosts());
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -34,9 +29,15 @@ export default function AdminBlog() {
     const month = months[now.getMonth()];
     const year = now.getFullYear();
     
+    const generateSlug = (text: string) => {
+      return text.toLowerCase().replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
+    };
+
     const postData = {
       title,
+      slug: generateSlug(title),
       excerpt,
+      content,
       category,
       readTime: readTime.includes('dk') ? readTime : readTime + ' dk',
       date: editingIndex !== null ? posts[editingIndex].date : `${day} ${month} ${year}`,
@@ -58,6 +59,7 @@ export default function AdminBlog() {
     localStorage.setItem('custom_blog_posts', JSON.stringify(updated));
     setTitle('');
     setExcerpt('');
+    setContent('');
     setCategory('Spiritüel Gelişim');
     setReadTime('');
   };
@@ -66,6 +68,7 @@ export default function AdminBlog() {
     const post = posts[index];
     setTitle(post.title);
     setExcerpt(post.excerpt);
+    setContent(post.content || '');
     setCategory(post.category);
     setReadTime(post.readTime.replace(' dk', ''));
     setImage(post.image || defaultImages[0].url);
@@ -109,6 +112,16 @@ export default function AdminBlog() {
                   onChange={(e) => setExcerpt(e.target.value)}
                   className="w-full bg-white/50 border border-gold/10 rounded-2xl px-6 py-4 outline-none focus:border-burgundy/30 transition-all text-wine h-24"
                   placeholder="Yazı özeti..."
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-[0.7rem] uppercase tracking-widest font-bold text-gold mb-2">Yazı İçeriği</label>
+                <textarea
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className="w-full bg-white/50 border border-gold/10 rounded-2xl px-6 py-4 outline-none focus:border-burgundy/30 transition-all text-wine h-48"
+                  placeholder="Yazının tam metni..."
                   required
                 />
               </div>

@@ -43,7 +43,7 @@ export default function FeaturedContent() {
           <AnimatedSection className="max-w-3xl">
             <span className="text-gold font-bold tracking-[0.4em] text-[0.6rem] uppercase mb-6 block">Kolektif Bilinç</span>
             <h2 className="font-serif text-5xl md:text-7xl text-wine mb-8 leading-[1.1]">
-              Güncel <span className="font-light text-[#a79d99]">İçerikler</span> & <br />
+              Güncel <span className="font-light text-[#7d7572]">İçerikler</span> & <br />
               <span className="gradient-text">Etkinlikler</span>
             </h2>
             <p className="body-md text-left text-taupe/60 leading-loose max-w-xl">

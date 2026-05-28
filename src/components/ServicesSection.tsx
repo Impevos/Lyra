@@ -66,7 +66,7 @@ export default function ServicesSection() {
             
             <h2 className="font-serif text-5xl md:text-7xl text-wine leading-[1.1] mb-8">
               Size Özel <br />
-              <span className="font-light text-[#a79d99]">Spiritüel</span> Hizmetlerimiz
+              <span className="font-light text-[#7d7572]">Spiritüel</span> Hizmetlerimiz
             </h2>
             
             <p className="body-md text-center text-taupe/50 leading-relaxed mx-auto max-w-2xl">

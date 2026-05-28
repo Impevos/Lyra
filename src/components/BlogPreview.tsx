@@ -5,16 +5,13 @@ import Image from 'next/image';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import AnimatedSection from './AnimatedSection';
 import { useState, useEffect } from 'react';
-import { defaultPosts } from '@/data/defaults';
+import { defaultPosts, getBlogPosts } from '@/data/defaults';
 
 export default function BlogPreview() {
   const [posts, setPosts] = useState(defaultPosts);
 
   useEffect(() => {
-    const saved = localStorage.getItem('custom_blog_posts');
-    if (saved) {
-      setPosts(JSON.parse(saved));
-    }
+    setPosts(getBlogPosts());
   }, []);
   return (
     <section id="blog" className="py-40 bg-ivory relative overflow-hidden">
@@ -22,7 +19,7 @@ export default function BlogPreview() {
         <div className="flex flex-col items-center text-center mb-24">
           <span className="text-gold font-bold tracking-[0.5em] text-[0.65rem] uppercase mb-6">Kütüphane</span>
           <h2 className="font-serif text-5xl md:text-7xl text-wine mb-8">
-            Spiritüel <span className="font-light text-[#a79d99]">Yazılar</span>
+            Spiritüel <span className="font-light text-[#7d7572]">Yazılar</span>
           </h2>
           <p className="body-md text-taupe/50 max-w-xl mx-auto leading-loose">
             Ruhsal gelişiminize ışık tutacak, derin farkındalıklar barındıran haftalık makalelerimiz.
@@ -30,9 +27,9 @@ export default function BlogPreview() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {posts.map((post, index) => (
+          {posts.slice(0, 3).map((post, index) => (
             <AnimatedSection key={post.title} delay={index * 0.15}>
-              <Link href="/blog" className="group block">
+              <Link href={`/blog/${post.slug}`} className="group block">
                 <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden mb-8 shadow-2xl">
                   <Image
                     src={post.image}

@@ -2,11 +2,22 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { defaultPageContent } from '@/data/defaults';
 import { motion } from 'framer-motion';
 import { HiOutlineArrowRight } from 'react-icons/hi';
 import AnimatedSection from './AnimatedSection';
 
 export default function CTASection() {
+  const [content, setContent] = useState(defaultPageContent);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('custom_page_content');
+    if (saved) {
+      setContent(JSON.parse(saved));
+    }
+  }, []);
+
   return (
     <section className="py-24 relative bg-ivory overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
@@ -54,13 +65,13 @@ export default function CTASection() {
 
           <div className="relative z-10 max-w-2xl text-center md:text-left">
             <AnimatedSection>
-              <span className="inline-block text-gold font-bold tracking-[0.4em] text-[0.6rem] uppercase mb-6">Dönüşüm Vakti</span>
-              <h2 className="font-serif text-4xl md:text-5xl text-ivory mb-6 leading-tight">
-                Ruhsal Yolculuğunuza <br />
-                <span className="font-light text-gold-light">Birlikte Adım Atalım</span>
+              <span className="inline-block text-white font-bold tracking-[0.4em] text-[0.6rem] uppercase mb-6">{content.ctaLabel}</span>
+              <h2 className="font-serif text-4xl md:text-5xl text-white mb-6 leading-tight">
+                {content.ctaTitleLine1} <br />
+                <span className="font-light text-white">{content.ctaTitleLine2}</span>
               </h2>
-              <p className="text-ivory/60 text-sm md:text-base leading-relaxed max-w-md">
-                Size en uygun spiritüel yolu bulmak ve içsel huzura ve gerçek potansiyelinize ulaşmanız için ilk adımı bugün atın.
+              <p className="text-white text-sm md:text-base leading-relaxed max-w-md">
+                {content.ctaDescription}
               </p>
             </AnimatedSection>
           </div>

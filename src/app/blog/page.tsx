@@ -4,63 +4,7 @@ import { useState, useEffect } from 'react';
 import AnimatedSection from '@/components/AnimatedSection';
 import Link from 'next/link';
 import { HiOutlineArrowRight, HiOutlineClock } from 'react-icons/hi';
-
-const defaultBlogPosts = [
-  {
-    category: 'Spiritüel Gelişim',
-    title: 'Bilinç Dönüşümü: İçsel Yolculuğun 5 Evresi',
-    excerpt: 'Spiritüel uyanış sürecinde bilinç nasıl dönüşür? Farkındalık seviyenizi derinleştirmek için bilmeniz gereken beş temel evre ve her bir evrede yaşanabilecek deneyimler.',
-    date: '5 Mayıs 2026',
-    readTime: '8 dk',
-    gradient: 'from-burgundy/8 to-pink/15',
-    featured: true,
-  },
-  {
-    category: 'Enerji Çalışmaları',
-    title: 'Günlük Enerji Temizliği Ritüelleri',
-    excerpt: 'Her gün uygulayabileceğiniz basit ama etkili enerji temizliği teknikleri. Auranızı güçlendirin ve negatif enerjilerden arının.',
-    date: '1 Mayıs 2026',
-    readTime: '6 dk',
-    gradient: 'from-gold/8 to-beige/20',
-    featured: false,
-  },
-  {
-    category: 'Meditasyon',
-    title: 'Yeni Başlayanlar İçin Farkındalık Meditasyonu',
-    excerpt: 'Meditasyona yeni başlıyorsanız, bu rehber tam size göre. Adım adım farkındalık meditasyonu pratiği ve ipuçları.',
-    date: '28 Nisan 2026',
-    readTime: '5 dk',
-    gradient: 'from-pink/10 to-rose/8',
-    featured: false,
-  },
-  {
-    category: 'Kristaller',
-    title: 'Şifa Taşları: Ametist ve Roze Kuvars',
-    excerpt: 'İki güçlü şifa taşının enerjik özellikleri, kullanım alanları ve günlük yaşamda nasıl faydalanabileceğiniz.',
-    date: '22 Nisan 2026',
-    readTime: '7 dk',
-    gradient: 'from-plum/6 to-pink/10',
-    featured: false,
-  },
-  {
-    category: 'Astroloji',
-    title: 'Yükselen Burcunuz ve Yaşam Amacınız',
-    excerpt: 'Doğum haritanızdaki yükselen burcun spiritüel anlamı ve yaşam yolculuğunuza etkisi hakkında derinlemesine bir bakış.',
-    date: '18 Nisan 2026',
-    readTime: '9 dk',
-    gradient: 'from-gold/6 to-beige/15',
-    featured: false,
-  },
-  {
-    category: 'Nefes Çalışmaları',
-    title: 'Pranayama: Bilinçli Nefes Sanatı',
-    excerpt: 'Kadim nefes tekniklerinin modern yaşamda uygulanması. Stresi azaltın, enerjinizi yükseltin.',
-    date: '12 Nisan 2026',
-    readTime: '6 dk',
-    gradient: 'from-burgundy/5 to-pink/10',
-    featured: false,
-  },
-];
+import { defaultPosts as defaultBlogPosts, getBlogPosts } from '@/data/defaults';
 
 const categories = ['Tümü', 'Spiritüel Gelişim', 'Enerji Çalışmaları', 'Meditasyon', 'Kristaller', 'Astroloji'];
 
@@ -68,11 +12,7 @@ export default function BlogPage() {
   const [blogPosts, setBlogPosts] = useState(defaultBlogPosts);
 
   useEffect(() => {
-    const saved = localStorage.getItem('custom_blog_posts');
-    if (saved) {
-      const custom = JSON.parse(saved);
-      setBlogPosts([...defaultBlogPosts, ...custom]);
-    }
+    setBlogPosts(getBlogPosts());
   }, []);
 
   const featuredPost = blogPosts.find(p => p.featured);
@@ -131,7 +71,7 @@ export default function BlogPage() {
         <section className="py-12 overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <AnimatedSection>
-              <Link href="/blog" className="block">
+              <Link href={`/blog/${featuredPost.slug}`} className="block">
                 <div className="premium-card overflow-hidden group cursor-pointer">
                   <div className="grid grid-cols-1 lg:grid-cols-2">
                     {/* Image */}
@@ -182,7 +122,7 @@ export default function BlogPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
             {regularPosts.map((post, index) => (
               <AnimatedSection key={post.title} delay={index * 0.08}>
-                <Link href="/blog" className="block h-full">
+                <Link href={`/blog/${post.slug}`} className="block h-full">
                   <article className="premium-card overflow-hidden group cursor-pointer h-full flex flex-col">
                     {/* Image */}
                     <div className={`relative h-48 bg-gradient-to-br ${post.gradient}`}>

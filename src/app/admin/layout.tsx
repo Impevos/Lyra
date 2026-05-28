@@ -74,6 +74,14 @@ export default function AdminLayout({
             <HiOutlineShoppingBag className="text-xl" /> ÜRÜNLER
           </Link>
           <Link 
+            href="/admin/sayfalar" 
+            className={`flex items-center gap-4 w-full p-4 rounded-2xl transition-all text-sm tracking-widest ${
+              pathname === '/admin/sayfalar' ? 'bg-gold/5 text-burgundy font-bold' : 'text-taupe/60 hover:bg-gold/5 font-medium'
+            }`}
+          >
+            <HiOutlineDocumentText className="text-xl" /> SAYFALAR
+          </Link>
+          <Link 
             href="/admin/blog" 
             className={`flex items-center gap-4 w-full p-4 rounded-2xl transition-all text-sm tracking-widest ${
               pathname === '/admin/blog' ? 'bg-gold/5 text-burgundy font-bold' : 'text-taupe/60 hover:bg-gold/5 font-medium'
