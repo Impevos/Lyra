@@ -1,9 +1,84 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
-import { HiOutlineDocumentText, HiOutlineSparkles, HiOutlineShoppingBag, HiOutlineLogout, HiOutlineViewGrid } from 'react-icons/hi';
-import { useEffect } from 'react';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import { 
+  HiOutlineViewGrid, 
+  HiOutlineLogout,
+  HiOutlineShoppingBag,
+  HiOutlineCalendar,
+  HiOutlineMail,
+  HiOutlineVideoCamera,
+  HiOutlineUser 
+} from 'react-icons/hi';
+import { useEffect, Suspense } from 'react';
+
+function AdminNav() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const activeTab = searchParams.get('tab') || 'overview';
+
+  const menuItems = [
+    {
+      tab: 'overview',
+      label: 'GENEL BAKIŞ',
+      href: '/admin/dashboard?tab=overview',
+      icon: HiOutlineViewGrid,
+    },
+    {
+      tab: 'products',
+      label: 'ÇALIŞMALAR & ÜRÜNLER',
+      href: '/admin/dashboard?tab=products',
+      icon: HiOutlineShoppingBag,
+    },
+    {
+      tab: 'appointments',
+      label: 'GÖRÜŞME BAŞVURULARI',
+      href: '/admin/dashboard?tab=appointments',
+      icon: HiOutlineCalendar,
+    },
+    {
+      tab: 'emails',
+      label: 'E-POSTA & OTOMASYON',
+      href: '/admin/dashboard?tab=emails',
+      icon: HiOutlineMail,
+    },
+    {
+      tab: 'videos',
+      label: 'YOUTUBE VİDEOLARI',
+      href: '/admin/dashboard?tab=videos',
+      icon: HiOutlineVideoCamera,
+    },
+    {
+      tab: 'profile',
+      label: 'PROFİL AYARLARI',
+      href: '/admin/dashboard?tab=profile',
+      icon: HiOutlineUser,
+    },
+  ];
+
+  return (
+    <nav className="space-y-1 flex-grow">
+      {menuItems.map((item) => {
+        const Icon = item.icon;
+        const isActive = pathname === '/admin/dashboard' && activeTab === item.tab;
+        return (
+          <Link
+            key={item.tab}
+            href={item.href}
+            className={`flex items-center gap-4 w-full p-3.5 rounded-2xl transition-all text-xs tracking-widest ${
+              isActive
+                ? 'bg-gold/10 text-burgundy font-bold shadow-sm border border-gold/10'
+                : 'text-taupe/60 hover:bg-gold/5 font-medium border border-transparent'
+            }`}
+          >
+            <Icon className="text-lg" /> {item.label}
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
 
 export default function AdminLayout({
   children,
@@ -48,48 +123,9 @@ export default function AdminLayout({
           </div>
         </div>
 
-        <nav className="space-y-4 flex-grow">
-          <Link 
-            href="/admin/dashboard" 
-            className={`flex items-center gap-4 w-full p-4 rounded-2xl transition-all text-sm tracking-widest ${
-              pathname === '/admin/dashboard' ? 'bg-gold/5 text-burgundy font-bold' : 'text-taupe/60 hover:bg-gold/5 font-medium'
-            }`}
-          >
-            <HiOutlineViewGrid className="text-xl" /> DASHBOARD
-          </Link>
-          <Link 
-            href="/admin/hizmetler" 
-            className={`flex items-center gap-4 w-full p-4 rounded-2xl transition-all text-sm tracking-widest ${
-              pathname === '/admin/hizmetler' ? 'bg-gold/5 text-burgundy font-bold' : 'text-taupe/60 hover:bg-gold/5 font-medium'
-            }`}
-          >
-            <HiOutlineSparkles className="text-xl" /> HİZMETLER
-          </Link>
-          <Link 
-            href="/admin/urunler" 
-            className={`flex items-center gap-4 w-full p-4 rounded-2xl transition-all text-sm tracking-widest ${
-              pathname === '/admin/urunler' ? 'bg-gold/5 text-burgundy font-bold' : 'text-taupe/60 hover:bg-gold/5 font-medium'
-            }`}
-          >
-            <HiOutlineShoppingBag className="text-xl" /> ÜRÜNLER
-          </Link>
-          <Link 
-            href="/admin/sayfalar" 
-            className={`flex items-center gap-4 w-full p-4 rounded-2xl transition-all text-sm tracking-widest ${
-              pathname === '/admin/sayfalar' ? 'bg-gold/5 text-burgundy font-bold' : 'text-taupe/60 hover:bg-gold/5 font-medium'
-            }`}
-          >
-            <HiOutlineDocumentText className="text-xl" /> SAYFALAR
-          </Link>
-          <Link 
-            href="/admin/blog" 
-            className={`flex items-center gap-4 w-full p-4 rounded-2xl transition-all text-sm tracking-widest ${
-              pathname === '/admin/blog' ? 'bg-gold/5 text-burgundy font-bold' : 'text-taupe/60 hover:bg-gold/5 font-medium'
-            }`}
-          >
-            <HiOutlineDocumentText className="text-xl" /> BLOG
-          </Link>
-        </nav>
+        <Suspense fallback={<div className="animate-pulse h-40 bg-gold/5 rounded-2xl" />}>
+          <AdminNav />
+        </Suspense>
 
         <button 
           onClick={handleLogout}
@@ -100,7 +136,7 @@ export default function AdminLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-grow lg:ml-72 p-6 lg:p-12">
+      <main className="flex-grow lg:ml-72 p-6 lg:p-12 w-full lg:max-w-[calc(100%-18rem)] min-w-0">
         {children}
       </main>
     </div>

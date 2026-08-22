@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import FloatingContact from "@/components/FloatingContact";
-import SmoothScroll from "@/components/SmoothScroll";
-import AmbientGlow from "@/components/AmbientGlow";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 
@@ -56,15 +54,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="tr" className={`${cormorant.variable} ${inter.variable} antialiased`} data-scroll-behavior="smooth">
+    <html lang="tr" className={`${cormorant.variable} ${inter.variable} antialiased`}>
       <body className="min-h-screen flex flex-col bg-ivory text-charcoal">
-        <SmoothScroll>
-          <AmbientGlow />
-          <LayoutWrapper>
-            <main className="flex-grow">{children}</main>
-          </LayoutWrapper>
-          <FloatingContact />
-        </SmoothScroll>
+        <LayoutWrapper>
+          <main className="flex-grow">{children}</main>
+        </LayoutWrapper>
+        <FloatingContact />
       </body>
     </html>
   );

@@ -5,95 +5,56 @@ import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="bg-ivory pt-12 pb-8 border-t border-gold/10">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-          {/* Brand Column */}
-          <div className="lg:col-span-1">
-            <Link href="/" className="flex flex-col items-center mb-2 group">
-              <div className="w-56 h-56 transition-transform duration-500 group-hover:scale-110 relative">
-                <Image
-                  src="/Lyra-Logo.png"
-                  alt="Lyra Logo"
-                  fill
-                  sizes="224px"
-                  className="object-contain"
-                  loading="lazy"
-                />
-              </div>
-              <div className="flex flex-col items-center -mt-4">
-                <span className="font-serif text-lg tracking-[0.1em] text-wine font-bold leading-tight text-center">LYRA</span>
-                <span className="text-[0.44rem] tracking-[0.31em] text-[#a79d99] font-bold -mt-0.5 uppercase text-center">On Earth</span>
-              </div>
+    <footer className="w-full max-w-6xl mx-auto px-5 py-8 mt-4">
+      {/* Divider */}
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-gold/15 to-transparent mb-6" />
+
+      <div className="flex flex-col items-center gap-4">
+        {/* Brand */}
+        <Link href="/" className="flex flex-col items-center group">
+          <div className="w-12 h-12 transition-transform duration-500 group-hover:scale-110 relative">
+            <Image
+              src="/Lyra-Logo.png"
+              alt="Lyra Logo"
+              fill
+              sizes="48px"
+              className="object-contain"
+              loading="lazy"
+            />
+          </div>
+        </Link>
+
+        {/* Copyright & Links */}
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 max-w-md">
+            <Link href="/offers" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+              Teklifler
             </Link>
-            <p className="text-taupe/60 text-sm leading-loose max-w-xs mb-4 text-center mx-auto">
-              &ldquo;Ruhsal farkındalık ve dönüşüm yolculuğunuzda ışığınızı keşfetmeniz için rehberlik ediyoruz.&rdquo;
-            </p>
+            <span className="w-px h-2.5 bg-gold/20" />
+            <Link href="/offers/paid" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+              Ücretli Programlar
+            </Link>
+            <span className="w-px h-2.5 bg-gold/20" />
+            <Link href="/offers/free" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+              Ücretsiz Kaynaklar
+            </Link>
+            <span className="w-px h-2.5 bg-gold/20" />
+            <Link href="/kvkk" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+              KVKK
+            </Link>
           </div>
 
-          {/* Links Columns */}
-          <div>
-            <h4 className="text-[0.65rem] font-bold tracking-[0.4em] text-gold uppercase mb-4">Keşfet</h4>
-            <ul className="space-y-4">
-              {['Hakkımızda', 'Hizmetler', 'Ürünler', 'Blog'].map((item) => (
-                <li key={item}>
-                  <Link href={`/${item.toLowerCase().replace('ı', 'i')}`} className="text-wine/60 hover:text-burgundy text-sm transition-colors duration-300 flex items-center gap-2 group">
-                    <div className="w-0 h-px bg-gold group-hover:w-4 transition-all" />
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <div className="w-12 h-px bg-gold/20" />
 
-          <div>
-            <h4 className="text-[0.65rem] font-bold tracking-[0.4em] text-gold uppercase mb-4">Hizmetler</h4>
-            <ul className="space-y-4">
-              {['Birebir Yayın', 'Grup Yayınları', 'Spiritüel Danışmanlık', 'Eğitimler'].map((item) => (
-                <li key={item}>
-                  <Link href="/hizmetler" className="text-wine/60 hover:text-burgundy text-sm transition-colors duration-300 flex items-center gap-2 group">
-                    <div className="w-0 h-px bg-gold group-hover:w-4 transition-all" />
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-[0.65rem] font-bold tracking-[0.4em] text-gold uppercase mb-4">İletişim</h4>
-            <ul className="space-y-4">
-              {['İletişim Formu', 'WhatsApp', 'E-posta'].map((item) => (
-                <li key={item}>
-                  <Link href="/iletisim" className="text-wine/60 hover:text-burgundy text-sm transition-colors duration-300 flex items-center gap-2 group">
-                    <div className="w-0 h-px bg-gold group-hover:w-4 transition-all" />
-                    {item}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="bg-beige py-8 mt-12 border-t border-gold/5">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[0.65rem] text-taupe/40 tracking-[0.2em] font-medium uppercase">
+          <p className="text-[0.6rem] text-taupe/35 tracking-[0.2em] font-medium uppercase text-center">
             © 2026 LYRA ON EARTH. TÜM HAKLARI SAKLIDIR.
           </p>
 
-          <div className="flex items-center gap-2">
-            <span className="text-[0.65rem] text-taupe/40 tracking-[0.2em] font-medium uppercase">MADE BY</span>
-            <Link href="https://impevos.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-3 py-1.5 rounded-full border border-transparent hover:bg-taupe/10 hover:border-gold/15 transition-all duration-300">
-              <Image src="/impevossiyahseffaf.png" alt="impevos" width={80} height={80} className="h-20 w-auto" loading="lazy" />
+          <div className="flex items-center gap-1.5 mt-1">
+            <span className="text-[0.55rem] text-taupe/30 tracking-[0.15em] uppercase">Made by</span>
+            <Link href="https://impevos.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
+              <Image src="/impevossiyahseffaf.png" alt="impevos" width={48} height={48} className="h-10 w-auto opacity-40 hover:opacity-60 transition-opacity" loading="lazy" />
             </Link>
-          </div>
-
-          <div className="flex gap-8">
-            <Link href="/kvkk" className="text-[0.65rem] text-gold/60 tracking-widest cursor-pointer hover:text-gold transition-colors">KVKK</Link>
-            <span className="text-[0.65rem] text-gold/60 tracking-widest cursor-pointer hover:text-gold transition-colors">ÇEREZ POLİTİKASI</span>
           </div>
         </div>
       </div>

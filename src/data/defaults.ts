@@ -1,309 +1,388 @@
-export const defaultPosts = [
+export interface ProductItem {
+  id: string;
+  title: string;
+  tagline: string;
+  image: string;
+  buttonText: string;
+  link: string;
+  price?: string;
+  section?: string;
+  description?: string;
+  type?: 'digital' | 'call' | 'external';
+  priceType?: 'paid' | 'free';
+}
+
+export interface ProfileData {
+  name: string;
+  brandName: string;
+  bio: string;
+  avatar: string;
+  socials: {
+    instagram?: string;
+    youtube?: string;
+    spotify?: string;
+    email?: string;
+    tiktok?: string;
+  };
+}
+
+export const defaultProfile: ProfileData = {
+  name: 'Deniz Bayraktar',
+  brandName: 'LYRA ON EARTH',
+  bio: 'Spiritüel farkındalık ve kişisel dönüşüm araçları.',
+  avatar: '/deniz_bayraktar.jpeg',
+  socials: {
+    instagram: 'https://instagram.com/lyraonearth',
+    youtube: 'https://www.youtube.com/@denizzbayraktar',
+    spotify: 'https://open.spotify.com/',
+    email: 'mailto:info@lyraonearth.com',
+  },
+};
+
+export const defaultProducts: ProductItem[] = [
   {
-    category: 'Spiritüel Gelişim',
-    title: 'Bilinç Dönüşümü: İçsel Yolculuğun 5 Evresi',
-    slug: 'bilinc-donusumu-icsel-yolculugun-5-evresi',
-    excerpt: 'Spiritüel uyanış sürecinde bilinç nasıl dönüşür? Farkındalık seviyenizi derinleştirmek için bilmeniz gereken beş temel evre ve her bir evrede yaşanabilecek deneyimler.',
-    content: 'Spiritüel uyanış süreci, hayatımızın pek çok alanında köklü değişimleri beraberinde getirir. İçsel yolculuğunuzda karşılaşabileceğiniz beş temel evre şunlardır:\n\n1. Uyanış ve Farkındalık\n2. Arınma Süreci\n3. Aydınlanma ve İçgörü\n4. Bütünleşme\n5. Yüksek Benlikle Uyumlanma\n\nBu evrelerin her biri, kişisel gelişiminizde önemli bir kilometre taşıdır.',
-    date: '5 Mayıs 2026',
-    readTime: '8 dk',
-    gradient: 'from-burgundy/8 to-pink/15',
-    featured: true,
-    image: 'https://images.unsplash.com/photo-1518191766664-98442223789b?auto=format&fit=crop&q=80&w=800'
+    id: '1',
+    title: 'Eye Am Nova',
+    tagline: 'Bilinçaltı yeniden kodlama ve frekans yükseltme portalı.',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400',
+    buttonText: 'Portala Giriş Yap',
+    link: '/p/1',
+    price: 'Görüşme ile',
+    priceType: 'paid',
+    section: 'main',
+    type: 'call',
+    description: 'Zihnin ötesine geçmek, egonun sınırlarını aşmak ve kendi öz frekansınızla uyumlanmak için tasarlanmış derinlemesine bir dönüşüm portalı. Bilinçaltı yeniden kodlama pratikleri, galaktik frekans meditasyonları ve yüksek benliğinizle doğrudan temas kurma çalışmaları.',
   },
   {
-    category: 'Enerji Çalışmaları',
-    title: 'Günlük Enerji Temizliği Ritüelleri',
-    slug: 'gunluk-enerji-temizligi-rituelleri',
-    excerpt: 'Her gün uygulayabileceğiniz basit ama etkili enerji temizliği teknikleri. Auranızı güçlendirin ve negatif enerjilerden arının.',
-    content: 'Gün içinde farkında olmadan pek çok dış enerjiye maruz kalırız. İşte her gün uygulayabileceğiniz bazı enerji temizliği ritüelleri:\n\n- Sabah meditasyonu ve topraklanma\n- Deniz tuzu veya Himalaya tuzu ile duş alma\n- Adaçayı veya palo santo tütsülemek\n- Ses frekanslarıyla alan temizliği',
-    date: '1 Mayıs 2026',
-    readTime: '6 dk',
-    gradient: 'from-gold/8 to-beige/20',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800'
+    id: '2',
+    title: 'MasterSoul',
+    tagline: 'Kendi realitenizin yaratıcısı olmayı öğrenin.',
+    image: 'https://images.unsplash.com/photo-1567225557594-88d73e55f2cb?auto=format&fit=crop&q=80&w=400',
+    buttonText: 'Kendi Ustalığına Adım At',
+    link: '/p/2',
+    price: 'Görüşme ile',
+    priceType: 'paid',
+    section: 'main',
+    type: 'call',
+    description: 'Kendi realitenizin yaratıcısı olmayı öğrenmek ve bilinç evrelerinde profesyonel düzeyde derinleşmek isteyenler için hazırlanan uzun soluklu akademi programı. Zihinsel kodlamalardan spiritüel yasalara, enerji mekaniklerinden kanal bilgilerine kadar en derin öğretiler.',
   },
   {
-    category: 'Meditasyon',
-    title: 'Yeni Başlayanlar İçin Farkındalık Meditasyonu',
-    slug: 'yeni-baslayanlar-icin-farkindalik-meditasyonu',
-    excerpt: 'Meditasyona yeni başlıyorsanız, bu rehber tam size göre. Adım adım farkındalık meditasyonu pratiği ve ipuçları.',
-    content: 'Farkındalık (mindfulness) meditasyonu, anı yaşamak ve zihni sakinleştirmek için mükemmel bir yöntemdir. Başlamak için:\n\n1. Sessiz bir yer bulun\n2. Rahat bir oturuş pozisyonu alın\n3. Nefesinize odaklanın\n4. Düşünceler geldiğinde onları sadece gözlemleyip geçmelerine izin verin.',
-    date: '28 Nisan 2026',
-    readTime: '5 dk',
-    gradient: 'from-pink/10 to-rose/8',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=800'
+    id: '3',
+    title: 'Lyra Starseed',
+    tagline: 'Yıldız tohumu kökeninizi ve galaktik kontratınızı keşfedin.',
+    image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=400',
+    buttonText: 'Galaktik Kökenini Keşfet',
+    link: '/p/3',
+    price: '1.200 ₺',
+    priceType: 'paid',
+    section: 'main',
+    type: 'digital',
+    description: 'Yıldız tohumu (Starseed) kimliğinizi, ruhunuzun dünya dışı enkarnasyon geçmişini ve bu yaşamdaki galaktik yaşam misyonunuzu keşfetmeye yönelik özel bir çalışma. Hangi galaktik sistemlerle (Sirius, Pleiades, Arcturus vb.) rezonans halinde olduğunuzu ve bu enerjiyi dünyada nasıl tezahür ettireceğinizi öğrenin.',
   },
   {
-    category: 'Kristaller',
-    title: 'Şifa Taşları: Ametist ve Roze Kuvars',
-    slug: 'sifa-taslari-ametist-ve-roze-kuvars',
-    excerpt: 'İki güçlü şifa taşının enerjik özellikleri, kullanım alanları ve günlük yaşamda nasıl faydalanabileceğiniz.',
-    content: 'Ametist ve Roze Kuvars, şifa çalışmalarında en çok tercih edilen iki güçlü kristaldir. Ametist, zihni sakinleştirip sezgileri güçlendirirken; Roze Kuvars, koşulsuz sevgi ve kalp çakrası şifasında kullanılır.\n\nTaşlarınızı dolunay ışığında arındırabilir ve niyetlerinizle programlayabilirsiniz.',
-    date: '22 Nisan 2026',
-    readTime: '7 dk',
-    gradient: 'from-plum/6 to-pink/10',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800'
+    id: '4',
+    title: '1:1 Çalışma',
+    tagline: 'Birebir seanslarla blokajları aşın ve yüksek bilincinizle hizalanın.',
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=400',
+    buttonText: 'Birebir Çalışma Başvurusu',
+    link: '/p/4',
+    price: 'Görüşme ile',
+    priceType: 'paid',
+    section: 'main',
+    type: 'call',
+    description: 'Hayatınızın herhangi bir alanında yaşadığınız tıkanıklıklar, enerjisel blokajlar ve uyanış süreçleriniz üzerine birebir danışmanlık ve derin frekans çalışması. Tamamen sizin hızınıza ve ihtiyaçlarınıza göre şekillenen özel meditasyonlar ve bilinçaltı rehberliği seansları.',
   },
   {
-    category: 'Astroloji',
-    title: 'Yükselen Burcunuz ve Yaşam Amacınız',
-    slug: 'yukselen-burcunuz-ve-yasam-amaciniz',
-    excerpt: 'Doğum haritanızdaki yükselen burcun spiritüel anlamı ve yaşam yolculuğunuza etkisi hakkında derinlemesine bir bakış.',
-    content: 'Doğum haritamızda yükselen burç, ruhumuzun bu dünyada deneyimlemek istediği yolu ve dış dünyaya sunduğumuz maskeyi temsil eder. Yaşam amacınızı bulma yolculuğunda yükselen burcunuz size büyük ipuçları verir.',
-    date: '18 Nisan 2026',
-    readTime: '9 dk',
-    gradient: 'from-gold/6 to-beige/15',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1518191766664-98442223789b?auto=format&fit=crop&q=80&w=800'
+    id: '5',
+    title: '1 Saat',
+    tagline: '60 dakikalık yoğunlaştırılmış ruhsal analiz ve yönlendirmeli seans.',
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400',
+    buttonText: 'Seans Planla',
+    link: '/p/5',
+    price: 'Görüşme ile',
+    priceType: 'paid',
+    section: 'main',
+    type: 'call',
+    description: 'Deniz Bayraktar ile 60 dakika boyunca canlı görüntülü olarak gerçekleştireceğiniz ruhsal analiz seansı. Hayatınızda tıkanmış hissettiğiniz alanlar, karar anları veya spiritüel sorgulamalarınız için doğrudan sorularınıza yanıt bulabileceğiniz, enerjisel dengelenme sağlayan özel bir çalışma.',
   },
   {
-    category: 'Nefes Çalışmaları',
-    title: 'Pranayama: Bilinçli Nefes Sanatı',
-    slug: 'pranayama-bilincli-nefes-sanati',
-    excerpt: 'Kadim nefes tekniklerinin modern yaşamda uygulanması. Stresi azaltın, enerjinizi yükseltin.',
-    content: 'Pranayama, yaşam enerjisini (prana) nefes yoluyla kontrol etme sanatıdır. Düzenli pranayama pratiği sinir sistemini dengeler, zihni sakinleştirir ve bedenin kendi kendini şifalandırma kapasitesini artırır. Nadi Shodhana (Dönüşümlü Burun Nefesi) başlamak için harika bir tekniktir.',
-    date: '12 Nisan 2026',
-    readTime: '6 dk',
-    gradient: 'from-burgundy/5 to-pink/10',
-    featured: false,
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800'
+    id: '6',
+    title: 'Aylık Paket',
+    tagline: '4 hafta boyunca yakın takipli, özel frekans ve ödev programlı değişim süreci.',
+    image: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&q=80&w=400',
+    buttonText: 'Aylık Pakete Başvur',
+    link: '/p/6',
+    price: 'İletişime Geçin',
+    priceType: 'paid',
+    section: 'main',
+    type: 'call',
+    description: '4 hafta süren, her hafta canlı seanslar, günlük motivasyon takibi, özel ödevler ve size özel meditasyon/frekans programları içeren premium dönüşüm süreci. Hayatınızda köklü bir kuantum sıçraması yapmanızı hedefler.',
+  },
+  {
+    id: '7',
+    title: '7 Günlük Bilinç Günlüğü',
+    tagline: 'Zihinsel kodlarınızı fark edin ve serbest bırakın.',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=400',
+    buttonText: 'Hemen İndir',
+    link: '/p/7',
+    price: 'Ücretsiz',
+    priceType: 'free',
+    section: 'main',
+    type: 'digital',
+    description: 'Bilinçaltınızdaki sınırlayıcı inanç kalıplarını ve zihinsel blokajları 7 günlük pratik yazma egzersizleriyle açığa çıkarın. Kendinizle daha derin bir dürüstlük bağı kurmanızı sağlayacak farkındalık sorularını içeren ücretsiz çalışma kitabı.',
+  },
+  {
+    id: '8',
+    title: 'Temel Aura Arındırma Ritüeli',
+    tagline: 'Negatif enerjileri şifalandıran günlük pratikler.',
+    image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400',
+    buttonText: 'Ritüeli İndir',
+    link: '/p/8',
+    price: 'Ücretsiz',
+    priceType: 'free',
+    section: 'main',
+    type: 'digital',
+    description: 'Günlük yaşamda auranızda biriken yabancı enerjileri arındırmak, enerji sınırlarınızı güçlendirmek ve çakralarınızı hizalamak için uygulayabileceğiniz basit ama son derece etkili nefes ve görselleştirme ritüelleri.',
   }
 ];
 
-export const defaultServices = [
-  {
-    title: 'Birebir Yayınlar',
-    description: 'Ruhsal yolculuğunuzda size özel rehberlik ve derinlemesine bilinç çalışmaları.',
-    icon: 'HiOutlineMoon',
-    link: '/hizmetler',
-    tag: 'Bilinç',
-  },
-  {
-    title: 'Grup Yayınları',
-    description: 'Kolektif bilinç çalışmaları ve ortak enerji alanında ruhsal deneyimler.',
-    icon: 'HiOutlineUserGroup',
-    link: '/hizmetler',
-    tag: 'Kolektif',
-  },
-  {
-    title: 'Spiritüel Danışmanlık',
-    description: 'Farkındalık ve içsel huzura giden yolda uzman danışmanlık hizmetleri.',
-    icon: 'HiOutlineSparkles',
-    link: '/hizmetler',
-    tag: 'Rehberlik',
-  },
-  {
-    title: 'Özel Eğitimler',
-    description: 'Spiritüel gelişiminiz için özenle hazırlanmış kapsamlı eğitim programları.',
-    icon: 'HiOutlineBookOpen',
-    link: '/hizmetler',
-    tag: 'Akademi',
-  },
-];
-
-export const defaultProducts = [
-  {
-    title: 'Spiritüel Uyanış Rehberi',
-    description: 'Spiritüel uyanış sürecini adım adım anlatan kapsamlı PDF rehber.',
-    price: '149 ₺',
-    category: 'PDF Rehberler',
-    icon: 'HiOutlineDocumentText',
-    gradient: 'from-burgundy/8 to-pink/12',
-    iconGrad: 'from-burgundy to-wine',
-    badge: 'Çok Satan',
-  },
-  {
-    title: 'Enerji Temizliği Meditasyonları',
-    description: '7 günlük enerji temizliği meditasyon programı. Güne temiz başlayın.',
-    price: '99 ₺',
-    category: 'Video Eğitimler',
-    icon: 'HiOutlinePlay',
-    gradient: 'from-gold/8 to-beige/20',
-    iconGrad: 'from-gold to-gold-dark',
-    badge: null,
-  },
-  {
-    title: 'Bilinç Dönüşümü Çalışma Kitabı',
-    description: 'Bilinç seviyenizi yükseltecek pratik egzersizler ve refleksiyonlar.',
-    price: '129 ₺',
-    category: 'PDF Rehberler',
-    icon: 'HiOutlineBookOpen',
-    gradient: 'from-pink/10 to-rose/8',
-    iconGrad: 'from-rose to-pink-muted',
-    badge: null,
-  },
-  {
-    title: 'Mastersoul Tanıtım Semineri',
-    description: 'Mastersoul eğitim programının tanıtım seansı kayıt erişimi.',
-    price: '79 ₺',
-    category: 'Yayın Kayıtları',
-    icon: 'HiOutlinePlay',
-    gradient: 'from-plum/6 to-pink/8',
-    iconGrad: 'from-plum to-burgundy-dark',
-    badge: null,
-  },
-  {
-    title: 'Çakra Dengeleme Rehberi',
-    description: '7 ana çakranızı dengelemek için kapsamlı uygulama rehberi.',
-    price: '119 ₺',
-    category: 'PDF Rehberler',
-    icon: 'HiOutlineDocumentText',
-    gradient: 'from-gold/6 to-beige/15',
-    iconGrad: 'from-gold to-gold-dark',
-    badge: 'Yeni',
-  },
-  {
-    title: 'Nefes Teknikleri Atölyesi',
-    description: 'Pranayama ve bilinçli nefes teknikleri video eğitim serisi.',
-    price: '89 ₺',
-    category: 'Video Eğitimler',
-    icon: 'HiOutlinePlay',
-    gradient: 'from-burgundy/5 to-pink/10',
-    iconGrad: 'from-burgundy to-wine',
-    badge: null,
-  },
-];
-
-export const defaultImages = [
-  { name: 'Meditasyon', url: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=800' },
-  { name: 'Kristal', url: 'https://images.unsplash.com/photo-1567225557594-88d73e55f2cb?auto=format&fit=crop&q=80&w=800' },
-  { name: 'Doğa ve Huzur', url: 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&q=80&w=800' },
-  { name: 'Mistik Atmosfer', url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&q=80&w=800' },
-  { name: 'Tütsü ve Ritüel', url: 'https://images.unsplash.com/photo-1595981234058-a9302fb97229?auto=format&fit=crop&q=80&w=800' },
-  { name: 'Mum Işığı', url: 'https://images.unsplash.com/photo-1602874801007-bd458bb1b8b6?auto=format&fit=crop&q=80&w=800' },
-  { name: 'Astroloji', url: 'https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&q=80&w=800' },
-  { name: 'Doğal Yaşam', url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800' },
-];
-
-export const defaultPageContent = {
-  heroLabel: 'Spiritüel Bilincin Kapısı',
-  heroTitleLine1: 'Ruhsal Yolculuğunuzda',
-  heroTitleLine2: 'Işığa Dönün',
-  heroDescription: 'Lyra On Earth, kadim bilgiler ve modern farkındalık teknikleriyle içsel huzura ve gerçek potansiyelinize ulaşmanız için yanınızda.',
-  
-  servicesLabel: 'Kadim Öğretiler',
-  servicesTitleLine1: 'Ruhsal',
-  servicesTitleLine2: 'Rehberlik',
-  servicesDescription: 'Farklı ihtiyaçlara yönelik tasarlanmış hizmetlerimizle içsel dengenizi bulun.',
-  
-  featuredLabel: 'Kolektif Bilinç',
-  featuredTitleLine1: 'Güncel İçerikler &',
-  featuredTitleLine2: 'Etkinlikler',
-  featuredDescription: 'Spiritüel yolculuğunuzu destekleyecek en yeni yayınlarımızı ve gelecek etkinliklerimizi buradan takip edebilirsiniz.',
-  
-  testimonialsLabel: 'Referanslar',
-  testimonialsTitleLine1: 'Katılımcılarımız',
-  testimonialsTitleLine2: 'Ne Diyor?',
-  
-  blogLabel: 'Kütüphane',
-  blogTitleLine1: 'Spiritüel',
-  blogTitleLine2: 'Yazılar',
-  blogDescription: 'Ruhsal gelişiminize ışık tutacak, derin farkındalıklar barındıran haftalık makalelerimiz.',
-
-  ctaLabel: 'Dönüşüm Vakti',
-  ctaTitleLine1: 'Ruhsal Yolculuğunuzda',
-  ctaTitleLine2: 'Birlikte Adım Atalım',
-  ctaDescription: 'Size en uygun spiritüel yolu bulmak ve içsel huzura ve gerçek potansiyelinize ulaşmanız için ilk adımı bugün atın.'
+export const getProfile = (): ProfileData => {
+  if (typeof window === 'undefined') return defaultProfile;
+  const saved = localStorage.getItem('custom_profile');
+  if (saved) return { ...defaultProfile, ...JSON.parse(saved) };
+  return defaultProfile;
 };
 
-export const getBlogPosts = () => {
-  if (typeof window === 'undefined') return defaultPosts;
-  const saved = localStorage.getItem('custom_blog_posts');
-  if (!saved) return defaultPosts;
+export const saveProfile = (profile: ProfileData) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('custom_profile', JSON.stringify(profile));
+  }
+};
 
-  let parsed = JSON.parse(saved);
-  let needsUpdate = false;
+export const getProducts = (): ProductItem[] => {
+  if (typeof window === 'undefined') return defaultProducts;
+  const saved = localStorage.getItem('custom_products');
+  let products: ProductItem[] = saved ? JSON.parse(saved) : defaultProducts;
   
-  parsed = parsed.map((p: any) => {
-    if (!p.slug || !p.content) {
-      needsUpdate = true;
-      const defaultMatch = defaultPosts.find(d => d.title === p.title);
-      
-      const generateSlug = (text: string) => {
-        if (!text) return '';
-        return text.toLowerCase().replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '');
-      };
-      
-      return {
-        ...p,
-        slug: p.slug || defaultMatch?.slug || generateSlug(p.title),
-        content: p.content || defaultMatch?.content || 'Bu yazının detayı henüz girilmemiştir.'
-      };
+  // Force clean old mock products if they exist in localStorage cache
+  const hasOldProducts = products.some(p => p.title === 'Birebir Yayınlar' || p.title === 'Grup Yayınlar');
+  if (hasOldProducts) {
+    localStorage.removeItem('custom_products');
+    products = defaultProducts;
+  }
+  
+  // Make sure new default products are also present
+  const savedIds = new Set(products.map(p => p.id));
+  const missingDefaults = defaultProducts.filter(p => !savedIds.has(p.id));
+  if (missingDefaults.length > 0) {
+    products = [...products, ...missingDefaults];
+  }
+  
+  // Sort products: paid offers first, free offers at the end
+  const paid = products.filter((p) => p.priceType !== 'free');
+  const free = products.filter((p) => p.priceType === 'free');
+  return [...paid, ...free];
+};
+
+export const saveProducts = (products: ProductItem[]) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('custom_products', JSON.stringify(products));
+  }
+};
+
+export interface FeaturedVideoItem {
+  id: string;
+  title: string;
+  thumbnail: string;
+  youtubeUrl: string;
+  duration?: string;
+}
+
+export const defaultVideos: FeaturedVideoItem[] = [
+  {
+    id: 'v1',
+    title: 'Ruhsal Uyanışın Belirtileri: Aydınlanma Yolculuğu',
+    thumbnail: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&q=80&w=400',
+    youtubeUrl: 'https://www.youtube.com/@denizzbayraktar',
+    duration: '14:22',
+  },
+  {
+    id: 'v2',
+    title: 'Günlük Meditasyon Ritüeli ve Çakra Dengeleme',
+    thumbnail: 'https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&q=80&w=400',
+    youtubeUrl: 'https://www.youtube.com/@denizzbayraktar',
+    duration: '08:45',
+  },
+  {
+    id: 'v3',
+    title: 'Bilinçaltı Blokajları Nasıl Çözülür?',
+    thumbnail: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=400',
+    youtubeUrl: 'https://www.youtube.com/@denizzbayraktar',
+    duration: '18:10',
+  },
+];
+
+export const getVideos = (): FeaturedVideoItem[] => {
+  if (typeof window === 'undefined') return defaultVideos;
+  const saved = localStorage.getItem('custom_videos');
+  if (saved) return JSON.parse(saved);
+  return defaultVideos;
+};
+
+export const saveVideos = (videos: FeaturedVideoItem[]) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('custom_videos', JSON.stringify(videos));
+  }
+};
+
+export interface AppointmentData {
+  id: string;
+  productId: string;
+  productTitle: string;
+  name: string;
+  email: string;
+  phone: string;
+  instagram: string;
+  date: string;
+  time: string;
+  createdAt: string;
+}
+
+export const getAppointments = (): AppointmentData[] => {
+  if (typeof window === 'undefined') return [];
+  const saved = localStorage.getItem('custom_appointments');
+  if (saved) return JSON.parse(saved);
+  return [];
+};
+
+export const saveAppointment = (appointment: Omit<AppointmentData, 'id' | 'createdAt'>) => {
+  if (typeof window !== 'undefined') {
+    const appointments = getAppointments();
+    const newAppointment: AppointmentData = {
+      ...appointment,
+      id: 'ap_' + Math.random().toString(36).substr(2, 9),
+      createdAt: new Date().toISOString(),
+    };
+    localStorage.setItem('custom_appointments', JSON.stringify([...appointments, newAppointment]));
+  }
+};
+
+export const deleteAppointment = (id: string) => {
+  if (typeof window !== 'undefined') {
+    const appointments = getAppointments();
+    localStorage.setItem('custom_appointments', JSON.stringify(appointments.filter((a) => a.id !== id)));
+  }
+};
+
+export interface SmtpSettings {
+  host: string;
+  port: number;
+  secure: boolean;
+  user: string;
+  password?: string;
+  enableHostingerAI: boolean;
+  agenticAutoReplies: boolean;
+  kodeeMailboxAssistant: boolean;
+}
+
+export interface ScheduledEmail {
+  id: string;
+  targetType: 'all' | 'product' | 'specific';
+  targetValue: string;
+  subject: string;
+  body: string;
+  scheduleType: 'one-time' | 'recurring';
+  scheduleValue: string;
+  status: 'active' | 'paused' | 'sent';
+  createdAt: string;
+  aiGenerated: boolean;
+}
+
+export interface SentEmailLog {
+  id: string;
+  to: string;
+  subject: string;
+  sentAt: string;
+  status: 'success' | 'failed';
+  error?: string;
+}
+
+export const getSmtpSettings = (): SmtpSettings => {
+  const defaultSettings: SmtpSettings = {
+    host: 'smtp.hostinger.com',
+    port: 465,
+    secure: true,
+    user: 'info@lyraonearth.com',
+    enableHostingerAI: true,
+    agenticAutoReplies: true,
+    kodeeMailboxAssistant: true,
+  };
+  if (typeof window === 'undefined') return defaultSettings;
+  const saved = localStorage.getItem('custom_smtp_settings');
+  if (saved) return { ...defaultSettings, ...JSON.parse(saved) };
+  return defaultSettings;
+};
+
+export const saveSmtpSettings = (settings: SmtpSettings) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('custom_smtp_settings', JSON.stringify(settings));
+  }
+};
+
+export const getScheduledEmails = (): ScheduledEmail[] => {
+  if (typeof window === 'undefined') return [];
+  const saved = localStorage.getItem('custom_scheduled_emails');
+  if (saved) return JSON.parse(saved);
+  return [
+    {
+      id: 'se_1',
+      targetType: 'all',
+      targetValue: 'all',
+      subject: 'Lyra On Earth: Uyanış Yolculuğuna Hoş Geldiniz ✨',
+      body: 'Merhaba,\n\nLyra On Earth uyanış portalına katıldığınız için teşekkür ederiz. Sizin için en doğru enerjisel yol haritasını çizmek ve hayatınızdaki tıkanıklıkları açmak üzere buradayız.\n\nİlk seans hazırlığı olarak son YouTube videomu izlemeyi ve sakinleşme meditasyonunu yapmayı unutmayın.\n\nSevgiler,\nDeniz Bayraktar',
+      scheduleType: 'recurring',
+      scheduleValue: 'Her Pazartesi 09:00',
+      status: 'active',
+      createdAt: new Date().toISOString(),
+      aiGenerated: true
     }
-    return p;
-  });
+  ];
+};
 
-  if (needsUpdate) {
-    localStorage.setItem('custom_blog_posts', JSON.stringify(parsed));
+export const saveScheduledEmails = (emails: ScheduledEmail[]) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem('custom_scheduled_emails', JSON.stringify(emails));
   }
-  
-  return parsed;
 };
 
-export const defaultFeatured = [
-  {
-    icon: 'HiOutlinePlay',
-    tag: 'Son Yayın',
-    title: 'Enerji Temizliği ve Farkındalık Çalışması',
-    description: 'Haftalık enerji temizliği seansımızda kolektif bilinç çalışması gerçekleştirdik. Yayın kaydına erişebilirsiniz.',
-    date: '3 Mayıs 2026',
-    color: 'from-burgundy to-wine',
-    link: '/blog',
-  },
-  {
-    icon: 'HiOutlineStar',
-    tag: 'Öne Çıkan Eğitim',
-    title: 'Mastersoul Eğitimi — Bilinç Dönüşümü',
-    description: 'Kapsamlı spiritüel gelişim programımız ile derinlemesine bilinç çalışması. Sınırlı kontenjan.',
-    date: 'Kayıtlar Açık',
-    color: 'from-gold to-gold-dark',
-    link: '/hizmetler',
-  },
-  {
-    icon: 'HiOutlineCalendar',
-    tag: 'Yaklaşan Etkinlik',
-    title: 'Yeni Ay Meditasyonu — Haziran 2026',
-    description: 'Yeni ay enerjisiyle niyet belirleme ve manifestasyon çalışması. Toplu meditasyon deneyimi.',
-    date: '15 Haziran 2026',
-    color: 'from-rose to-pink-muted',
-    link: '/iletisim',
-  },
-];
-
-export const defaultTestimonials = [
-  {
-    name: 'Merve A.',
-    role: 'Mastersoul Eğitim Katılımcısı',
-    text: 'Mastersoul eğitimi beklentilerimin çok üzerindeydi. Derinlemesine bilinç çalışmalarıyla kendimi yeniden keşfettim. Bu deneyimi herkese tavsiye ederim.',
-    rating: 5,
-  },
-  {
-    name: 'Caner B.',
-    role: 'Birebir Yayın Danışanı',
-    text: 'Lyra On Earth ile tanıştığımdan beri hayatımdaki farkındalık seviyesi inanılmaz arttı. Enerji temizliği seansları çok etkili.',
-    rating: 5,
-  },
-  {
-    name: 'Elif Y.',
-    role: 'Grup Yayını Katılımcısı',
-    text: 'Her hafta sabırsızlıkla beklediğim bir topluluk. Kolektif bilinç çalışmalarında kendimi çok huzurlu ve dengeli hissediyorum.',
-    rating: 5,
-  },
-];
-
-export const getFeaturedItems = () => {
-  if (typeof window === 'undefined') return defaultFeatured;
-  const saved = localStorage.getItem('custom_featured_items');
-  if (saved) return JSON.parse(saved);
-  return defaultFeatured;
+export const deleteScheduledEmail = (id: string) => {
+  if (typeof window !== 'undefined') {
+    const emails = getScheduledEmails();
+    saveScheduledEmails(emails.filter((e) => e.id !== id));
+  }
 };
 
-export const getTestimonials = () => {
-  if (typeof window === 'undefined') return defaultTestimonials;
-  const saved = localStorage.getItem('custom_testimonials');
+export const getSentEmailLogs = (): SentEmailLog[] => {
+  if (typeof window === 'undefined') return [];
+  const saved = localStorage.getItem('custom_sent_email_logs');
   if (saved) return JSON.parse(saved);
-  return defaultTestimonials;
+  return [];
+};
+
+export const saveSentEmailLog = (log: Omit<SentEmailLog, 'id' | 'sentAt'>) => {
+  if (typeof window !== 'undefined') {
+    const logs = getSentEmailLogs();
+    const newLog: SentEmailLog = {
+      ...log,
+      id: 'log_' + Math.random().toString(36).substr(2, 9),
+      sentAt: new Date().toISOString()
+    };
+    localStorage.setItem('custom_sent_email_logs', JSON.stringify([newLog, ...logs]));
+  }
+};
+
+export const clearSentEmailLogs = () => {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('custom_sent_email_logs');
+  }
 };

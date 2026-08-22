@@ -1,8 +1,8 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import Navbar from './Navbar';
 import Footer from './Footer';
+import Header from './Header';
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -10,8 +10,10 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
 
   return (
     <>
-      {!isAdmin && <Navbar />}
-      {children}
+      {!isAdmin && <Header />}
+      <div className={!isAdmin ? 'pt-24 lg:pt-28' : ''}>
+        {children}
+      </div>
       {!isAdmin && <Footer />}
     </>
   );

@@ -30,170 +30,62 @@
     overflow-x: hidden;
   }
 
-  /* Typography Base */
-  .heading-display {
-    @apply font-serif text-center;
-    font-size: clamp(2.5rem, 8vw, 5.5rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: #2A2A2A;
+  /* Force rounded-none globally for our new geometric design */
+  button, input, select, textarea, a.btn {
+    border-radius: 0px !important;
   }
 
-  .heading-lg {
-    @apply font-serif text-center;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
+  /* Selection style */
+  ::selection {
+    background-color: rgba(184, 149, 106, 0.2);
     color: var(--color-wine);
-  }
-
-  .heading-md {
-    @apply font-serif text-center;
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    line-height: 1.25;
-    color: var(--color-wine);
-  }
-
-  .heading-sm {
-    @apply font-serif text-center;
-    font-size: 1.5rem;
-    line-height: 1.2;
-    color: var(--color-wine);
-  }
-
-  .body-lg {
-    @apply font-sans text-center;
-    font-size: 1.25rem;
-    line-height: 1.9;
-    color: rgba(74, 68, 63, 0.8);
-  }
-
-  .body-md {
-    @apply font-sans text-center;
-    font-size: 1.125rem;
-    line-height: 1.85;
-    color: rgba(74, 68, 63, 0.7);
-  }
-
-  .body-sm {
-    @apply font-sans text-center;
-    font-size: 0.875rem;
-    line-height: 1.75;
-    color: rgba(74, 68, 63, 0.6);
-  }
-
-  .label-line {
-    @apply flex items-center gap-4 text-[0.75rem] uppercase font-bold justify-center w-full;
-    letter-spacing: 0.4em;
-    color: rgba(184, 149, 106, 0.8);
-  }
-
-  .label-line::before,
-  .label-line::after {
-    content: "";
-    height: 1px;
-    width: 2.5rem;
-    background: linear-gradient(to right, transparent, rgba(184, 149, 106, 0.3));
-  }
-
-  .label-line::after {
-    background: linear-gradient(to left, transparent, rgba(184, 149, 106, 0.3));
   }
 }
 
 @layer components {
-  .btn-primary {
-    @apply relative overflow-hidden px-8 py-4 text-ivory rounded-full 
-           text-[0.85rem] font-bold uppercase transition-all duration-500
-           flex items-center gap-3 justify-center cursor-pointer;
-    background: linear-gradient(to right, #a79d99, #8a7f7b);
-    letter-spacing: 0.15em;
+  /* Product card base */
+  .product-card {
+    @apply block transition-all duration-300;
   }
 
-  .btn-primary:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(167, 157, 153, 0.3);
+  .product-card:active {
+    transform: scale(0.99);
   }
 
-  .btn-secondary {
-    @apply px-8 py-4 border border-gold/30 text-wine rounded-full 
-           text-[0.85rem] font-bold uppercase transition-all duration-500
-           flex items-center gap-3 justify-center cursor-pointer;
-    letter-spacing: 0.15em;
+  /* Floating contact glass tooltip */
+  .glass-dark {
+    background: rgba(62, 10, 22, 0.95);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(184, 149, 106, 0.3);
   }
 
-  .btn-secondary:hover {
-    background-color: rgba(184, 149, 106, 0.05);
+  /* Sharp frame accents */
+  .sharp-frame {
+    position: relative;
+    border: 1px solid rgba(184, 149, 106, 0.2);
+  }
+  
+  .sharp-frame::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(184, 149, 106, 0.08);
+    pointer-events: none;
+  }
+
+  /* Interactive geometric hover */
+  .geometric-hover {
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .geometric-hover:hover {
     border-color: var(--color-gold);
-    transform: translateY(-4px);
-  }
-
-  .glass-nav {
-    @apply fixed top-0 left-0 right-0 z-50 transition-all duration-700 h-24 flex items-center;
-  }
-
-  .glass-nav.scrolled {
-    @apply h-20 border-b border-gold/10;
-    background-color: rgba(253, 251, 247, 0.8);
-    backdrop-filter: blur(24px);
-    box-shadow: 0 10px 40px rgba(184, 149, 106, 0.1);
-  }
-
-  .nav-link {
-    @apply text-[0.78rem] font-bold uppercase transition-all duration-400 
-           relative py-2;
-    letter-spacing: 0.2em;
-    color: rgba(62, 10, 22, 0.6);
-  }
-
-  .nav-link:hover {
-    color: var(--color-burgundy);
-  }
-
-  .nav-link::after {
-    content: "";
-    @apply absolute bottom-0 left-0 w-0 h-px transition-all duration-500;
-    background: linear-gradient(to right, var(--color-gold), var(--color-burgundy));
-  }
-
-  .nav-link:hover::after {
-    @apply w-full;
-  }
-
-  .premium-card {
-    @apply relative rounded-[2.5rem] border border-gold/5
-           transition-all duration-700;
-    background-color: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(24px);
-    box-shadow: 0 20px 50px rgba(184, 149, 106, 0.05);
-  }
-
-  .premium-card:hover {
-    border-color: rgba(184, 149, 106, 0.2);
-    box-shadow: 0 30px 70px rgba(110, 21, 37, 0.1);
-  }
-
-  .angel-wings-bg {
-    @apply absolute pointer-events-none;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 1000px;
-    aspect-ratio: 1;
-    background-image: url('/angel_wings_line_art_1778181127578.png');
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.04;
-    z-index: 0;
-  }
-
-  .centered-container {
-    @apply flex flex-col items-center justify-center text-center w-full relative;
+    box-shadow: 0 0 0 1px var(--color-gold);
+    background-color: rgba(255, 255, 255, 0.95);
   }
 }
 
+/* Subtle gradient text for accents */
 .gradient-text {
   @apply bg-clip-text text-transparent;
   background-image: linear-gradient(to right, #5a4e49, #8C6D45, #5a4e49);
@@ -205,43 +97,24 @@
   to { background-position: 200% center; }
 }
 
-.orb {
-  @apply absolute rounded-full pointer-events-none;
-  filter: blur(100px);
+/* Linear scanning accent animation */
+.linear-scan {
+  position: relative;
+  overflow: hidden;
 }
 
-.orb-pink { background-color: rgba(232, 196, 200, 0.2); }
-.orb-gold { background-color: rgba(184, 149, 106, 0.15); }
-
-/* Custom Animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-40px) scale(1.02); }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { transform: scale(1); opacity: 0.3; }
-  50% { transform: scale(1.05); opacity: 0.6; }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 6s ease-in-out infinite;
-}
-
-.ambient-glow {
-  position: fixed;
+.linear-scan::after {
+  content: '';
+  position: absolute;
   top: 0;
-  left: 0;
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, rgba(184, 149, 106, 0.04) 0%, rgba(184, 149, 106, 0) 70%);
-  pointer-events: none;
-  z-index: 1;
-  mix-blend-mode: plus-lighter;
-  will-change: transform;
+  left: -150%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(184, 149, 106, 0.15), transparent);
+  transform: skewX(-20deg);
+  transition: all 0.75s ease;
 }
 
+.linear-scan:hover::after {
+  left: 150%;
+}

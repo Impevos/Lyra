@@ -1,65 +1,138 @@
-import HeroSection from '@/components/HeroSection';
-import ServicesSection from '@/components/ServicesSection';
-import FeaturedContent from '@/components/FeaturedContent';
-import TestimonialSection from '@/components/TestimonialSection';
-import BlogPreview from '@/components/BlogPreview';
-import CTASection from '@/components/CTASection';
+'use client';
+
+import ProfileHeader from '@/components/ProfileHeader';
+import ProductCard from '@/components/ProductCard';
+import SectionDivider from '@/components/SectionDivider';
+import CheckoutDrawer from '@/components/CheckoutDrawer';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { getProducts, ProductItem, defaultProducts, getVideos, FeaturedVideoItem } from '@/data/defaults';
 
 export default function HomePage() {
+  const [products, setProducts] = useState<ProductItem[]>(defaultProducts);
+  const [videos, setVideos] = useState<FeaturedVideoItem[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
+
+  useEffect(() => {
+    setProducts(getProducts());
+    setVideos(getVideos());
+  }, []);
+
+  const mainProducts = products.filter((p) => p.section !== 'work');
+  const workProducts = products.filter((p) => p.section === 'work');
+
+
+
   return (
-    <main className="relative min-h-screen bg-ivory">
-      {/* ✦ Ethereal Fire Wings Background ✦ */}
-      <div className="absolute top-0 left-0 w-full h-[140vh] pointer-events-none z-0 overflow-hidden">
+    <main className="min-h-screen bg-ivory flex flex-col items-center">
+      {/* Subtle background texture */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-b from-gold/[0.03] to-transparent rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[400px] bg-gradient-to-t from-burgundy/[0.02] to-transparent rounded-full blur-[100px]" />
         
-        {/* The Wings — Responsive positioning and scaling to look organic, not like a pasted photo */}
-        <div className="relative w-full h-full flex items-center justify-center animate-float translate-y-[10vh] md:translate-y-[15vh]">
-          <div className="relative w-full max-w-[2400px] h-full flex items-center justify-center">
-            <div className="relative w-full h-full scale-[1.5] md:scale-[1.6] mix-blend-screen opacity-[0.75]"
-              style={{
-                maskImage: 'radial-gradient(circle at 50% 50%, black 20%, transparent 70%)',
-                WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 20%, transparent 70%)'
-              }}
-            >
-              <Image
-                src="/wings_golden_fire.png"
-                alt="Ethereal Wings"
-                fill
-                sizes="100vw"
-                className="object-contain"
-                loading="lazy"
+        {/* Glowing Golden Wings Watermark */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[800px] aspect-square opacity-[0.035] select-none pointer-events-none">
+          <Image
+            src="/wings_golden_fire.png"
+            alt="Lyra Wings"
+            fill
+            className="object-contain animate-[pulse_10s_ease-in-out_infinite]"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      {/* Content Container */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-5 pb-16 pt-4 lg:grid lg:grid-cols-12 lg:gap-12 lg:items-start">
+        
+        {/* Sol Sütun: Profil, Fotoğraf ve Biyografi */}
+        <div className="lg:col-span-5 lg:sticky lg:top-12 flex flex-col items-center lg:items-start text-center lg:text-left mb-8 lg:mb-0">
+          <ProfileHeader />
+        </div>
+
+        {/* Sağ Sütun: Eğitimler, Videolar ve Hizmetler */}
+        <div id="products" className="lg:col-span-7 space-y-8 mt-4 lg:mt-0">
+          {/* All Products & Offers */}
+          <div className="grid grid-cols-1 gap-5">
+            {products.map((product, index) => (
+              <ProductCard 
+                key={product.id || `product-${index}`} 
+                product={product} 
+                index={index} 
+                onSelect={setSelectedProduct} 
               />
-            </div>
+            ))}
           </div>
+
+          {/* YouTube Videos Section */}
+          {videos.length > 0 && (
+            <div id="videos">
+              <SectionDivider title="Öne Çıkan Videolar" />
+              <div className="grid grid-cols-1 gap-4">
+                {videos.map((video, index) => (
+                  <a
+                    key={video.id || `video-${index}`}
+                    href={video.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block rounded-none bg-white/70 border border-gold/15 hover:border-gold/45 hover:bg-white/90 transition-all duration-500 hover:shadow-xl hover:shadow-gold/3 hover:-translate-y-0.5 linear-scan"
+                  >
+                    <div className="flex gap-4 p-4 items-center relative">
+                      {/* Inner border for aesthetic alignment */}
+                      <div className="absolute inset-1 border border-gold/5 pointer-events-none group-hover:border-gold/15 transition-colors" />
+                      
+                      {/* Video Thumbnail */}
+                      <div className="relative w-28 h-20 min-w-[7rem] rounded-none overflow-hidden border border-gold/10 bg-charcoal z-10">
+                        <Image
+                          src={video.thumbnail || 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&q=80&w=400'}
+                          alt={video.title}
+                          fill
+                          sizes="112px"
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        {/* Play overlay button */}
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-colors">
+                          <div className="w-9 h-9 rounded-none border border-wine/25 bg-white/95 flex items-center justify-center text-wine shadow-md transition-transform duration-300 group-hover:scale-110">
+                            <svg className="w-4 h-4 fill-current ml-0.5" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z" />
+                            </svg>
+                          </div>
+                        </div>
+                        {/* Duration Tag */}
+                        {video.duration && (
+                          <div className="absolute bottom-1 right-1 bg-black/75 px-1.5 py-0.5 rounded-none text-[0.6rem] text-white font-bold tracking-wide">
+                            {video.duration}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-grow min-w-0 z-10">
+                        <span className="text-[0.65rem] font-bold text-gold tracking-widest uppercase block mb-1">
+                          YOUTUBE BÖLÜMÜ
+                        </span>
+                        <h3 className="font-serif text-[0.95rem] text-wine font-semibold leading-snug mb-1 line-clamp-2 uppercase">
+                          {video.title}
+                        </h3>
+                        <p className="text-[0.7rem] text-taupe/40 font-bold tracking-[0.1em] uppercase flex items-center gap-1 group-hover:text-wine transition-colors">
+                          ŞİMDİ İZLE
+                          <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-
-        {/* Professional Blend Gradients */}
-        {/* Strong top-down gradient ensures the text area is clean and readable */}
-        <div className="absolute top-0 left-0 w-full h-[60%] bg-gradient-to-b from-ivory via-ivory/95 to-transparent" />
-        
-        {/* Bottom fade into the next section */}
-        <div className="absolute bottom-0 left-0 w-full h-[40%] bg-gradient-to-t from-ivory via-ivory/80 to-transparent" />
-        
-        {/* Subtle side fades */}
-        <div className="absolute top-0 left-0 w-[15%] h-full bg-gradient-to-r from-ivory to-transparent" />
-        <div className="absolute top-0 right-0 w-[15%] h-full bg-gradient-to-l from-ivory to-transparent" />
-
-        {/* Deep background ambient glow to enrich the ivory behind the text */}
-        <div className="absolute top-[20%] left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[#C8943A]/5 rounded-full blur-[200px]" />
       </div>
 
-      <div className="relative z-10">
-        <HeroSection />
-        <div className="relative">
-          {/* Feather/Cloud Overlay between sections */}
-          <div className="absolute -top-48 left-0 w-full h-96 bg-gradient-to-b from-transparent via-ivory to-ivory pointer-events-none" />
-          <ServicesSection />
-          <FeaturedContent />
-          <TestimonialSection />
-          <BlogPreview />
-          <CTASection />
-        </div>
-      </div>
+      {/* Stan Store Style Checkout Drawer */}
+      <CheckoutDrawer product={selectedProduct} onClose={() => setSelectedProduct(null)} />
     </main>
   );
 }
