@@ -134,7 +134,14 @@ function AdminDashboardContent() {
     duration: ''
   });
 
+  const [publicImages, setPublicImages] = useState<string[]>([]);
+
   useEffect(() => {
+    fetch('/api/images')
+      .then(r => r.json())
+      .then(d => { if (d.images) setPublicImages(d.images) })
+      .catch(e => console.error('Error fetching images:', e));
+
     setProducts(getProducts());
     setProfile(getProfile());
     setVideos(getVideos());
@@ -513,7 +520,7 @@ function AdminDashboardContent() {
 
               <div className="p-6 bg-white/60 rounded-2xl border border-gold/10 flex items-center justify-between shadow-sm">
                 <div>
-                  <p className="text-[0.65rem] uppercase tracking-[0.2em] font-bold text-gold mb-1">Görüşme Talepleri</p>
+                  <p className="text-[0.65rem] uppercase tracking-[0.2em] font-bold text-gold mb-1">Satın Alma / Başvuru</p>
                   <h3 className="text-3xl font-serif text-wine font-semibold">{appointments.length}</h3>
                 </div>
                 <div className="p-3 rounded-xl bg-ivory text-burgundy">
@@ -661,11 +668,11 @@ function AdminDashboardContent() {
         {/* PANEL: APPOINTMENTS */}
         {activeTab === 'appointments' && (
           <div className="space-y-6">
-            <h3 className="font-serif text-xl text-wine font-semibold">Online Görüşme Başvuruları</h3>
+            <h3 className="font-serif text-xl text-wine font-semibold">Satın Alma & Başvurular</h3>
 
             {appointments.length === 0 ? (
               <div className="p-12 bg-white/40 rounded-2xl border border-gold/10 text-center">
-                <p className="text-taupe/50 text-sm font-medium">Henüz herhangi bir online görüşme başvurusu yapılmamış.</p>
+                <p className="text-taupe/50 text-sm font-medium">Henüz herhangi bir satın alma veya başvuru yapılmamış.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 gap-4">
@@ -789,13 +796,25 @@ function AdminDashboardContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col gap-1.5">
                 <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Görsel (Avatar) URL</label>
-                <input
-                  type="text"
-                  required
-                  value={profile.avatar}
-                  onChange={(e) => setProfile({ ...profile, avatar: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl bg-white border border-gold/10 focus:border-gold/30 focus:outline-none text-sm text-wine font-medium"
-                />
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    required
+                    value={profile.avatar}
+                    onChange={(e) => setProfile({ ...profile, avatar: e.target.value })}
+                    className="flex-1 w-full px-4 py-3 rounded-xl bg-white border border-gold/10 focus:border-gold/30 focus:outline-none text-sm text-wine font-medium"
+                  />
+                  <select 
+                    className="w-1/3 px-4 py-3 rounded-xl bg-white border border-gold/10 focus:border-gold/30 focus:outline-none text-sm text-wine font-medium"
+                    onChange={(e) => {
+                      if(e.target.value) setProfile({ ...profile, avatar: `/${e.target.value}` });
+                      e.target.value = "";
+                    }}
+                  >
+                    <option value="">Galeriden Seç...</option>
+                    {publicImages.map(img => <option key={img} value={img}>{img}</option>)}
+                  </select>
+                </div>
               </div>
 
               <div className="flex flex-col gap-1.5">
@@ -1592,14 +1611,26 @@ function AdminDashboardContent() {
 
                   <div className="flex flex-col gap-1">
                     <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Görsel URL</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="https://images.unsplash.com/..."
-                      value={productForm.image}
-                      onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
-                      className="w-full px-4 py-2.5 rounded-none bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
-                    />
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        required
+                        placeholder="https://images.unsplash.com/..."
+                        value={productForm.image}
+                        onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
+                        className="flex-1 w-full px-4 py-2.5 rounded-none bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
+                      />
+                      <select 
+                        className="w-1/3 px-4 py-2.5 rounded-none bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
+                        onChange={(e) => {
+                          if(e.target.value) setProductForm({ ...productForm, image: `/${e.target.value}` });
+                          e.target.value = "";
+                        }}
+                      >
+                        <option value="">Galeriden Seç...</option>
+                        {publicImages.map(img => <option key={img} value={img}>{img}</option>)}
+                      </select>
+                    </div>
                   </div>
 
                   <div className="flex flex-col gap-1">
@@ -1757,14 +1788,26 @@ function AdminDashboardContent() {
 
                 <div className="flex flex-col gap-1">
                   <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Thumbnail Görsel URL</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="https://images.unsplash.com/..."
-                    value={videoForm.thumbnail}
-                    onChange={(e) => setVideoForm({ ...videoForm, thumbnail: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-xl bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
-                  />
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      required
+                      placeholder="https://images.unsplash.com/..."
+                      value={videoForm.thumbnail}
+                      onChange={(e) => setVideoForm({ ...videoForm, thumbnail: e.target.value })}
+                      className="flex-1 w-full px-4 py-2.5 rounded-xl bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
+                    />
+                    <select 
+                      className="w-1/3 px-4 py-2.5 rounded-xl bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
+                      onChange={(e) => {
+                        if(e.target.value) setVideoForm({ ...videoForm, thumbnail: `/${e.target.value}` });
+                        e.target.value = "";
+                      }}
+                    >
+                      <option value="">Galeriden Seç...</option>
+                      {publicImages.map(img => <option key={img} value={img}>{img}</option>)}
+                    </select>
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-1">

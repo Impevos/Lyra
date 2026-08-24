@@ -39,6 +39,10 @@ export default function Footer() {
               Ücretsiz Kaynaklar
             </Link>
             <span className="w-px h-2.5 bg-gold/20" />
+            <Link href="/sozlesmeler" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+              Sözleşmeler
+            </Link>
+            <span className="w-px h-2.5 bg-gold/20" />
             <Link href="/kvkk" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
               KVKK
             </Link>
@@ -50,10 +54,10 @@ export default function Footer() {
             © 2026 LYRA ON EARTH. TÜM HAKLARI SAKLIDIR.
           </p>
 
-          <div className="flex items-center gap-1.5 mt-1">
-            <span className="text-[0.55rem] text-taupe/30 tracking-[0.15em] uppercase">Made by</span>
-            <Link href="https://impevos.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-              <Image src="/impevossiyahseffaf.png" alt="impevos" width={48} height={48} className="h-10 w-auto opacity-40 hover:opacity-60 transition-opacity" loading="lazy" />
+          <div className="flex flex-col items-center gap-2 mt-3 py-4 px-6 border-t border-gold/10">
+            <span className="text-sm text-taupe/50 tracking-[0.15em] uppercase font-semibold">Made by</span>
+            <Link href="https://impevos.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-90 transition-opacity">
+              <Image src="/impevossiyahseffaf.png" alt="impevos" width={120} height={120} className="h-16 w-auto opacity-70 hover:opacity-90 transition-opacity" loading="lazy" />
             </Link>
           </div>
         </div>

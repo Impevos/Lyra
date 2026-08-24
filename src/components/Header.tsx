@@ -86,16 +86,6 @@ export default function Header() {
           >
             Videolarım
           </Link>
-
-          
-          <span className="w-px h-4 bg-gold/20" />
-          
-          <Link 
-            href="/admin/dashboard" 
-            className="inline-flex items-center gap-1.5 bg-wine hover:bg-wine/90 text-white text-[0.65rem] font-bold uppercase tracking-wider px-4 py-2 rounded-none transition-all hover:shadow-md hover:shadow-wine/10"
-          >
-            YÖNETİM PANELİ
-          </Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -146,17 +136,6 @@ export default function Header() {
                 className="text-xs font-bold tracking-widest text-taupe/70 hover:text-wine uppercase py-2"
               >
                 Videolarım
-              </Link>
-
-              
-              <div className="w-full h-px bg-gold/15 my-1" />
-              
-              <Link 
-                href="/admin/dashboard" 
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="bg-wine text-white text-[0.65rem] font-bold uppercase tracking-wider py-3.5 rounded-none block"
-              >
-                Yönetim Paneli
               </Link>
             </div>
           </motion.div>
