@@ -15,7 +15,7 @@ import {
   HiOutlineCreditCard,
   HiOutlineLockClosed
 } from 'react-icons/hi';
-import { ProductItem, saveAppointment } from '@/data/defaults';
+import { ProductItem, saveAppointment, getScheduledEmails, getSmtpSettings } from '@/data/defaults';
 
 interface CheckoutDrawerProps {
   product: ProductItem | null;
@@ -74,7 +74,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
     return digits;
   };
 
-  const completeOrder = () => {
+  const completeOrder = async () => {
     if (product?.type === 'call' && selectedDate && selectedTime) {
       const dateStr = selectedDate.toLocaleDateString('tr-TR', {
         day: '2-digit',
@@ -113,6 +113,30 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
         time: timeStr,
       });
     }
+
+    // Trigger Sales Automation Email
+    try {
+      const automations = getScheduledEmails();
+      const onPurchaseAutomations = automations.filter(e => e.triggerType === 'on_purchase' && e.status === 'active');
+      
+      const smtpSettings = getSmtpSettings(); // For prototype, get config from local storage
+
+      for (const auto of onPurchaseAutomations) {
+        await fetch('/api/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to: formData.email,
+            subject: auto.subject,
+            text: auto.body,
+            smtpConfig: smtpSettings
+          })
+        });
+      }
+    } catch (e) {
+      console.error('Failed to trigger sales automation:', e);
+    }
+
     setStep(4);
   };
 

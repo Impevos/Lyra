@@ -79,10 +79,7 @@ function AdminDashboardContent() {
   const [scheduledEmails, setScheduledEmails] = useState<ScheduledEmail[]>([]);
   const [sentLogs, setSentLogs] = useState<SentEmailLog[]>([]);
 
-  // AI Copilot States
-  const [aiTopic, setAiTopic] = useState<'welcome' | 'homework' | 'meditation' | 'custom'>('welcome');
-  const [aiTone, setAiTone] = useState<'spiritual' | 'friendly' | 'professional'>('spiritual');
-  const [aiCustomPrompt, setAiCustomPrompt] = useState('');
+
 
   // Email Form State
   const [mailForm, setMailForm] = useState({
@@ -92,6 +89,7 @@ function AdminDashboardContent() {
     body: '',
     scheduleType: 'one-time' as 'one-time' | 'recurring',
     scheduleValue: '',
+    triggerType: 'manual' as 'manual' | 'on_purchase',
   });
 
   const [smtpForm, setSmtpForm] = useState<SmtpSettings>({
@@ -100,9 +98,6 @@ function AdminDashboardContent() {
     secure: true,
     user: 'info@lyraonearth.com',
     password: '',
-    enableHostingerAI: true,
-    agenticAutoReplies: true,
-    kodeeMailboxAssistant: true,
   });
   
   // Notification state
@@ -314,57 +309,6 @@ function AdminDashboardContent() {
     showNotification('Hostinger SMTP ve AI ayarları kaydedildi.');
   };
 
-  // AI Email Copilot Generator
-  const handleGenerateAIEmail = () => {
-    let subject = '';
-    let body = '';
-    
-    if (aiTopic === 'welcome') {
-      if (aiTone === 'spiritual') {
-        subject = 'Kozmik Hizalanma ve Uyanış Portalına Hoş Geldiniz ✨';
-        body = `Merhaba {İsim},\n\nLyra On Earth portalına ve uyanış alanımıza adım attığınız için mutluyuz. Ruhsal kontratınızın bu özel evresinde, kendi realitenizi yaratma ve yüksek frekanslarla uyumlanma sürecinizi başlatıyoruz.\n\nİlk adım olarak auranızı arındırmak için hazırladığımız günlük pratikleri uygulayabilir, yüksek benliğinizle olan bağınızı güçlendirebilirsiniz. Bu yolculukta galaktik kökenlerinizi ve galaktik yaşam misyonunuzu hatırlamak için kalbinizin sesine güvenin.\n\nSevgiler ve Işıkla,\nDeniz Bayraktar`;
-      } else if (aiTone === 'friendly') {
-        subject = 'Lyra Ailesine Hoş Geldiniz! Harika Bir Yolculuk Başlıyor 💛';
-        body = `Merhaba {İsim},\n\nAramıza katıldığın için çok heyecanlıyım! Lyra On Earth uyanış topluluğunda senin gibi arayışta olan ve kendini keşfetmek isteyen ruhlarla bir arada olmak harika bir duygu.\n\nSüreç boyunca sana rehberlik edecek tüm içeriklere portal üzerinden ulaşabilirsin. Aklına takılan her şeyde buradayım, çekinmeden bana yazabilirsin.\n\nYakında görüşmek üzere,\nDeniz`;
-      } else {
-        subject = 'Lyra On Earth Kayıt Onayı ve Bilgilendirme';
-        body = `Sayın {İsim},\n\nLyra On Earth sistemine kaydınız başarıyla tamamlanmıştır. Eğitimleriniz ve katılım sağladığınız dijital materyaller profilinize tanımlanmıştır.\n\nHerhangi bir teknik aksaklık veya soru durumunda info@lyraonearth.com adresi üzerinden bizimle iletişime geçebilirsiniz. Gelişim sürecinizde başarılar dileriz.\n\nSaygılarımla,\nDeniz Bayraktar`;
-      }
-    } else if (aiTopic === 'homework') {
-      if (aiTone === 'spiritual') {
-        subject = 'Bilinçaltı Blokajlarınızı Fark Etme Zamanı: Haftalık Ödeviniz 🔮';
-        body = `Merhaba {İsim},\n\nBu hafta zihninizin derinliklerinde yatan ve sizi geride tutan sınırlayıcı inanç kalıplarını açığa çıkarma vakti. Kuantum alanında sıçrama yapabilmek için egonun direncini sevgiyle kabul edip dönüştürmeliyiz.\n\nLütfen bu haftaki 7 Günlük Bilinç Günlüğü egzersizlerinizi her sabah uyanır uyanmaz, zihniniz henüz uykudayken yazarak tamamlayın. Enerjisel dönüşümünüzü izliyorum.\n\nIşıkla kal,\nDeniz Bayraktar`;
-      } else if (aiTone === 'friendly') {
-        subject = 'Selam! Bu Haftaki Gelişim Egzersizimiz 😊';
-        body = `Merhaba {İsim},\n\nHarika bir hafta geçirmeni dilerim! Bu haftaki gelişim yolculuğumuzda zihinsel kodlarımızı fark etmek için pratik bir ödevimiz var. Günlüğünü eline al ve sana gönderdiğim farkındalık sorularını içtenlikle cevapla.\n\nKendine ayıracağın bu 10 dakika, hayatında çok güzel farkındalık kapıları açacak. Cevaplarını benimle de paylaşabilirsin!\n\nSevgiler,\nDeniz`;
-      } else {
-        subject = 'Haftalık Eğitim Modülü Ödevi ve Takibi';
-        body = `Sayın {İsim},\n\nKatıldığınız eğitim programı kapsamında bu haftaya ait ödev ve pratik uygulamalarınız sisteminize yüklenmiştir. Sürecin verimliliği açısından ödevlerinizi planlanan tarihe kadar tamamlamanız önem arz etmektedir.\n\nÇalışmalarınızı tamamladıktan sonra portal üzerinden geri bildirim yapabilirsiniz.\n\nİyi çalışmalar,\nDeniz Bayraktar`;
-      }
-    } else if (aiTopic === 'meditation') {
-      if (aiTone === 'spiritual') {
-        subject = 'Kozmik Portal Aktivasyonu: Frekans Yükseltme Meditasyonu 🌌';
-        body = `Merhaba {İsim},\n\nBugün gezegensel enerjilerin en yüksek olduğu hizalanma günlerinden biri. Auranızı yabancı enerjilerden arındırmak, çakralarınızı galaktik merkezle hizalamak için hazırladığımız yeni frekans meditasyonu yayında.\n\nSessiz bir alana geçin, derin nefesler alın ve Lyra Starseed enerjisinin bedeninizi şifalandırmasına izin verin. Akışta kalın.\n\nSevgiler,\nDeniz Bayraktar`;
-      } else if (aiTone === 'friendly') {
-        subject = 'Harika Bir Meditasyon Hazırladım! Birlikte Frekansımızı Yükseltelim 🧘✨';
-        body = `Merhaba {İsim},\n\nBugün kendimizi yorgun veya sıkışmış hissettiğimiz anlar için harika bir meditasyon paylaştım. Auranı temizleyip enerjini tazelemek için sadece 15 dakikanı ayırman yeterli.\n\nHadi, kulaklıklarını tak ve sakin bir köşeye geçip derin bir nefes alarak başla. Nasıl hissettiğini bana yazmayı unutma!\n\nKucak dolusu sevgiler,\nDeniz`;
-      } else {
-        subject = 'Frekans Yükseltme Meditasyon Duyurusu';
-        body = `Sayın {İsim},\n\nLyra On Earth bünyesinde hazırlanan yeni frekans yükseltme meditasyonu portalımıza eklenmiştir. Günlük pratikleriniz arasına ekleyerek enerjisel dengenizi koruyabilirsiniz.\n\nKatılım linki ve detaylar e-postada yer almaktadır.\n\nSaygılarımla,\nDeniz Bayraktar`;
-      }
-    } else {
-      subject = `Yolculuk Bildirimi: ${aiCustomPrompt || 'Lyra On Earth Özel Bildirimi'}`;
-      body = `Merhaba {İsim},\n\nUyanış yolculuğunuz hakkında bilgilendirmek istedik. ${aiCustomPrompt || 'Genel gelişim pratikleriniz devam ediyor.'}\n\nSevgiler,\nDeniz Bayraktar`;
-    }
-
-    setMailForm(prev => ({
-      ...prev,
-      subject,
-      body
-    }));
-    showNotification('AI E-posta taslağı başarıyla oluşturuldu.');
-  };
-
   // Schedule / Automation Submit
   const handleScheduleEmailSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -384,7 +328,7 @@ function AdminDashboardContent() {
       scheduleValue: mailForm.scheduleValue || (mailForm.scheduleType === 'one-time' ? new Date(Date.now() + 86400000).toISOString().slice(0, 16) : 'Her Pazartesi 09:00'),
       status: 'active',
       createdAt: new Date().toISOString(),
-      aiGenerated: aiTopic !== 'custom'
+      triggerType: mailForm.triggerType,
     };
 
     const updated = [...scheduledEmails, newScheduled];
@@ -422,7 +366,7 @@ function AdminDashboardContent() {
     showNotification('Otomasyon durumu güncellendi.');
   };
 
-  const handleSendEmailManually = (email: ScheduledEmail | { targetType: string; targetValue: string; subject: string; body: string }) => {
+  const handleSendEmailManually = async (email: ScheduledEmail | { targetType: string; targetValue: string; subject: string; body: string }) => {
     // Resolve targets to send to
     let recipients: string[] = [];
     if (email.targetType === 'all') {
@@ -438,17 +382,48 @@ function AdminDashboardContent() {
       return;
     }
 
-    // Save to sent log
-    recipients.forEach(toEmail => {
-      saveSentEmailLog({
-        to: toEmail,
-        subject: email.subject,
-        status: 'success'
-      });
-    });
+    showNotification('E-postalar gönderiliyor...', 'success');
+
+    for (const toEmail of recipients) {
+      try {
+        const response = await fetch('/api/email/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to: toEmail,
+            subject: email.subject,
+            text: email.body,
+            smtpConfig: smtpSettings
+          })
+        });
+
+        if (response.ok) {
+          saveSentEmailLog({
+            to: toEmail,
+            subject: email.subject,
+            status: 'success'
+          });
+        } else {
+          saveSentEmailLog({
+            to: toEmail,
+            subject: email.subject,
+            status: 'failed',
+            error: 'API Hatası'
+          });
+        }
+      } catch (err: any) {
+        saveSentEmailLog({
+          to: toEmail,
+          subject: email.subject,
+          status: 'failed',
+          error: err.message
+        });
+      }
+    }
 
     // Refresh sent logs state
     setSentLogs(getSentEmailLogs());
+    showNotification('Gönderim işlemi tamamlandı.');
 
     // Update status if it was a one-time scheduled email
     if ('id' in email && email.scheduleType === 'one-time') {
@@ -933,7 +908,7 @@ function AdminDashboardContent() {
                   emailSubTab === 'send' ? 'border-wine text-wine' : 'border-transparent text-taupe/40 hover:text-wine'
                 }`}
               >
-                <HiOutlineMail className="text-base" /> Yeni E-posta & AI
+                <HiOutlineMail className="text-base" /> Yeni E-posta / Otomasyon
               </button>
               <button
                 onClick={() => setEmailSubTab('contacts')}
@@ -957,79 +932,16 @@ function AdminDashboardContent() {
                   emailSubTab === 'hostinger' ? 'border-wine text-wine' : 'border-transparent text-taupe/40 hover:text-wine'
                 }`}
               >
-                <HiOutlineServer className="text-base" /> Hostinger & Kodee AI
+                <HiOutlineServer className="text-base" /> SMTP Ayarları
               </button>
             </div>
 
             {/* Alt Sekme İçerikleri */}
             <div className="min-h-[400px]">
               
-              {/* SUBTAB 1: YENİ E-POSTA & AI */}
+              {/* SUBTAB 1: YENİ E-POSTA / OTOMASYON */}
               {emailSubTab === 'send' && (
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
-                  
-                  {/* AI Sihirbazı Modülü (Sol Taraf) */}
-                  <div className="xl:col-span-4 bg-white/60 border border-gold/15 p-6 space-y-4">
-                    <h4 className="font-serif text-base text-wine font-semibold flex items-center gap-2 border-b border-gold/10 pb-2.5">
-                      <HiOutlineSparkles className="text-gold text-lg animate-pulse" /> AI Asistanı
-                    </h4>
-                    <p className="text-[0.65rem] text-taupe/60 leading-relaxed">
-                      Göndermek istediğiniz mail konusunu ve tonunu seçin. Yapay zeka, Deniz Bayraktar'ın tarzına uygun uyanış/spiritüel temalı bir taslak hazırlayacaktır.
-                    </p>
-                    
-                    <div className="space-y-3">
-                      <div className="flex flex-col gap-1">
-                        <label className="text-[0.55rem] font-bold uppercase tracking-wider text-taupe/50">E-posta Tipi</label>
-                        <select
-                          value={aiTopic}
-                          onChange={(e) => setAiTopic(e.target.value as any)}
-                          className="w-full px-3 py-2 bg-ivory border border-gold/15 text-xs text-wine font-semibold focus:outline-none"
-                        >
-                          <option value="welcome">Hoş Geldin Karşılaması</option>
-                          <option value="homework">Haftalık Eğitim Ödevi</option>
-                          <option value="meditation">Yeni Meditasyon Duyurusu</option>
-                          <option value="custom">Özel AI Promptu</option>
-                        </select>
-                      </div>
-
-                      <div className="flex flex-col gap-1">
-                        <label className="text-[0.55rem] font-bold uppercase tracking-wider text-taupe/50">İletişim Tonu</label>
-                        <select
-                          value={aiTone}
-                          onChange={(e) => setAiTone(e.target.value as any)}
-                          className="w-full px-3 py-2 bg-ivory border border-gold/15 text-xs text-wine font-semibold focus:outline-none"
-                        >
-                          <option value="spiritual">Spiritüel & Kozmik ✨</option>
-                          <option value="friendly">Samimi & Destekleyici 💛</option>
-                          <option value="professional">Profesyonel & Net 💼</option>
-                        </select>
-                      </div>
-
-                      {aiTopic === 'custom' && (
-                        <div className="flex flex-col gap-1">
-                          <label className="text-[0.55rem] font-bold uppercase tracking-wider text-taupe/50">AI Komutu (Prompt)</label>
-                          <textarea
-                            rows={3}
-                            value={aiCustomPrompt}
-                            onChange={(e) => setAiCustomPrompt(e.target.value)}
-                            placeholder="Örn: MasterSoul üyelerine seans öncesi hazırlık ödevlerini hatırlat..."
-                            className="w-full px-3 py-2 bg-ivory border border-gold/15 text-xs text-wine font-medium focus:outline-none"
-                          />
-                        </div>
-                      )}
-
-                      <button
-                        type="button"
-                        onClick={handleGenerateAIEmail}
-                        className="w-full bg-gold hover:bg-gold-dark text-white py-2.5 text-[0.65rem] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 shadow-md cursor-pointer"
-                      >
-                        <HiOutlineSparkles /> AI Metni Oluştur
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Mail Düzenleme & Zamanlama Composer (Sağ Taraf) */}
-                  <div className="xl:col-span-8 bg-white/60 border border-gold/15 p-6 space-y-5">
+                <div className="max-w-4xl bg-white/60 border border-gold/15 p-6 space-y-5">
                     <h4 className="font-serif text-base text-wine font-semibold border-b border-gold/10 pb-2.5">
                       E-posta İçeriği & Zamanlama
                     </h4>
@@ -1094,18 +1006,32 @@ function AdminDashboardContent() {
                         )}
 
                         <div className="flex flex-col gap-1">
-                          <label className="text-[0.6rem] font-bold uppercase tracking-wider text-taupe/50">Zamanlama Türü</label>
+                          <label className="text-[0.6rem] font-bold uppercase tracking-wider text-taupe/50">Tetikleyici Türü</label>
                           <select
-                            value={mailForm.scheduleType}
-                            onChange={(e) => setMailForm(prev => ({ ...prev, scheduleType: e.target.value as any }))}
+                            value={mailForm.triggerType}
+                            onChange={(e) => setMailForm(prev => ({ ...prev, triggerType: e.target.value as any }))}
                             className="w-full px-3.5 py-2 bg-ivory border border-gold/15 text-xs text-wine font-semibold focus:outline-none focus:border-gold/30"
                           >
-                            <option value="one-time">Tek Seferlik (Belirli Saat/Gün)</option>
-                            <option value="recurring">Düzenli Periyot (Tekrarlayan)</option>
+                            <option value="manual">Manuel veya Belirli Zamanda</option>
+                            <option value="on_purchase">Satın Alma İşlemi Sonrası (Otomatik)</option>
                           </select>
                         </div>
 
-                        {mailForm.scheduleType === 'one-time' ? (
+                        {mailForm.triggerType === 'manual' && (
+                          <>
+                            <div className="flex flex-col gap-1">
+                              <label className="text-[0.6rem] font-bold uppercase tracking-wider text-taupe/50">Zamanlama Türü</label>
+                              <select
+                                value={mailForm.scheduleType}
+                                onChange={(e) => setMailForm(prev => ({ ...prev, scheduleType: e.target.value as any }))}
+                                className="w-full px-3.5 py-2 bg-ivory border border-gold/15 text-xs text-wine font-semibold focus:outline-none focus:border-gold/30"
+                              >
+                                <option value="one-time">Tek Seferlik (Belirli Saat/Gün)</option>
+                                <option value="recurring">Düzenli Periyot (Tekrarlayan)</option>
+                              </select>
+                            </div>
+
+                            {mailForm.scheduleType === 'one-time' ? (
                           <div className="flex flex-col gap-1">
                             <label className="text-[0.6rem] font-bold uppercase tracking-wider text-taupe/50">Zaman (Tarih & Saat)</label>
                             <input
@@ -1132,7 +1058,9 @@ function AdminDashboardContent() {
                             </select>
                           </div>
                         )}
-                      </div>
+                      </>
+                    )}
+                  </div>
 
                       <div className="flex flex-col gap-1">
                         <label className="text-[0.6rem] font-bold uppercase tracking-wider text-taupe/50">Konu</label>
@@ -1181,7 +1109,6 @@ function AdminDashboardContent() {
                       </div>
                     </form>
                   </div>
-                </div>
               )}
 
               {/* SUBTAB 2: KAYITLI KİŞİLER */}
@@ -1287,12 +1214,14 @@ function AdminDashboardContent() {
                                   Alıcı: {email.targetType === 'all' ? 'Tüm Kayıtlar' : email.targetValue}
                                 </span>
                                 <span className={`text-[0.55rem] font-bold px-2 py-0.5 uppercase border ${
+                                  email.triggerType === 'on_purchase' ? 'bg-green-500/10 border-green-500/20 text-green-700' :
                                   email.scheduleType === 'recurring' ? 'bg-burgundy/5 border-burgundy/10 text-burgundy' : 'bg-wine/5 border-wine/10 text-wine'
                                 }`}>
-                                  {email.scheduleType === 'recurring' ? 'Periyodik' : 'Tek Seferlik'}
+                                  {email.triggerType === 'on_purchase' ? 'SATIŞ OTOMASYONU' : 
+                                   email.scheduleType === 'recurring' ? 'Periyodik' : 'Tek Seferlik'}
                                 </span>
                                 <span className="text-[0.55rem] text-taupe/40 font-mono">
-                                  {email.scheduleValue}
+                                  {email.triggerType === 'on_purchase' ? 'Otomatik Tetiklenir' : email.scheduleValue}
                                 </span>
                               </div>
                               <h5 className="text-xs font-serif font-bold text-wine">{email.subject}</h5>
@@ -1371,12 +1300,9 @@ function AdminDashboardContent() {
                 </div>
               )}
 
-              {/* SUBTAB 4: HOSTINGER & KODEE AI */}
+              {/* SUBTAB 4: SMTP AYARLARI */}
               {emailSubTab === 'hostinger' && (
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
-                  
-                  {/* SMTP Ayarları (Sol Taraf) */}
-                  <form onSubmit={handleSmtpSave} className="xl:col-span-5 bg-white/60 border border-gold/15 p-6 space-y-4">
+                  <form onSubmit={handleSmtpSave} className="max-w-xl bg-white/60 border border-gold/15 p-6 space-y-4">
                     <h4 className="font-serif text-base text-wine font-semibold flex items-center gap-2 border-b border-gold/10 pb-2.5">
                       <HiOutlineServer className="text-gold text-lg" /> SMTP Sunucu Ayarları
                     </h4>
@@ -1440,48 +1366,6 @@ function AdminDashboardContent() {
                       </div>
 
                       <div className="w-full h-px bg-gold/10 my-2" />
-
-                      {/* Yapay Zeka Toggles */}
-                      <div className="space-y-2.5 pt-1 text-xs">
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-col">
-                            <span className="font-bold text-wine">Kodee AI Asistanı</span>
-                            <span className="text-[0.5rem] text-taupe/40">Mail özetleme, arama ve asistanlık</span>
-                          </div>
-                          <input
-                            type="checkbox"
-                            checked={smtpForm.kodeeMailboxAssistant}
-                            onChange={(e) => setSmtpForm(prev => ({ ...prev, kodeeMailboxAssistant: e.target.checked }))}
-                            className="accent-gold w-3.5 h-3.5"
-                          />
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-col">
-                            <span className="font-bold text-wine">Agentic Email (Beta)</span>
-                            <span className="text-[0.5rem] text-taupe/40">Otonom uyanış mail sekans takibi</span>
-                          </div>
-                          <input
-                            type="checkbox"
-                            checked={smtpForm.agenticAutoReplies}
-                            onChange={(e) => setSmtpForm(prev => ({ ...prev, agenticAutoReplies: e.target.checked }))}
-                            className="accent-gold w-3.5 h-3.5"
-                          />
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          <div className="flex flex-col">
-                            <span className="font-bold text-wine">Akıllı Yanıt Taslakları</span>
-                            <span className="text-[0.5rem] text-taupe/40">Hostinger AI otomatik taslak oluşturucu</span>
-                          </div>
-                          <input
-                            type="checkbox"
-                            checked={smtpForm.enableHostingerAI}
-                            onChange={(e) => setSmtpForm(prev => ({ ...prev, enableHostingerAI: e.target.checked }))}
-                            className="accent-gold w-3.5 h-3.5"
-                          />
-                        </div>
-                      </div>
                     </div>
 
                     <button
@@ -1491,62 +1375,6 @@ function AdminDashboardContent() {
                       SMTP Ayarlarını Kaydet
                     </button>
                   </form>
-
-                  {/* Kodee AI Gelen Kutusu Özetleri (Sağ Taraf) */}
-                  {smtpSettings?.kodeeMailboxAssistant && (
-                    <div className="xl:col-span-7 bg-white/60 border border-gold/15 p-6 space-y-4">
-                      <h4 className="font-serif text-base text-wine font-semibold flex items-center gap-2 border-b border-gold/10 pb-2.5">
-                        <HiOutlineSparkles className="text-gold text-lg animate-pulse" /> Kodee Gelen Kutusu AI Özetleri
-                      </h4>
-                      <p className="text-[0.65rem] text-taupe/65 font-medium">
-                        Hostinger Premium AI aracı olan mailbox assistant "Kodee" gelen maillerinizi tarayarak özetledi. Hızlıca akıllı yanıt oluşturabilirsiniz:
-                      </p>
-
-                      <div className="space-y-3.5">
-                        {[
-                          {
-                            sender: 'selin.kaya@gmail.com',
-                            subject: 'Meditasyon sonrası baş ağrısı ve rüyalar hakkında',
-                            summary: 'Pratik sonrası baş ağrısı ve yoğun kozmik rüyalar gördüğünü söylüyor. Deniz Bayraktar\'dan enerji dengelenmesi hakkında rehberlik ve tavsiye istiyor.',
-                            reply: 'Selin Hanım, meditasyon sonrası baş ağrısı enerjisel direncin çözülmesiyle ilgilidir. Ritüelleri yavaşlatmasını ve bol su içmesini tavsiye eden bir şablon hazırladım.'
-                          },
-                          {
-                            sender: 'ahmet.yildiz@outlook.com',
-                            subject: 'MasterSoul portal giriş hatası alıyorum',
-                            summary: 'MasterSoul portalına giriş yaparken teknik hata aldığını, uyanış modüllerine erişemediğini belirtip şifre yenileme linki talep ediyor.',
-                            reply: 'Portala kayıtlı e-postası doğrulanıp teknik bir sıfırlama linki gönderilebilir.'
-                          }
-                        ].map((item, idx) => (
-                          <div key={idx} className="p-3 bg-ivory/50 border border-gold/10 space-y-2">
-                            <div className="flex justify-between items-center text-[0.6rem] font-bold text-gold-dark border-b border-gold/5 pb-1">
-                              <span>Gönderen: {item.sender}</span>
-                              <span className="bg-wine/5 text-wine px-1.5 py-0.5 uppercase tracking-wide">Müşteri Talebi</span>
-                            </div>
-                            <h5 className="text-[0.7rem] font-bold text-wine">{item.subject}</h5>
-                            <p className="text-[0.65rem] text-taupe/65 font-medium bg-white/70 p-2 border border-gold/5 leading-relaxed">{item.summary}</p>
-                            <button
-                              onClick={() => {
-                                setMailForm({
-                                  targetType: 'specific',
-                                  targetValue: item.sender,
-                                  subject: `Re: ${item.subject}`,
-                                  body: `Merhaba,\n\nSorunuz için teşekkür ederiz. İlettiğiniz konuyu inceledik.\n\n${item.reply}\n\nUyanış yolculuğunuzda size rehberlik etmekten mutluluk duyuyoruz. Akışta kalın.\n\nSevgiler,\nDeniz Bayraktar`,
-                                  scheduleType: 'one-time',
-                                  scheduleValue: new Date(Date.now() + 600000).toISOString().slice(0, 16)
-                                });
-                                setEmailSubTab('send');
-                                showNotification(`AI Akıllı Yanıtı yeni mail composer'a başarıyla aktarıldı.`);
-                              }}
-                              className="w-full text-center py-1.5 text-[0.55rem] font-bold uppercase tracking-wider text-wine bg-gold/15 hover:bg-gold/25 transition-all cursor-pointer"
-                            >
-                              Akıllı AI Yanıtı Hazırla
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
               )}
 
             </div>

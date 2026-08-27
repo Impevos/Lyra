@@ -280,9 +280,6 @@ export interface SmtpSettings {
   secure: boolean;
   user: string;
   password?: string;
-  enableHostingerAI: boolean;
-  agenticAutoReplies: boolean;
-  kodeeMailboxAssistant: boolean;
 }
 
 export interface ScheduledEmail {
@@ -295,7 +292,7 @@ export interface ScheduledEmail {
   scheduleValue: string;
   status: 'active' | 'paused' | 'sent';
   createdAt: string;
-  aiGenerated: boolean;
+  triggerType?: 'manual' | 'on_purchase';
 }
 
 export interface SentEmailLog {
@@ -313,9 +310,6 @@ export const getSmtpSettings = (): SmtpSettings => {
     port: 465,
     secure: true,
     user: 'info@lyraonearth.com',
-    enableHostingerAI: true,
-    agenticAutoReplies: true,
-    kodeeMailboxAssistant: true,
   };
   if (typeof window === 'undefined') return defaultSettings;
   const saved = localStorage.getItem('custom_smtp_settings');
@@ -344,7 +338,19 @@ export const getScheduledEmails = (): ScheduledEmail[] => {
       scheduleValue: 'Her Pazartesi 09:00',
       status: 'active',
       createdAt: new Date().toISOString(),
-      aiGenerated: true
+      triggerType: 'manual'
+    },
+    {
+      id: 'se_2',
+      targetType: 'all',
+      targetValue: 'all',
+      subject: 'Siparişiniz Alındı - Lyra On Earth ✨',
+      body: 'Merhaba,\n\nSatın alma işleminiz başarıyla tamamlanmıştır. Hizmet/Eğitim detaylarına erişim bilgileriniz ve ilgili dökümanlar yakında sizinle paylaşılacaktır.\n\nIşık ve sevgiyle,\nLyra On Earth',
+      scheduleType: 'one-time',
+      scheduleValue: 'Anında',
+      status: 'active',
+      createdAt: new Date().toISOString(),
+      triggerType: 'on_purchase'
     }
   ];
 };
