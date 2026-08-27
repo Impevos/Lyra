@@ -772,6 +772,46 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                   </p>
                 </div>
 
+                {/* Google Calendar Button */}
+                {(() => {
+                  let startDt: Date;
+                  let durationMin = 60;
+
+                  if (product.type === 'call' && selectedDate && selectedTime) {
+                    const [h, m] = selectedTime.split(':').map(Number);
+                    startDt = new Date(selectedDate);
+                    startDt.setHours(h, m, 0, 0);
+                  } else {
+                    startDt = new Date();
+                    startDt.setDate(startDt.getDate() + 1);
+                    startDt.setHours(10, 0, 0, 0);
+                  }
+
+                  const endDt = new Date(startDt.getTime() + durationMin * 60 * 1000);
+
+                  const fmt = (d: Date) =>
+                    d.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+                  const calUrl = `https://www.google.com/calendar/render?action=TEMPLATE` +
+                    `&text=${encodeURIComponent(product.title + ' – Lyra One Earth')}` +
+                    `&dates=${fmt(startDt)}/${fmt(endDt)}` +
+                    `&details=${encodeURIComponent('Lyra One Earth ile ' + product.title + ' seansı.\n\nGörüşme linki mail kutunuza gönderilecektir.\n\n' + formData.name)}` +
+                    `&location=${encodeURIComponent('Online – Google Meet')}` +
+                    `&sf=true&output=xml`;
+
+                  return (
+                    <a
+                      href={calUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-5 py-3 rounded-none bg-wine/90 hover:bg-wine text-white text-xs font-bold uppercase tracking-widest transition-all shadow-md hover:shadow-wine/20"
+                    >
+                      <HiOutlineCalendar className="text-base" />
+                      Google Takvime Ekle
+                    </a>
+                  );
+                })()}
+
                 <button
                   onClick={onClose}
                   className="px-6 py-3 rounded-none border border-gold/30 hover:border-wine hover:bg-wine hover:text-white text-wine text-xs font-bold uppercase tracking-widest transition-all"

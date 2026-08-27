@@ -12,6 +12,7 @@ import {
   HiOutlineTrash, 
   HiOutlinePencil, 
   HiOutlineCheckCircle,
+  HiCheck,
   HiOutlineEye,
   HiOutlineX,
   HiOutlineCalendar,
@@ -769,26 +770,58 @@ function AdminDashboardContent() {
             <h3 className="font-serif text-xl text-wine font-semibold border-b border-gold/10 pb-3">Profil Detayları</h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col gap-1.5">
-                <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Görsel (Avatar) URL</label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    required
-                    value={profile.avatar}
-                    onChange={(e) => setProfile({ ...profile, avatar: e.target.value })}
-                    className="flex-1 w-full px-4 py-3 rounded-xl bg-white border border-gold/10 focus:border-gold/30 focus:outline-none text-sm text-wine font-medium"
-                  />
-                  <select 
-                    className="w-1/3 px-4 py-3 rounded-xl bg-white border border-gold/10 focus:border-gold/30 focus:outline-none text-sm text-wine font-medium"
-                    onChange={(e) => {
-                      if(e.target.value) setProfile({ ...profile, avatar: `/${e.target.value}` });
-                      e.target.value = "";
-                    }}
-                  >
-                    <option value="">Galeriden Seç...</option>
-                    {publicImages.map(img => <option key={img} value={img}>{img}</option>)}
-                  </select>
+              <div className="flex flex-col gap-3 md:col-span-2">
+                <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Görsel Seçimi (Avatar)</label>
+                <div className="flex flex-wrap items-center gap-4">
+                  {['/deniz1.jpeg', '/deniz2.jpeg', '/deniz3.jpeg', '/deniz4.jpeg', '/deniz5.jpeg', '/deniz_bayraktar.jpeg'].map((imgSrc) => (
+                    <div 
+                      key={imgSrc}
+                      onClick={() => setProfile({ ...profile, avatar: imgSrc })}
+                      className={`relative w-20 h-20 rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-300 shrink-0 ${profile.avatar === imgSrc ? 'border-gold shadow-[0_0_15px_rgba(212,175,55,0.4)] scale-105' : 'border-transparent hover:border-gold/50'}`}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={imgSrc} alt="Avatar" className="w-full h-full object-cover" />
+                      {profile.avatar === imgSrc && (
+                        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                          <HiCheck className="text-white text-2xl drop-shadow-md" />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+
+                  {/* Özel yüklenen resim önizlemesi */}
+                  {profile.avatar && !['/deniz1.jpeg', '/deniz2.jpeg', '/deniz3.jpeg', '/deniz4.jpeg', '/deniz5.jpeg', '/deniz_bayraktar.jpeg'].includes(profile.avatar) && (
+                    <div className="relative w-20 h-20 rounded-xl overflow-hidden cursor-pointer border-2 border-gold shadow-[0_0_15px_rgba(212,175,55,0.4)] scale-105 shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={profile.avatar} alt="Custom Avatar" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <HiCheck className="text-white text-2xl drop-shadow-md" />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Fotoğraf Yükle Butonu */}
+                  <label className="w-20 h-20 rounded-xl border-2 border-dashed border-gold/40 hover:border-gold hover:bg-gold/5 flex flex-col items-center justify-center cursor-pointer transition-all shrink-0">
+                    <HiOutlinePlus className="text-2xl text-gold mb-1" />
+                    <span className="text-[0.55rem] font-bold text-wine">YÜKLE</span>
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onloadend = () => {
+                            if (typeof reader.result === 'string') {
+                              setProfile({ ...profile, avatar: reader.result });
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                    />
+                  </label>
                 </div>
               </div>
 
@@ -1437,27 +1470,75 @@ function AdminDashboardContent() {
                     />
                   </div>
 
-                  <div className="flex flex-col gap-1">
-                    <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Görsel URL</label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        required
-                        placeholder="https://images.unsplash.com/..."
-                        value={productForm.image}
-                        onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
-                        className="flex-1 w-full px-4 py-2.5 rounded-none bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
-                      />
-                      <select 
-                        className="w-1/3 px-4 py-2.5 rounded-none bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
-                        onChange={(e) => {
-                          if(e.target.value) setProductForm({ ...productForm, image: `/${e.target.value}` });
-                          e.target.value = "";
-                        }}
-                      >
-                        <option value="">Galeriden Seç...</option>
-                        {publicImages.map(img => <option key={img} value={img}>{img}</option>)}
-                      </select>
+                  <div className="flex flex-col gap-3 sm:col-span-2">
+                    <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Görsel Seçimi (Ürün / Hizmet)</label>
+                    
+                    <div className="flex flex-wrap items-center gap-3">
+                      {[
+                        'https://images.unsplash.com/photo-1474540412665-1cdae210ae6b?auto=format&fit=crop&q=80&w=400',
+                        'https://images.unsplash.com/photo-1528569937393-ee892b976859?auto=format&fit=crop&q=80&w=400',
+                        'https://images.unsplash.com/photo-1604881991720-f91add269bed?auto=format&fit=crop&q=80&w=400',
+                        'https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&q=80&w=400',
+                        'https://images.unsplash.com/photo-1555685812-4b943f1cb0eb?auto=format&fit=crop&q=80&w=400',
+                        'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&q=80&w=400',
+                        'https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?auto=format&fit=crop&q=80&w=400',
+                        'https://images.unsplash.com/photo-1551739440-5dd934d3a94a?auto=format&fit=crop&q=80&w=400',
+                        'https://images.unsplash.com/photo-1541516160071-4bb0c5af65ba?auto=format&fit=crop&q=80&w=400',
+                        '/angel_wings.png',
+                        '/ethereal_wings.png',
+                        '/majestic_wings.png',
+                        '/wings_golden_fire.png',
+                        '/flaming_wings.png',
+                        '/flaming_wings_subtle.png'
+                      ].map((imgSrc) => (
+                        <div 
+                          key={imgSrc}
+                          onClick={() => setProductForm({ ...productForm, image: imgSrc })}
+                          className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-300 shrink-0 ${productForm.image === imgSrc ? 'border-gold shadow-[0_0_15px_rgba(212,175,55,0.4)] scale-105' : 'border-transparent hover:border-gold/50'}`}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={imgSrc} alt="Product" className="w-full h-full object-cover" />
+                          {productForm.image === imgSrc && (
+                            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                              <HiCheck className="text-white text-xl sm:text-2xl drop-shadow-md" />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+
+                      {/* Özel yüklenen resim önizlemesi */}
+                      {productForm.image && !productForm.image.includes('images.unsplash.com') && (
+                        <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden cursor-pointer border-2 border-gold shadow-[0_0_15px_rgba(212,175,55,0.4)] scale-105 shrink-0">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={productForm.image} alt="Custom Product" className="w-full h-full object-cover" />
+                          <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                            <HiCheck className="text-white text-xl sm:text-2xl drop-shadow-md" />
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Fotoğraf Yükle Butonu */}
+                      <label className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl border-2 border-dashed border-gold/40 hover:border-gold hover:bg-gold/5 flex flex-col items-center justify-center cursor-pointer transition-all shrink-0">
+                        <HiOutlinePlus className="text-xl sm:text-2xl text-gold mb-1" />
+                        <span className="text-[0.45rem] sm:text-[0.55rem] font-bold text-wine">YÜKLE</span>
+                        <input 
+                          type="file" 
+                          accept="image/*" 
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              const reader = new FileReader();
+                              reader.onloadend = () => {
+                                if (typeof reader.result === 'string') {
+                                  setProductForm({ ...productForm, image: reader.result });
+                                }
+                              };
+                              reader.readAsDataURL(file);
+                            }
+                          }}
+                        />
+                      </label>
                     </div>
                   </div>
 
