@@ -7,21 +7,13 @@ import { ProductItem } from '@/data/defaults';
 interface ProductCardProps {
   product: ProductItem;
   index: number;
-  onSelect?: (product: ProductItem) => void;
 }
 
-export default function ProductCard({ product, index, onSelect }: ProductCardProps) {
-  const handleClick = (e: React.MouseEvent) => {
-    if (product.type !== 'external' && onSelect) {
-      e.preventDefault();
-      onSelect(product);
-    }
-  };
-
+export default function ProductCard({ product, index }: ProductCardProps) {
   const isEven = index % 2 === 0;
 
   return (
-    <Link href={product.link || '#'} onClick={handleClick} className="product-card group block w-full">
+    <Link href={product.link || '#'} className="product-card group block w-full">
       <motion.div
         className={`relative flex flex-col ${
           isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'
@@ -65,7 +57,7 @@ export default function ProductCard({ product, index, onSelect }: ProductCardPro
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-2 flex-wrap">
               <span className="text-[0.55rem] font-bold tracking-[0.3em] text-gold-dark uppercase">
-                {product.priceType === 'free' ? 'ÜCRETSİZ KAYNAK' : 'ÖZEL EĞİTİM & SEANS'}
+                {product.badgeText || (product.priceType === 'free' ? 'ÜCRETSİZ KAYNAK' : 'ÖZEL EĞİTİM & SEANS')}
               </span>
             </div>
             

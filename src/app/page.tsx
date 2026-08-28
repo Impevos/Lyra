@@ -3,7 +3,6 @@
 import ProfileHeader from '@/components/ProfileHeader';
 import ProductCard from '@/components/ProductCard';
 import SectionDivider from '@/components/SectionDivider';
-import CheckoutDrawer from '@/components/CheckoutDrawer';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
@@ -12,17 +11,11 @@ import { getProducts, ProductItem, defaultProducts, getVideos, FeaturedVideoItem
 export default function HomePage() {
   const [products, setProducts] = useState<ProductItem[]>(defaultProducts);
   const [videos, setVideos] = useState<FeaturedVideoItem[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
 
   useEffect(() => {
     setProducts(getProducts());
     setVideos(getVideos());
   }, []);
-
-  const mainProducts = products.filter((p) => p.section !== 'work');
-  const workProducts = products.filter((p) => p.section === 'work');
-
-
 
   return (
     <main className="min-h-screen bg-ivory flex flex-col items-center">
@@ -60,7 +53,6 @@ export default function HomePage() {
                 key={product.id || `product-${index}`} 
                 product={product} 
                 index={index} 
-                onSelect={setSelectedProduct} 
               />
             ))}
           </div>
@@ -130,9 +122,6 @@ export default function HomePage() {
           )}
         </div>
       </div>
-
-      {/* Stan Store Style Checkout Drawer */}
-      <CheckoutDrawer product={selectedProduct} onClose={() => setSelectedProduct(null)} />
     </main>
   );
 }

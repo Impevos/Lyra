@@ -10,6 +10,8 @@ export interface ProductItem {
   description?: string;
   type?: 'digital' | 'call' | 'external';
   priceType?: 'paid' | 'free';
+  testimonialImages?: string[];
+  badgeText?: string;
 }
 
 export interface ProfileData {
@@ -246,6 +248,8 @@ export interface AppointmentData {
   date: string;
   time: string;
   createdAt: string;
+  expectations?: string;
+  aboutSelf?: string;
 }
 
 export const getAppointments = (): AppointmentData[] => {
@@ -265,6 +269,26 @@ export const saveAppointment = (appointment: Omit<AppointmentData, 'id' | 'creat
     };
     localStorage.setItem('custom_appointments', JSON.stringify([...appointments, newAppointment]));
   }
+};
+
+export const checkDuplicateFreeRegistration = (email: string, phone: string, instagram: string): boolean => {
+  if (typeof window === 'undefined') return false;
+  const appointments = getAppointments();
+  const products = getProducts();
+  const freeProductIds = new Set(products.filter(p => p.priceType === 'free').map(p => p.id));
+  
+  const freeAppointments = appointments.filter(a => freeProductIds.has(a.productId));
+  
+  const normalizeIg = (ig: string) => ig.replace(/^@/, '').toLowerCase().trim();
+  const normalizePhone = (ph: string) => ph.replace(/\s+/g, '').replace(/[^0-9+]/g, '').trim();
+  const normalizeEmail = (em: string) => em.toLowerCase().trim();
+  
+  return freeAppointments.some(a => {
+    if (email && a.email && normalizeEmail(a.email) === normalizeEmail(email)) return true;
+    if (phone && a.phone && normalizePhone(a.phone) === normalizePhone(phone)) return true;
+    if (instagram && a.instagram && normalizeIg(a.instagram) === normalizeIg(instagram)) return true;
+    return false;
+  });
 };
 
 export const deleteAppointment = (id: string) => {

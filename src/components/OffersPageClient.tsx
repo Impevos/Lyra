@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { getProducts, ProductItem, defaultProducts } from '@/data/defaults';
 import ProductCard from '@/components/ProductCard';
-import CheckoutDrawer from '@/components/CheckoutDrawer';
 
 interface OffersPageClientProps {
   filterType: 'all' | 'paid' | 'free';
@@ -14,7 +13,6 @@ interface OffersPageClientProps {
 
 export default function OffersPageClient({ filterType }: OffersPageClientProps) {
   const [products, setProducts] = useState<ProductItem[]>(defaultProducts);
-  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
 
   useEffect(() => {
     setProducts(getProducts());
@@ -116,7 +114,6 @@ export default function OffersPageClient({ filterType }: OffersPageClientProps) 
                 key={product.id || `offer-${index}`}
                 product={product}
                 index={index}
-                onSelect={setSelectedProduct}
               />
             ))}
           </div>
@@ -128,9 +125,6 @@ export default function OffersPageClient({ filterType }: OffersPageClientProps) 
           </div>
         )}
       </div>
-
-      {/* Checkout Drawer */}
-      <CheckoutDrawer product={selectedProduct} onClose={() => setSelectedProduct(null)} />
     </main>
   );
 }

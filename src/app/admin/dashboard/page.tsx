@@ -117,7 +117,9 @@ function AdminDashboardContent() {
     section: 'main',
     description: '',
     type: 'digital',
-    priceType: 'paid'
+    priceType: 'paid',
+    testimonialImages: [],
+    badgeText: ''
   });
 
   // Modal / Form states for Video
@@ -219,7 +221,9 @@ function AdminDashboardContent() {
       section: 'main',
       description: '',
       type: 'digital',
-      priceType: 'paid'
+      priceType: 'paid',
+      testimonialImages: [],
+      badgeText: ''
     });
     setIsProductModalOpen(true);
   };
@@ -236,7 +240,9 @@ function AdminDashboardContent() {
       section: product.section || 'main',
       description: product.description || '',
       type: product.type || 'digital',
-      priceType: product.priceType || 'paid'
+      priceType: product.priceType || 'paid',
+      testimonialImages: product.testimonialImages || [],
+      badgeText: product.badgeText || ''
     });
     setIsProductModalOpen(true);
   };
@@ -690,6 +696,24 @@ function AdminDashboardContent() {
                           </a>
                         </div>
                       </div>
+
+                      {/* Beklenti & Kişisel Bilgi */}
+                      {(appointment.expectations || appointment.aboutSelf) && (
+                        <div className="mt-3 pt-3 border-t border-gold/10 space-y-2">
+                          {appointment.expectations && (
+                            <div>
+                              <span className="text-taupe/40 font-bold uppercase text-[0.55rem] tracking-wider block mb-0.5">Beklentisi</span>
+                              <p className="text-xs text-wine/70 leading-relaxed font-medium bg-gold/[0.03] p-2 border border-gold/8">{appointment.expectations}</p>
+                            </div>
+                          )}
+                          {appointment.aboutSelf && (
+                            <div>
+                              <span className="text-taupe/40 font-bold uppercase text-[0.55rem] tracking-wider block mb-0.5">Kişisel Bilgi</span>
+                              <p className="text-xs text-wine/70 leading-relaxed font-medium bg-gold/[0.03] p-2 border border-gold/8">{appointment.aboutSelf}</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <button
@@ -1630,6 +1654,71 @@ function AdminDashboardContent() {
                     onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-none bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
                   />
+                </div>
+
+                {/* Badge / Etiket Yazısı */}
+                <div className="flex flex-col gap-1">
+                  <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Kart Etiket Yazısı (Badge)</label>
+                  <input
+                    type="text"
+                    placeholder="Örn: ÖZEL EĞİTİM & SEANS, ÜCRETSİZ KAYNAK, PREMIUM PROGRAM..."
+                    value={productForm.badgeText || ''}
+                    onChange={(e) => setProductForm({ ...productForm, badgeText: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-none bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
+                  />
+                  <span className="text-[0.55rem] text-taupe/40 font-medium">Boş bırakırsanız varsayılan etiket kullanılır.</span>
+                </div>
+
+                {/* Testimonial / Kullanıcı Yorum Fotoğrafları */}
+                <div className="flex flex-col gap-2 pt-2 border-t border-gold/10">
+                  <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Kullanıcı Deneyimi Fotoğrafları (SS / Yorumlar)</label>
+                  
+                  <div className="flex flex-wrap items-center gap-2">
+                    {(productForm.testimonialImages || []).map((img, idx) => (
+                      <div key={idx} className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-none overflow-hidden border border-gold/20 group shrink-0">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={img} alt={`Yorum ${idx + 1}`} className="w-full h-full object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = [...(productForm.testimonialImages || [])];
+                            updated.splice(idx, 1);
+                            setProductForm({ ...productForm, testimonialImages: updated });
+                          }}
+                          className="absolute top-0 right-0 bg-red-500 text-white w-5 h-5 flex items-center justify-center text-[0.6rem] font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ))}
+
+                    {/* Fotoğraf Yükle Butonu */}
+                    <label className="w-16 h-16 sm:w-20 sm:h-20 rounded-none border-2 border-dashed border-gold/40 hover:border-gold hover:bg-gold/5 flex flex-col items-center justify-center cursor-pointer transition-all shrink-0">
+                      <HiOutlinePlus className="text-xl sm:text-2xl text-gold mb-0.5" />
+                      <span className="text-[0.45rem] sm:text-[0.5rem] font-bold text-wine">SS EKLE</span>
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                              if (typeof reader.result === 'string') {
+                                setProductForm({ 
+                                  ...productForm, 
+                                  testimonialImages: [...(productForm.testimonialImages || []), reader.result] 
+                                });
+                              }
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <span className="text-[0.55rem] text-taupe/40 font-medium">Kullanıcıların eğitim hakkındaki yorum ekran görüntülerini yükleyin. Eğitim detay sayfasında galeri olarak görünecek.</span>
                 </div>
 
                 <div className="flex justify-end gap-3 pt-4 border-t border-gold/10 mt-6">
