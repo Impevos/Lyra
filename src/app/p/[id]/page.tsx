@@ -143,7 +143,8 @@ export default function ProductDetailPage({ params }: PageProps) {
       });
     }
 
-    // Google Calendar API'ye kaydet
+    // Google Calendar API'ye kaydet (Geçici olarak devre dışı bırakıldı)
+    /* 
     if (product?.type === 'call' && selectedDate && selectedTime) {
       try {
         const dateStr = selectedDate.toLocaleDateString('tr-TR', {
@@ -170,6 +171,7 @@ export default function ProductDetailPage({ params }: PageProps) {
         console.error('Failed to add to Google Calendar:', e);
       }
     }
+    */
 
     // Trigger Sales Automation Email
     try {
