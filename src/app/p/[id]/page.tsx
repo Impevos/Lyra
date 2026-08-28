@@ -143,6 +143,34 @@ export default function ProductDetailPage({ params }: PageProps) {
       });
     }
 
+    // Google Calendar API'ye kaydet
+    if (product?.type === 'call' && selectedDate && selectedTime) {
+      try {
+        const dateStr = selectedDate.toLocaleDateString('tr-TR', {
+          day: '2-digit',
+          month: '2-digit',
+          year: 'numeric'
+        });
+        await fetch('/api/calendar', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productTitle: product.title,
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            instagram: formData.instagram,
+            expectations: formData.expectations,
+            aboutSelf: formData.aboutSelf,
+            date: dateStr,
+            time: selectedTime,
+          })
+        });
+      } catch (e) {
+        console.error('Failed to add to Google Calendar:', e);
+      }
+    }
+
     // Trigger Sales Automation Email
     try {
       const automations = getScheduledEmails();
