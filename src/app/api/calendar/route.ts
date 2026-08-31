@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       scopes: ['https://www.googleapis.com/auth/calendar.events'],
     });
 
-    const calendar = google.calendar({ version: 'v3', auth: client });
+    const calendar = google.calendar({ version: 'v3', auth: client as any });
 
     // Tarihi doğru formata çevirme (DD.MM.YYYY formatından YYYY-MM-DD'ye)
     // frontend'den data.date "25.10.2023" veya "25/10/2023" gibi gelebilir
