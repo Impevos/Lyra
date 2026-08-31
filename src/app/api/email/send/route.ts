@@ -22,34 +22,51 @@ function wrapInTemplate(text: string, subject: string) {
   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FDFCF7; padding: 40px 10px;">
     <tr>
       <td align="center">
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border: 1px solid #EAD8C0; box-shadow: 0 4px 20px rgba(91, 28, 42, 0.04); overflow: hidden;">
-          <!-- HEADER -->
+        <!-- OUTER BORDER BOX FOR LUXURY LOOK -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border: 1px solid #DFC15D; box-shadow: 0 10px 30px rgba(91, 28, 42, 0.06); overflow: hidden;">
+          
+          <!-- TOP GLOWING WINE HEADER -->
           <tr>
-            <td align="center" style="background-color: #5B1C2A; padding: 35px 20px; border-bottom: 3px solid #C5A880;">
-              <img src="https://lyraonearth.com/Lyra-Logo-White.png" alt="Lyra On Earth" style="height: 65px; width: auto; display: block;" />
+            <td align="center" style="background: linear-gradient(135deg, #4A121E 0%, #5B1C2A 100%); background-color: #5B1C2A; padding: 40px 20px; border-bottom: 2px solid #DFC15D;">
+              <img src="https://lyraonearth.com/Lyra-Logo-White.png" alt="Lyra On Earth" style="height: 70px; width: auto; display: block;" />
             </td>
           </tr>
           
           <!-- CONTENT -->
           <tr>
-            <td style="padding: 40px 30px; color: #3A3530; font-size: 15px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            <td style="padding: 45px 35px 35px 35px; color: #3A3530; font-size: 15px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
               ${htmlContent}
+              
+              <!-- Celestial Divider -->
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 35px 0;">
+                <tr>
+                  <td align="center">
+                    <div style="display: inline-block; width: 50px; height: 1px; background-color: #DFC15D; vertical-align: middle;"></div>
+                    <span style="color: #DFC15D; font-size: 14px; margin: 0 10px; vertical-align: middle;">✦</span>
+                    <div style="display: inline-block; width: 50px; height: 1px; background-color: #DFC15D; vertical-align: middle;"></div>
+                  </td>
+                </tr>
+              </table>
+              
+              <p style="margin: 0; font-size: 13px; color: #7A7570; text-align: center; font-style: italic; font-family: Georgia, serif;">
+                Gökyüzünün rehberliği ve enerjinin şifası sizinle olsun.
+              </p>
             </td>
           </tr>
           
           <!-- FOOTER -->
           <tr>
-            <td align="center" style="background-color: #F9F6F0; border-top: 1px solid #EAD8C0; padding: 30px 20px; color: #7A7570; font-size: 12px;">
-              <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 15px; width: auto; margin-left: auto; margin-right: auto;">
+            <td align="center" style="background-color: #FAF8F5; border-top: 1px solid #EAD8C0; padding: 35px 20px; color: #7A7570; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+              <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 20px; width: auto; margin-left: auto; margin-right: auto;">
                 <tr>
                   <td align="center">
-                    <a href="https://lyraonearth.com" style="color: #5B1C2A; text-decoration: none; font-weight: bold; font-size: 12px; margin: 0 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Web Sitesi</a>
-                    <span style="color: #EAD8C0;">|</span>
-                    <a href="https://instagram.com/lyraonearth" style="color: #5B1C2A; text-decoration: none; font-weight: bold; font-size: 12px; margin: 0 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">Instagram</a>
+                    <a href="https://lyraonearth.com" style="color: #5B1C2A; text-decoration: none; font-weight: bold; font-size: 12px; margin: 0 15px; letter-spacing: 0.05em;">Web Sitesi</a>
+                    <span style="color: #DFC15D; font-size: 14px;">•</span>
+                    <a href="https://www.instagram.com/lyra.onearth/" style="color: #5B1C2A; text-decoration: none; font-weight: bold; font-size: 12px; margin: 0 15px; letter-spacing: 0.05em;">Instagram</a>
                   </td>
                 </tr>
               </table>
-              <p style="margin: 0; line-height: 1.6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+              <p style="margin: 0; line-height: 1.6; font-size: 11px; color: #9A9590; letter-spacing: 0.02em;">
                 Bu e-posta <strong>Lyra On Earth</strong> tarafından otomatik olarak gönderilmiştir.<br>
                 © 2026 Lyra On Earth. Tüm Hakları Saklıdır.
               </p>
