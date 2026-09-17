@@ -21,8 +21,9 @@ export async function POST(request: Request) {
 
     // --- ENV ---
     const merchant_id   = (process.env.PAYTR_MERCHANT_ID || '').trim();
-    const merchant_key  = (process.env.PAYTR_MERCHANT_KEY || '').trim();
-    const merchant_salt = (process.env.PAYTR_MERCHANT_SALT || '').trim();
+    // PayTR keys/salts are exactly alphanumeric. Remove any invisible chars.
+    const merchant_key  = (process.env.PAYTR_MERCHANT_KEY || '').replace(/[^a-zA-Z0-9]/g, '');
+    const merchant_salt = (process.env.PAYTR_MERCHANT_SALT || '').replace(/[^a-zA-Z0-9]/g, '');
     
     const safeEmail = (email || '').trim();
 
