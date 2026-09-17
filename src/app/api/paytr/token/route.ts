@@ -110,7 +110,19 @@ export async function POST(request: Request) {
     } else {
       console.error('PayTR Token Error:', result);
       return NextResponse.json(
-        { error: 'PayTR token alınamadı.', reason: result.reason },
+        { 
+          error: 'PayTR token alınamadı.', 
+          reason: result.reason,
+          debug: {
+            hashStr,
+            tokenGenerated: paytr_token,
+            merchantIdLen: merchant_id.length,
+            keyLen: merchant_key.length,
+            saltLen: merchant_salt.length,
+            basketBase64: user_basket_encoded,
+            ip: user_ip,
+          }
+        },
         { status: 400 }
       );
     }
