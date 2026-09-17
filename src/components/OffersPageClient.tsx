@@ -15,7 +15,11 @@ export default function OffersPageClient({ filterType }: OffersPageClientProps) 
   const [products, setProducts] = useState<ProductItem[]>(defaultProducts);
 
   useEffect(() => {
-    setProducts(getProducts());
+    const loadData = async () => {
+      const data = await getProducts();
+      setProducts(data);
+    };
+    loadData();
   }, []);
 
   // Filter products based on page type

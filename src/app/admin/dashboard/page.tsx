@@ -49,6 +49,7 @@ import {
   ScheduledEmail,
   SentEmailLog
 } from '@/data/defaults';
+import { supabase } from '@/lib/supabase';
 
 export default function AdminDashboard() {
   return (
@@ -140,18 +141,53 @@ function AdminDashboardContent() {
       .then(d => { if (d.images) setPublicImages(d.images) })
       .catch(e => console.error('Error fetching images:', e));
 
-    setProducts(getProducts());
-    setProfile(getProfile());
-    setVideos(getVideos());
-    setAppointments(getAppointments());
+    const loadData = async () => {
+      setProducts(await getProducts());
+      setProfile(await getProfile());
+      setVideos(getVideos());
+      setAppointments(getAppointments());
+    };
+    loadData();
     
     // Load email database properties
     const smtp = getSmtpSettings();
     setSmtpSettings(smtp);
-    setSmtpForm(smtp);
+    if (smtp) setSmtpForm(smtp);
     setScheduledEmails(getScheduledEmails());
     setSentLogs(getSentEmailLogs());
   }, []);
+
+  // Migration Function
+  const handleMigrateToSupabase = async () => {
+    if (!window.confirm("DİKKAT: Bilgisayarınızdaki (Local Storage) tüm veriler Supabase veritabanına aktarılacaktır. Devam etmek istiyor musunuz?")) return;
+    
+    showNotification("Aktarım başlatıldı, lütfen bekleyin...", "success");
+    
+    try {
+      // Migrate Products from Local Storage
+      const savedProducts = localStorage.getItem('custom_products');
+      if (savedProducts) {
+        const localProducts: ProductItem[] = JSON.parse(savedProducts);
+        for (const prod of localProducts) {
+          const { error } = await supabase.from('products').upsert(prod);
+          if (error) throw error;
+        }
+      }
+      
+      // Migrate Profile from Local Storage
+      const savedProfile = localStorage.getItem('custom_profile');
+      if (savedProfile) {
+        const localProfile: ProfileData = JSON.parse(savedProfile);
+        const { error } = await supabase.from('profile').upsert({ id: 'default', ...localProfile });
+        if (error) throw error;
+      }
+
+      showNotification("VERİLER BAŞARIYLA SUPABASE'E AKTARILDI! Lütfen sayfayı yenileyin.", "success");
+    } catch (err: any) {
+      console.error(err);
+      showNotification(`Hata: ${err.message}`, "error");
+    }
+  };
 
   const showNotification = (message: string, type: 'success' | 'error' = 'success') => {
     setNotification({ message, type });
@@ -572,6 +608,12 @@ function AdminDashboardContent() {
                   className="border border-gold/25 hover:bg-gold/5 text-wine px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all"
                 >
                   Ürün Listesi
+                </button>
+                <button
+                  onClick={handleMigrateToSupabase}
+                  className="bg-black text-white px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all shadow-md shadow-black/20 hover:scale-105"
+                >
+                  SUPABASE'E AKTAR
                 </button>
               </div>
             </div>

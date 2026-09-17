@@ -1,3 +1,5 @@
+import { supabase } from '@/lib/supabase';
+
 export interface ProductItem {
   id: string;
   title: string;
@@ -148,47 +150,57 @@ export const defaultProducts: ProductItem[] = [
   }
 ];
 
-export const getProfile = (): ProfileData => {
-  if (typeof window === 'undefined') return defaultProfile;
-  const saved = localStorage.getItem('custom_profile');
-  if (saved) return { ...defaultProfile, ...JSON.parse(saved) };
+export const getProfile = async (): Promise<ProfileData> => {
+  try {
+    const { data, error } = await supabase.from('profile').select('*').eq('id', 'default').single();
+    if (error && error.code !== 'PGRST116') {
+      console.warn('Supabase getProfile error:', error);
+      return defaultProfile;
+    }
+    if (data) {
+      return { ...defaultProfile, ...data };
+    }
+  } catch (err) {
+    console.warn(err);
+  }
   return defaultProfile;
 };
 
-export const saveProfile = (profile: ProfileData) => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('custom_profile', JSON.stringify(profile));
+export const saveProfile = async (profile: ProfileData) => {
+  try {
+    const { error } = await supabase.from('profile').upsert({ id: 'default', ...profile });
+    if (error) console.error('Supabase saveProfile error:', error);
+  } catch (err) {
+    console.error(err);
   }
 };
 
-export const getProducts = (): ProductItem[] => {
-  if (typeof window === 'undefined') return defaultProducts;
-  const saved = localStorage.getItem('custom_products');
-  let products: ProductItem[] = saved ? JSON.parse(saved) : defaultProducts;
-  
-  // Force clean old mock products if they exist in localStorage cache
-  const hasOldProducts = products.some(p => p.title === 'Birebir Yayınlar' || p.title === 'Grup Yayınlar');
-  if (hasOldProducts) {
-    localStorage.removeItem('custom_products');
-    products = defaultProducts;
+export const getProducts = async (): Promise<ProductItem[]> => {
+  try {
+    const { data, error } = await supabase.from('products').select('*');
+    if (error) {
+      console.warn('Supabase getProducts error:', error);
+      return defaultProducts;
+    }
+    if (data && data.length > 0) {
+      const paid = data.filter((p: ProductItem) => p.priceType !== 'free');
+      const free = data.filter((p: ProductItem) => p.priceType === 'free');
+      return [...paid, ...free];
+    }
+  } catch (err) {
+    console.warn(err);
   }
-  
-  // Make sure new default products are also present
-  const savedIds = new Set(products.map(p => p.id));
-  const missingDefaults = defaultProducts.filter(p => !savedIds.has(p.id));
-  if (missingDefaults.length > 0) {
-    products = [...products, ...missingDefaults];
-  }
-  
-  // Sort products: paid offers first, free offers at the end
-  const paid = products.filter((p) => p.priceType !== 'free');
-  const free = products.filter((p) => p.priceType === 'free');
-  return [...paid, ...free];
+  return defaultProducts;
 };
 
-export const saveProducts = (products: ProductItem[]) => {
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('custom_products', JSON.stringify(products));
+export const saveProducts = async (products: ProductItem[]) => {
+  try {
+    for (const prod of products) {
+      const { error } = await supabase.from('products').upsert(prod);
+      if (error) console.error('Supabase saveProducts error on item:', prod.id, error);
+    }
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -271,10 +283,10 @@ export const saveAppointment = (appointment: Omit<AppointmentData, 'id' | 'creat
   }
 };
 
-export const checkDuplicateFreeRegistration = (email: string, phone: string, instagram: string): boolean => {
+export const checkDuplicateFreeRegistration = async (email: string, phone: string, instagram: string): Promise<boolean> => {
   if (typeof window === 'undefined') return false;
   const appointments = getAppointments();
-  const products = getProducts();
+  const products = await getProducts();
   const freeProductIds = new Set(products.filter(p => p.priceType === 'free').map(p => p.id));
   
   const freeAppointments = appointments.filter(a => freeProductIds.has(a.productId));

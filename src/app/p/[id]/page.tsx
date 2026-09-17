@@ -67,13 +67,16 @@ export default function ProductDetailPage({ params }: PageProps) {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   useEffect(() => {
-    const products = getProducts();
-    const found = products.find((p) => p.id === id);
-    if (found) {
-      setProduct(found);
-    } else {
-      router.push('/');
-    }
+    const loadProduct = async () => {
+      const products = await getProducts();
+      const found = products.find((p) => p.id === id);
+      if (found) {
+        setProduct(found);
+      } else {
+        router.push('/');
+      }
+    };
+    loadProduct();
   }, [id, router]);
 
   if (!product) {
@@ -198,13 +201,14 @@ export default function ProductDetailPage({ params }: PageProps) {
     setStep(4);
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setDuplicateError(null);
 
     // Check duplicate for free products
     if (product.priceType === 'free') {
-      const isDuplicate = checkDuplicateFreeRegistration(
+      // For free digital products, enforce one registration per person
+      const isDuplicate = await checkDuplicateFreeRegistration(
         formData.email,
         formData.phone,
         formData.instagram

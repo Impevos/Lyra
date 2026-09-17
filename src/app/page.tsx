@@ -13,8 +13,11 @@ export default function HomePage() {
   const [videos, setVideos] = useState<FeaturedVideoItem[]>([]);
 
   useEffect(() => {
-    setProducts(getProducts());
-    setVideos(getVideos());
+    const loadData = async () => {
+      setProducts(await getProducts());
+      setVideos(getVideos());
+    };
+    loadData();
   }, []);
 
   return (

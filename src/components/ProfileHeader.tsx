@@ -18,7 +18,10 @@ export default function ProfileHeader() {
   const [profile, setProfile] = useState<ProfileData>(defaultProfile);
 
   useEffect(() => {
-    setProfile(getProfile());
+    const loadProfile = async () => {
+      setProfile(await getProfile());
+    };
+    loadProfile();
   }, []);
 
   const activeSocials = Object.entries(profile.socials).filter(([, url]) => url);
