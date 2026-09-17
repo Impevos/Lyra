@@ -61,11 +61,11 @@ export default function AdminDashboard() {
 
 function AdminDashboardContent() {
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'profile' | 'videos' | 'appointments' | 'emails'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'profile' | 'videos' | 'appointments' | 'emails' | 'purchases'>('overview');
 
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab && ['overview', 'products', 'profile', 'videos', 'appointments', 'emails'].includes(tab)) {
+    if (tab && ['overview', 'products', 'profile', 'videos', 'appointments', 'emails', 'purchases'].includes(tab)) {
       setActiveTab(tab as any);
     }
   }, [searchParams]);
@@ -76,12 +76,45 @@ function AdminDashboardContent() {
   const [videos, setVideos] = useState<FeaturedVideoItem[]>([]);
   const [appointments, setAppointments] = useState<AppointmentData[]>([]);
 
+  const [orders, setOrders] = useState<any[]>([]);
+
   // Email States
   const [smtpSettings, setSmtpSettings] = useState<SmtpSettings | null>(null);
   const [scheduledEmails, setScheduledEmails] = useState<ScheduledEmail[]>([]);
   const [sentLogs, setSentLogs] = useState<SentEmailLog[]>([]);
 
+  useEffect(() => {
+    // Fetch all needed data
+    fetchData();
+  }, []);
 
+  const fetchData = async () => {
+    const productsData = await getProducts();
+    const profileData = await getProfile();
+    const videosData = await getVideos();
+    const appointmentsData = await getAppointments();
+    
+    // Fetch Email Data
+    const smtpData = await getSmtpSettings();
+    const scheduledData = await getScheduledEmails();
+    const logsData = await getSentEmailLogs();
+
+    // Fetch orders
+    const { data: ordersData } = await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    setProducts(productsData || []);
+    setProfile(profileData);
+    setVideos(videosData || []);
+    setAppointments(appointmentsData || []);
+    if (ordersData) setOrders(ordersData);
+    
+    if (smtpData) setSmtpSettings(smtpData);
+    setScheduledEmails(scheduledData || []);
+    setSentLogs(logsData || []);
+  };
 
   // Email Form State
   const [mailForm, setMailForm] = useState({
@@ -120,7 +153,8 @@ function AdminDashboardContent() {
     type: 'digital',
     priceType: 'paid',
     testimonialImages: [],
-    badgeText: ''
+    badgeText: '',
+    downloadUrl: ''
   });
 
   // Modal / Form states for Video
@@ -183,7 +217,8 @@ function AdminDashboardContent() {
             type: prod.type,
             priceType: prod.priceType,
             testimonialImages: prod.testimonialImages,
-            badgeText: prod.badgeText || (prod as any).badge || null
+            badgeText: prod.badgeText || (prod as any).badge || null,
+            downloadUrl: prod.downloadUrl || ''
           };
           const { error } = await supabase.from('products').upsert(sanitizedProd);
           if (error) throw error;
@@ -283,7 +318,8 @@ function AdminDashboardContent() {
       type: 'digital',
       priceType: 'paid',
       testimonialImages: [],
-      badgeText: ''
+      badgeText: '',
+      downloadUrl: ''
     });
     setIsProductModalOpen(true);
   };
@@ -302,7 +338,8 @@ function AdminDashboardContent() {
       type: product.type || 'digital',
       priceType: product.priceType || 'paid',
       testimonialImages: product.testimonialImages || [],
-      badgeText: product.badgeText || ''
+      badgeText: product.badgeText || '',
+      downloadUrl: product.downloadUrl || ''
     });
     setIsProductModalOpen(true);
   };
@@ -1506,6 +1543,68 @@ function AdminDashboardContent() {
         )}
       </div>
 
+      {/* PANEL: PURCHASES */}
+      {activeTab === 'purchases' && (
+        <div className="space-y-8 animate-fadeIn">
+          <div className="bg-white/60 border border-gold/15 p-6 space-y-6">
+            <h3 className="font-serif text-2xl text-wine border-b border-gold/15 pb-4">
+              Satın Alımlar
+            </h3>
+            
+            {orders.length === 0 ? (
+              <div className="text-center py-10 text-taupe/60">
+                <p>Henüz satın alım bulunmuyor.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-sm text-taupe/80">
+                  <thead className="bg-gold/5 text-wine uppercase text-xs tracking-wider border-b border-gold/15">
+                    <tr>
+                      <th className="px-4 py-4 font-bold">Müşteri</th>
+                      <th className="px-4 py-4 font-bold">Ürün</th>
+                      <th className="px-4 py-4 font-bold">Tutar</th>
+                      <th className="px-4 py-4 font-bold">Durum</th>
+                      <th className="px-4 py-4 font-bold">Tarih</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gold/10 bg-white/40">
+                    {orders.map((order) => (
+                      <tr key={order.id} className="hover:bg-gold/5 transition-colors">
+                        <td className="px-4 py-4">
+                          <div className="font-bold text-wine">{order.customer_name}</div>
+                          <div className="text-xs text-taupe/60">{order.customer_email}</div>
+                          <div className="text-xs text-taupe/60">{order.customer_phone}</div>
+                        </td>
+                        <td className="px-4 py-4 font-medium text-wine">
+                          {order.product_title}
+                        </td>
+                        <td className="px-4 py-4">
+                          ₺{(order.amount / 100).toLocaleString('tr-TR', { minimumFractionDigits: 2 })}
+                        </td>
+                        <td className="px-4 py-4">
+                          <span className={`px-2 py-1 text-xs font-bold rounded-full ${
+                            order.status === 'success' 
+                              ? 'bg-green-100 text-green-700' 
+                              : order.status === 'failed'
+                                ? 'bg-red-100 text-red-700'
+                                : 'bg-yellow-100 text-yellow-700'
+                          }`}>
+                            {order.status === 'success' ? 'Başarılı' : order.status === 'failed' ? 'Başarısız' : 'Bekliyor'}
+                          </span>
+                        </td>
+                        <td className="px-4 py-4 text-xs">
+                          {new Date(order.created_at).toLocaleString('tr-TR')}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* PRODUCT MODAL */}
       <AnimatePresence>
         {isProductModalOpen && (
@@ -1699,6 +1798,19 @@ function AdminDashboardContent() {
                     </select>
                   </div>
                 </div>
+
+                {productForm.type === 'digital' && (
+                  <div className="flex flex-col gap-1">
+                    <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">İndirme Linki (Download URL)</label>
+                    <input
+                      type="text"
+                      placeholder="Örn: /dark-mother-kali.pdf"
+                      value={productForm.downloadUrl || ''}
+                      onChange={(e) => setProductForm({ ...productForm, downloadUrl: e.target.value })}
+                      className="w-full px-4 py-2.5 rounded-none bg-ivory border border-gold/10 focus:border-gold/30 focus:outline-none text-xs text-wine font-medium"
+                    />
+                  </div>
+                )}
 
                 <div className="flex flex-col gap-1">
                   <label className="text-[0.65rem] font-bold uppercase tracking-wider text-taupe/50">Özel Yönlendirme Linki (Opsiyonel)</label>

@@ -55,6 +55,12 @@ function AdminNav() {
       href: '/admin/dashboard?tab=profile',
       icon: HiOutlineUser,
     },
+    {
+      tab: 'purchases',
+      label: 'SATIN ALIMLAR',
+      href: '/admin/dashboard?tab=purchases',
+      icon: HiOutlineShoppingBag,
+    },
   ];
 
   return (

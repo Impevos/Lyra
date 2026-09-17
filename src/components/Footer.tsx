@@ -43,6 +43,14 @@ export default function Footer() {
               Sözleşmeler
             </Link>
             <span className="w-px h-2.5 bg-gold/20" />
+            <Link href="/sozlesmeler#mesafeli" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+              Mesafeli Satış Sözleşmesi
+            </Link>
+            <span className="w-px h-2.5 bg-gold/20" />
+            <Link href="/teslimat-ve-iade" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+              İptal, İade ve Teslimat
+            </Link>
+            <span className="w-px h-2.5 bg-gold/20" />
             <Link href="/kvkk" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
               KVKK
             </Link>
@@ -50,7 +58,20 @@ export default function Footer() {
 
           <div className="w-12 h-px bg-gold/20" />
 
-          <p className="text-[0.6rem] text-taupe/35 tracking-[0.2em] font-medium uppercase text-center">
+          {/* Adres Bilgisi (PayTR için zorunlu) */}
+          <div className="text-center space-y-1 my-2">
+            <p className="text-[0.65rem] text-taupe/60 font-medium uppercase tracking-widest">
+              DENİZ BAYRAKTAR
+            </p>
+            <p className="text-[0.6rem] text-taupe/50 uppercase tracking-widest max-w-sm mx-auto">
+              Göztepe Mah. Batışehir Cad. Batışehir K Blok No: 2/2 İç Kapı No: 115 Bağcılar/ İstanbul
+            </p>
+            <p className="text-[0.6rem] text-taupe/50 uppercase tracking-widest">
+              info@lyraonearth.com
+            </p>
+          </div>
+
+          <p className="text-[0.6rem] text-taupe/35 tracking-[0.2em] font-medium uppercase text-center mt-2">
             © 2026 LYRA ON EARTH. TÜM HAKLARI SAKLIDIR.
           </p>
 

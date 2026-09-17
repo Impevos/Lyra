@@ -26,6 +26,7 @@ import {
   getScheduledEmails,
   getSmtpSettings
 } from '@/data/defaults';
+import { supabase } from '@/lib/supabase';
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -229,6 +230,28 @@ export default function ProductDetailPage({ params }: PageProps) {
         .replace(/ö/g, 'o').replace(/Ö/g, 'O')
         .replace(/ç/g, 'c').replace(/Ç/g, 'C');
       
+      const merchant_oid = 'lyra' + Date.now() + Math.floor(Math.random()*1000);
+
+      // Save pending order to Supabase
+      const { error: dbError } = await supabase.from('orders').insert([{
+        merchant_oid,
+        product_id: product.id,
+        product_title: product.title,
+        customer_name: formData.name,
+        customer_email: formData.email,
+        customer_phone: formData.phone,
+        amount: priceNumeric,
+        status: 'pending'
+      }]);
+
+      if (dbError) {
+        console.error("Supabase Order Insert Error:", dbError);
+        // Continue even if logging fails, or maybe throw error? 
+        // We will continue to avoid blocking payment for db errors, 
+        // but ideally we should only proceed if db is successful.
+        // Let's proceed to ensure payment works, but log it.
+      }
+      
       const res = await fetch('/api/paytr/token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -239,7 +262,7 @@ export default function ProductDetailPage({ params }: PageProps) {
           user_address: "Adres Belirtilmemiş",
           user_phone: formData.phone,
           user_basket: [[safeTitle, (priceNumeric/100).toFixed(2), 1]],
-          merchant_oid: 'lyra' + Date.now() + Math.floor(Math.random()*1000),
+          merchant_oid,
         })
       });
       const data = await res.json();
@@ -420,6 +443,21 @@ export default function ProductDetailPage({ params }: PageProps) {
                   );
                 })()}
 
+                {/* Download Button for Digital Products */}
+                {product.downloadUrl && (
+                  <a
+                    href={product.downloadUrl}
+                    download
+                    target="_blank"
+                    className="flex items-center gap-2 px-6 py-4 rounded-none bg-gold hover:bg-gold-dark text-white text-sm font-bold uppercase tracking-widest transition-all shadow-lg shadow-gold/20 animate-pulse mt-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Dosyayı İndir
+                  </a>
+                )}
+
                 <Link
                   href="/"
                   className="px-6 py-3 rounded-none border border-gold/30 hover:border-wine hover:bg-wine hover:text-white text-wine text-xs font-bold uppercase tracking-widest transition-all"
@@ -440,12 +478,13 @@ export default function ProductDetailPage({ params }: PageProps) {
 
                 {/* Main Image */}
                 <div className="relative w-full aspect-video border border-gold/10">
-                  <Image
+                  <img
                     src={product.image}
                     alt={product.title}
-                    fill
-                    className="object-cover"
-                    priority
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400';
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
                   
@@ -664,10 +703,10 @@ export default function ProductDetailPage({ params }: PageProps) {
                           className="mt-0.5 accent-wine w-4 h-4 shrink-0 cursor-pointer"
                         />
                         <label htmlFor="kvkk-consent" className="text-[0.65rem] text-taupe/60 leading-relaxed cursor-pointer">
-                          <Link href="/sozlesmeler" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">Hizmet Sözleşmesi</Link>,{' '}
-                          <Link href="/kvkk" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">KVKK Aydınlatma Metni</Link>{' '}
-                          ve{' '}
-                          <Link href="/sozlesmeler" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">Açık Rıza Beyanı</Link>&apos;nı okudum, kabul ediyorum.
+                          <Link href="/sozlesmeler#mesafeli" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">Mesafeli Satış Sözleşmesi</Link>,{' '}
+                          <Link href="/teslimat-ve-iade" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">İptal, İade ve Teslimat Koşulları</Link>
+                          {' '}ve{' '}
+                          <Link href="/kvkk" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">KVKK Aydınlatma Metni</Link>&apos;ni okudum, onaylıyorum.
                         </label>
                       </div>
 
@@ -799,7 +838,7 @@ export default function ProductDetailPage({ params }: PageProps) {
                         <div className="absolute inset-0.5 border border-gold/5 pointer-events-none" />
                         <div className="relative z-10 flex items-center gap-4">
                           <div className="relative w-14 h-14 rounded-none overflow-hidden border border-gold/10 shrink-0">
-                            <Image src={product.image} alt={product.title} fill className="object-cover" sizes="56px" />
+                            <img src={product.image} alt={product.title} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&q=80&w=400'; }} />
                           </div>
                           <div className="min-w-0">
                             <h4 className="font-serif text-sm text-wine font-bold uppercase tracking-wide truncate">{product.title}</h4>

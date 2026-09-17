@@ -36,28 +36,46 @@ export async function POST(req: NextRequest) {
     // 2) Handle the payment status
     if (status === 'success') {
       // Payment successful
-      // Here you would normally update the order status in Supabase to 'paid'
       console.log(`Payment successful for order: ${merchant_oid}`);
       
-      // Example Supabase update (assuming you have an 'orders' table)
-      /*
-      await supabase
+      const { data: order, error: fetchError } = await supabase
         .from('orders')
-        .update({ status: 'paid', updated_at: new Date().toISOString() })
-        .eq('merchant_oid', merchant_oid);
-      */
+        .select('*')
+        .eq('merchant_oid', merchant_oid)
+        .single();
+
+      if (order && !fetchError) {
+        await supabase
+          .from('orders')
+          .update({ status: 'success', updated_at: new Date().toISOString() })
+          .eq('merchant_oid', merchant_oid);
+
+        // Send email to customer
+        try {
+          const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || (req.headers.get('host') ? `https://${req.headers.get('host')}` : 'https://lyraonearth.com');
+          await fetch(`${baseUrl}/api/email/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              to: order.customer_email,
+              subject: 'Siparişiniz Başarıyla Alındı - Lyra On Earth',
+              text: `Merhaba ${order.customer_name},\n\n"${order.product_title}" isimli siparişinizin ödemesi (₺${(order.amount / 100).toFixed(2)}) başarıyla gerçekleştirilmiştir.\n\nSatın aldığınız içerik/hizmet ile ilgili detaylar en kısa sürede size iletilecektir.\n\nTeşekkür ederiz!`
+            })
+          });
+        } catch (emailErr) {
+          console.error("Failed to send customer email:", emailErr);
+        }
+      }
       
     } else {
       // Payment failed
       const failed_reason_msg = params.get('failed_reason_msg') || 'Bilinmeyen hata';
       console.error(`Payment failed for order: ${merchant_oid}. Reason: ${failed_reason_msg}`);
       
-      /*
       await supabase
         .from('orders')
-        .update({ status: 'failed', failed_reason: failed_reason_msg })
+        .update({ status: 'failed', updated_at: new Date().toISOString() })
         .eq('merchant_oid', merchant_oid);
-      */
     }
 
     // 3) Respond with 'OK' so PayTR stops sending notifications

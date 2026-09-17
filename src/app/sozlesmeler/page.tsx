@@ -10,6 +10,11 @@ export const metadata: Metadata = {
 // Contract data extracted from docx files
 const contracts = [
   {
+    id: 'mesafeli',
+    title: 'Mesafeli Satış Sözleşmesi',
+    icon: '⚖️',
+  },
+  {
     id: 'hizmet',
     title: 'İçerik Hizmetleri Sözleşmesi',
     icon: '📜',
@@ -59,6 +64,85 @@ export default function SozlesmelerPage() {
       </div>
 
       <div className="space-y-16">
+
+        {/* ===== 0. MESAFELİ SATIŞ SÖZLEŞMESİ ===== */}
+        <section id="mesafeli" className="scroll-mt-28">
+          <div className="bg-white/40 backdrop-blur-sm border border-gold/10 rounded-2xl p-8 md:p-12 shadow-sm space-y-10">
+            <div className="text-center border-b border-gold/10 pb-8">
+              <span className="text-4xl mb-4 block">⚖️</span>
+              <h2 className="font-serif text-2xl md:text-3xl text-wine font-bold tracking-wide">MESAFELİ SATIŞ SÖZLEŞMESİ</h2>
+            </div>
+
+            <div className="space-y-8 text-charcoal/80 leading-loose text-sm md:text-base">
+              {/* Madde 1: Taraflar */}
+              <div className="border-t border-gold/10 pt-6 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <h3 className="text-lg font-bold text-wine tracking-wide">MADDE 1 – TARAFLAR</h3>
+                <div className="col-span-2 space-y-3">
+                  <p><strong>1.1. SATICI BİLGİLERİ</strong></p>
+                  <p>Unvanı: DENİZ BAYRAKTAR (Bundan böyle SATICI olarak anılacaktır.)</p>
+                  <p>Adres: Göztepe Mah. Batışehir Cad. Batışehir K Blok No: 2/2 İç Kapı No: 115 Bağcılar/ İstanbul</p>
+                  <p>E-posta: info@lyraonearth.com</p>
+                  
+                  <p className="mt-4"><strong>1.2. ALICI BİLGİLERİ</strong></p>
+                  <p>İşbu sözleşmede ALICI, www.lyraonearth.com internet sitesinden hizmet satın alan kişidir. ALICI'nın üye olurken veya sipariş verirken kullandığı adres ve iletişim bilgileri esas alınır.</p>
+                </div>
+              </div>
+
+              {/* Madde 2: Konu */}
+              <div className="border-t border-gold/10 pt-6 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <h3 className="text-lg font-bold text-wine tracking-wide">MADDE 2 – KONU</h3>
+                <div className="col-span-2 space-y-3">
+                  <p>İşbu sözleşmenin konusu, ALICI'nın SATICI'ya ait internet sitesinden elektronik ortamda siparişini yaptığı dijital içerik, eğitim veya danışmanlık hizmetinin satışı ve ifası ile ilgili olarak 6502 sayılı Tüketicinin Korunması Hakkında Kanun ve Mesafeli Sözleşmeler Yönetmeliği hükümleri gereğince tarafların hak ve yükümlülüklerinin saptanmasıdır.</p>
+                </div>
+              </div>
+
+              {/* Madde 3: Sözleşme Konusu Ürün/Hizmet */}
+              <div className="border-t border-gold/10 pt-6 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <h3 className="text-lg font-bold text-wine tracking-wide">MADDE 3 – SÖZLEŞME KONUSU ÜRÜN/HİZMET</h3>
+                <div className="col-span-2 space-y-3">
+                  <p>Ürünlerin/Hizmetlerin cinsi ve türü, miktarı, marka/modeli, rengi, vergiler dâhil satış bedeli (adet x birim fiyat olarak) www.lyraonearth.com adlı internet sitesinde belirtildiği gibidir. SATICI tarafından sunulan tüm hizmetler dijital mahiyettedir ve fiziki bir ürün teslimatı yapılmamaktadır.</p>
+                </div>
+              </div>
+
+              {/* Madde 4: Teslimat Şekli */}
+              <div className="border-t border-gold/10 pt-6 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <h3 className="text-lg font-bold text-wine tracking-wide">MADDE 4 – TESLİMAT ŞEKLİ</h3>
+                <div className="col-span-2 space-y-3">
+                  <p>Ürün/Hizmet dijital olduğu için, satın alma işlemi başarıyla tamamlandıktan ve ödeme onaylandıktan sonra ALICI'ya elektronik ortamda (e-posta yoluyla veya sistem üzerinden doğrudan erişim hakkı tanınarak) anında teslim edilir / ifa sürecine başlanır. Fiziksel bir kargo gönderimi yoktur.</p>
+                </div>
+              </div>
+
+              {/* Madde 5: Cayma Hakkı */}
+              <div className="border-t border-gold/10 pt-6 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <h3 className="text-lg font-bold text-wine tracking-wide">MADDE 5 – CAYMA HAKKI VE İSTİSNALARI</h3>
+                <div className="col-span-2 space-y-3">
+                  <p>Mesafeli Sözleşmeler Yönetmeliği Madde 15 (ğ) bendi uyarınca, <strong>"Elektronik ortamda anında ifa edilen hizmetler veya tüketiciye anında teslim edilen gayrimaddi mallara ilişkin sözleşmeler"</strong> cayma hakkının istisnaları kapsamındadır.</p>
+                  <p>SATICI tarafından satışı yapılan ürünler (online masterclass eğitimleri, dijital PDF dokümanları, e-kitaplar ve görüntülü seanslar) elektronik ortamda anında ifa edilen hizmetler veya anında teslim edilen dijital içerikler olduğundan, ALICI'nın işbu sözleşme kapsamında <strong>CAYMA HAKKI BULUNMAMAKTADIR.</strong> Satın alınan ürünler için ücret iadesi yapılamaz.</p>
+                </div>
+              </div>
+
+              {/* Madde 6: Genel Hükümler */}
+              <div className="border-t border-gold/10 pt-6 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <h3 className="text-lg font-bold text-wine tracking-wide">MADDE 6 – GENEL HÜKÜMLER</h3>
+                <div className="col-span-2 space-y-3">
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>ALICI, SATICI'ya ait internet sitesinde sözleşme konusu ürünün temel nitelikleri, satış fiyatı ve ödeme şekli ile teslimata ilişkin ön bilgileri okuyup bilgi sahibi olduğunu ve elektronik ortamda gerekli teyidi verdiğini beyan eder.</li>
+                    <li>ALICI, bu sözleşmeyi elektronik ortamda teyit etmekle, mesafeli sözleşmelerin akdinden önce, SATICI tarafından ALICI'ya verilmesi gereken adres, siparişi verilen ürünlere ait temel özellikler, ürünlerin vergiler dâhil fiyatı, ödeme ve teslimat bilgilerini de doğru ve eksiksiz olarak edindiğini teyit etmiş olur.</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Madde 7: Uyuşmazlıkların Çözümü */}
+              <div className="border-t border-gold/10 pt-6 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                <h3 className="text-lg font-bold text-wine tracking-wide">MADDE 7 – UYUŞMAZLIKLARIN ÇÖZÜMÜ</h3>
+                <div className="col-span-2 space-y-3">
+                  <p>İşbu Sözleşme'nin uygulanmasında, Gümrük ve Ticaret Bakanlığınca ilan edilen değere kadar Alıcının Mal veya Hizmeti satın aldığı ve ikametgahının bulunduğu yerdeki Tüketici Hakem Heyetleri ile Tüketici Mahkemeleri yetkilidir.</p>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </section>
 
         {/* ===== 1. İÇERİK HİZMETLERİ SÖZLEŞMESİ ===== */}
         <section id="hizmet" className="scroll-mt-28">
