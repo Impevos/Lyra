@@ -12,8 +12,12 @@ interface ProductCardProps {
 export default function ProductCard({ product, index }: ProductCardProps) {
   const isEven = index % 2 === 0;
 
+  const href = product.type === 'external' && product.link 
+    ? product.link 
+    : `/p/${product.id}`;
+
   return (
-    <Link href={product.link || '#'} className="product-card group block w-full">
+    <Link href={href} className="product-card group block w-full">
       <motion.div
         className={`relative flex flex-col ${
           isEven ? 'sm:flex-row' : 'sm:flex-row-reverse'
