@@ -65,7 +65,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
               {product.title}
             </h3>
             <p className="text-[0.8rem] text-taupe/70 leading-relaxed font-medium line-clamp-3 sm:line-clamp-4">
-              {product.description || product.tagline}
+              {product.tagline || product.description}
             </p>
           </div>
 
