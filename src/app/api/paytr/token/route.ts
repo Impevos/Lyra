@@ -12,9 +12,12 @@ export async function POST(request: Request) {
       user_name,
       user_address,
       user_phone,
-      user_basket,       // Base64 encoded JSON: btoa(JSON.stringify([["Ürün","Fiyat",Adet]]))
+      user_basket,       // Dizi olarak gelir: [["Ürün", "150.00", 1]]
       merchant_oid,      // Benzersiz sipariş numarası
     } = body;
+    
+    // Güvenli Base64 Çevirisi (btoa yerine Buffer kullanarak Türkçe karakter sorununu çözer)
+    const user_basket_encoded = Buffer.from(JSON.stringify(user_basket)).toString('base64');
 
     // --- ENV ---
     const merchant_id   = process.env.PAYTR_MERCHANT_ID!;
@@ -58,7 +61,7 @@ export async function POST(request: Request) {
       merchant_oid +
       email +
       String(payment_amount) +
-      user_basket +
+      user_basket_encoded +
       no_installment +
       max_installment +
       currency +
@@ -77,7 +80,7 @@ export async function POST(request: Request) {
       email,
       payment_amount: String(payment_amount),
       paytr_token,
-      user_basket,
+      user_basket: user_basket_encoded,
       debug_on,
       no_installment,
       max_installment,

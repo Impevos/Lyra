@@ -230,7 +230,7 @@ export default function ProductDetailPage({ params }: PageProps) {
           user_name: formData.name,
           user_address: "Adres Belirtilmemiş",
           user_phone: formData.phone,
-          user_basket: btoa(JSON.stringify([[product.title, (priceNumeric/100).toString(), 1]])),
+          user_basket: [[product.title, (priceNumeric/100).toString(), 1]],
           merchant_oid: 'lyra_' + Date.now() + '_' + Math.floor(Math.random()*1000),
         })
       });
