@@ -169,7 +169,22 @@ function AdminDashboardContent() {
       if (savedProducts) {
         const localProducts: ProductItem[] = JSON.parse(savedProducts);
         for (const prod of localProducts) {
-          const { error } = await supabase.from('products').upsert(prod);
+          const sanitizedProd = {
+            id: prod.id,
+            title: prod.title,
+            tagline: prod.tagline,
+            image: prod.image,
+            buttonText: prod.buttonText,
+            link: prod.link,
+            price: prod.price,
+            section: prod.section,
+            description: prod.description,
+            type: prod.type,
+            priceType: prod.priceType,
+            testimonialImages: prod.testimonialImages,
+            badgeText: prod.badgeText || (prod as any).badge || null
+          };
+          const { error } = await supabase.from('products').upsert(sanitizedProd);
           if (error) throw error;
         }
       }
@@ -178,7 +193,15 @@ function AdminDashboardContent() {
       const savedProfile = localStorage.getItem('custom_profile');
       if (savedProfile) {
         const localProfile: ProfileData = JSON.parse(savedProfile);
-        const { error } = await supabase.from('profile').upsert({ id: 'default', ...localProfile });
+        const sanitizedProfile = {
+          id: 'default',
+          name: localProfile.name,
+          brandName: localProfile.brandName,
+          bio: localProfile.bio,
+          avatar: localProfile.avatar,
+          socials: localProfile.socials
+        };
+        const { error } = await supabase.from('profile').upsert(sanitizedProfile);
         if (error) throw error;
       }
 

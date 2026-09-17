@@ -168,7 +168,15 @@ export const getProfile = async (): Promise<ProfileData> => {
 
 export const saveProfile = async (profile: ProfileData) => {
   try {
-    const { error } = await supabase.from('profile').upsert({ id: 'default', ...profile });
+    const sanitizedProfile = {
+      id: 'default',
+      name: profile.name,
+      brandName: profile.brandName,
+      bio: profile.bio,
+      avatar: profile.avatar,
+      socials: profile.socials
+    };
+    const { error } = await supabase.from('profile').upsert(sanitizedProfile);
     if (error) console.error('Supabase saveProfile error:', error);
   } catch (err) {
     console.error(err);
@@ -196,7 +204,22 @@ export const getProducts = async (): Promise<ProductItem[]> => {
 export const saveProducts = async (products: ProductItem[]) => {
   try {
     for (const prod of products) {
-      const { error } = await supabase.from('products').upsert(prod);
+      const sanitizedProd = {
+        id: prod.id,
+        title: prod.title,
+        tagline: prod.tagline,
+        image: prod.image,
+        buttonText: prod.buttonText,
+        link: prod.link,
+        price: prod.price,
+        section: prod.section,
+        description: prod.description,
+        type: prod.type,
+        priceType: prod.priceType,
+        testimonialImages: prod.testimonialImages,
+        badgeText: prod.badgeText || (prod as any).badge || null
+      };
+      const { error } = await supabase.from('products').upsert(sanitizedProd);
       if (error) console.error('Supabase saveProducts error on item:', prod.id, error);
     }
   } catch (err) {
