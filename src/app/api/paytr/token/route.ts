@@ -70,9 +70,11 @@ export async function POST(request: Request) {
       currency +
       test_mode;
 
+    const paytr_token_str = hashStr + merchant_salt;
+    
     const paytr_token = crypto
-      .createHmac('sha256', merchant_key + merchant_salt)
-      .update(hashStr)
+      .createHmac('sha256', merchant_key)
+      .update(paytr_token_str)
       .digest('base64');
 
     // --- PayTR API İsteği ---
