@@ -20,6 +20,10 @@ export default function HomePage() {
     loadData();
   }, []);
 
+  const eyeAmNova = products.find(p => p.id === 'eye-am-nova');
+  const mastersoul = products.find(p => p.id === 'mastersoul');
+  const freeProducts = products.filter(p => p.priceType === 'free');
+
   return (
     <main className="min-h-screen bg-ivory flex flex-col items-center">
       {/* Subtle background texture */}
@@ -48,17 +52,39 @@ export default function HomePage() {
         </div>
 
         {/* Sağ Sütun: Eğitimler, Videolar ve Hizmetler */}
-        <div id="products" className="lg:col-span-7 space-y-8 mt-4 lg:mt-0">
-          {/* All Products & Offers */}
-          <div className="grid grid-cols-1 gap-5">
-            {products.map((product, index) => (
-              <ProductCard 
-                key={product.id || `product-${index}`} 
-                product={product} 
-                index={index} 
-              />
-            ))}
-          </div>
+        <div id="products" className="lg:col-span-7 space-y-4 mt-4 lg:mt-0">
+          
+          {/* EYE AM NOVA - Featured Training */}
+          {eyeAmNova && (
+            <div>
+              <SectionDivider title="EYE AM NOVA" />
+              <ProductCard product={eyeAmNova} index={0} />
+            </div>
+          )}
+
+          {/* MASTERSOUL - Featured Training */}
+          {mastersoul && (
+            <div>
+              <SectionDivider title="MASTERSOUL" />
+              <ProductCard product={mastersoul} index={1} />
+            </div>
+          )}
+
+          {/* Ücretsiz Kaynaklar */}
+          {freeProducts.length > 0 && (
+            <div>
+              <SectionDivider title="Ücretsiz Kaynaklar" />
+              <div className="grid grid-cols-1 gap-5">
+                {freeProducts.map((product, index) => (
+                  <ProductCard 
+                    key={product.id || `free-${index}`} 
+                    product={product} 
+                    index={index + 2} 
+                  />
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* YouTube Videos Section */}
           {videos.length > 0 && (
