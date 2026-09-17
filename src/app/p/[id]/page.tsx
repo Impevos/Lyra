@@ -239,7 +239,7 @@ export default function ProductDetailPage({ params }: PageProps) {
         setPaytrToken(data.token);
       } else {
         console.error("PayTR Token Error:", data);
-        setPaytrError(data.error || "Ödeme sistemi başlatılamadı.");
+        setPaytrError(data.reason ? `Hata: ${data.reason}` : (data.error || "Ödeme sistemi başlatılamadı."));
       }
     } catch (e) {
       console.error(e);
