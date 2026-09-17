@@ -114,12 +114,103 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
       });
     }
 
-    // Trigger Sales Automation Email
+    // Send branded thank you email
+    try {
+      const smtpSettings = getSmtpSettings();
+
+      const dateInfo = product?.type === 'call' && selectedDate && selectedTime
+        ? `<tr><td style="padding: 16px 24px; background-color: #FBF8F4; border: 1px solid #EAD8C0; text-align: center;"><p style="margin: 0 0 4px 0; font-size: 11px; color: #B8956A; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">RANDEVU TARİHİNİZ</p><p style="margin: 0; font-size: 16px; color: #3E0A16; font-weight: bold; font-family: Georgia, serif;">${selectedDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })} — Saat ${selectedTime}</p></td></tr>`
+        : '';
+
+      const thankYouHtml = `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Teşekkür Ederiz ✨</title></head>
+<body style="background-color: #FDFCF7; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FDFCF7; padding: 40px 10px;">
+    <tr><td align="center">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border: 1px solid #DFC15D; box-shadow: 0 10px 30px rgba(91, 28, 42, 0.06); overflow: hidden;">
+        
+        <!-- HEADER -->
+        <tr><td align="center" style="background: linear-gradient(135deg, #4A121E 0%, #5B1C2A 100%); background-color: #5B1C2A; padding: 45px 20px; border-bottom: 2px solid #DFC15D;">
+          <img src="https://lyraonearth.com/Lyra-Logo-White.png" alt="Lyra On Earth" style="height: 60px; width: auto; display: block; margin-bottom: 16px;" />
+          <p style="margin: 0; font-size: 11px; color: #DFC15D; letter-spacing: 0.3em; text-transform: uppercase; font-weight: bold;">TEŞEKKÜR EDERİZ</p>
+        </td></tr>
+        
+        <!-- GOLDEN ACCENT LINE -->
+        <tr><td style="height: 3px; background: linear-gradient(90deg, #DFC15D, #B8956A, #DFC15D);"></td></tr>
+        
+        <!-- CONTENT -->
+        <tr><td style="padding: 45px 35px 20px 35px; color: #3A3530; font-size: 15px;">
+          <h1 style="margin: 0 0 8px 0; font-size: 22px; color: #3E0A16; font-family: Georgia, serif; font-weight: bold; text-align: center;">Sevgili ${formData.name},</h1>
+          <p style="margin: 0 0 24px 0; text-align: center; font-size: 13px; color: #B8956A; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">KAYDINIZ BAŞARIYLA ALINDI</p>
+          
+          <!-- PRODUCT INFO BOX -->
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 24px;">
+            <tr><td style="padding: 20px 24px; background-color: #FBF8F4; border: 1px solid #EAD8C0;">
+              <p style="margin: 0 0 4px 0; font-size: 11px; color: #B8956A; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">SATIN ALINAN</p>
+              <p style="margin: 0; font-size: 18px; color: #3E0A16; font-weight: bold; font-family: Georgia, serif;">${product.title}</p>
+            </td></tr>
+            ${dateInfo}
+          </table>
+          
+          <p style="margin: 0 0 16px 0; line-height: 1.8; font-size: 14px; color: #4A443F;">Bu yolculuğa adım attığınız için çok mutluyuz. Sizinle birlikte çalışmak bizim için büyük bir onur.</p>
+          
+          <p style="margin: 0 0 16px 0; line-height: 1.8; font-size: 14px; color: #4A443F;">${product.type === 'call' 
+            ? 'Görüşme detaylarınız, Google Meet linki ve hazırlık notlarınız en kısa sürede ayrı bir e-posta ile paylaşılacaktır.' 
+            : 'Eğitim programınıza dair tüm bilgiler, erişim detayları ve içerikler en kısa sürede ayrı bir e-posta ile paylaşılacaktır.'}</p>
+          
+          <p style="margin: 0 0 16px 0; line-height: 1.8; font-size: 14px; color: #4A443F;">Herhangi bir sorunuz olursa bize Instagram üzerinden <strong>@lyra.onearth</strong> hesabından veya <strong>info@lyraonearth.com</strong> adresinden ulaşabilirsiniz.</p>
+        </td></tr>
+        
+        <!-- DIVIDER -->
+        <tr><td align="center" style="padding: 0 35px 30px 35px;">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 0;"><tr><td align="center">
+            <div style="display: inline-block; width: 50px; height: 1px; background-color: #DFC15D; vertical-align: middle;"></div>
+            <span style="color: #DFC15D; font-size: 14px; margin: 0 10px; vertical-align: middle;">✦</span>
+            <div style="display: inline-block; width: 50px; height: 1px; background-color: #DFC15D; vertical-align: middle;"></div>
+          </td></tr></table>
+          <p style="margin: 16px 0 0 0; font-size: 15px; color: #3E0A16; font-family: Georgia, serif; font-style: italic; text-align: center;">Işığınız yolunuzu aydınlatsın. ✨</p>
+          <p style="margin: 8px 0 0 0; font-size: 13px; color: #B8956A; font-weight: bold; letter-spacing: 0.05em;">Deniz Bayraktar</p>
+          <p style="margin: 2px 0 0 0; font-size: 11px; color: #9A9590; letter-spacing: 0.1em;">LYRA ON EARTH</p>
+        </td></tr>
+        
+        <!-- FOOTER -->
+        <tr><td align="center" style="background-color: #FAF8F5; border-top: 1px solid #EAD8C0; padding: 30px 20px; color: #7A7570; font-size: 12px;">
+          <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;"><tr><td align="center">
+            <a href="https://lyraonearth.com" style="color: #5B1C2A; text-decoration: none; font-weight: bold; font-size: 11px; margin: 0 12px; letter-spacing: 0.05em;">Web Sitesi</a>
+            <span style="color: #DFC15D;">•</span>
+            <a href="https://www.instagram.com/lyra.onearth/" style="color: #5B1C2A; text-decoration: none; font-weight: bold; font-size: 11px; margin: 0 12px; letter-spacing: 0.05em;">Instagram</a>
+            <span style="color: #DFC15D;">•</span>
+            <a href="https://www.youtube.com/@denizzbayraktar" style="color: #5B1C2A; text-decoration: none; font-weight: bold; font-size: 11px; margin: 0 12px; letter-spacing: 0.05em;">YouTube</a>
+          </td></tr></table>
+          <p style="margin: 0; font-size: 10px; color: #9A9590;">Bu e-posta Lyra On Earth tarafından otomatik olarak gönderilmiştir.<br>© 2026 Lyra On Earth. Tüm Hakları Saklıdır.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
+      await fetch('/api/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: formData.email,
+          subject: `✨ Teşekkürler ${formData.name} — ${product.title} Kaydınız Alındı`,
+          html: thankYouHtml,
+          text: `Sevgili ${formData.name}, ${product.title} kaydınız başarıyla alınmıştır. Detaylar en kısa sürede e-posta ile paylaşılacaktır. Sevgiler, Lyra On Earth`,
+          smtpConfig: smtpSettings
+        })
+      });
+    } catch (e) {
+      console.error('Failed to send thank you email:', e);
+    }
+
+    // Also trigger any sales automation emails
     try {
       const automations = getScheduledEmails();
       const onPurchaseAutomations = automations.filter(e => e.triggerType === 'on_purchase' && e.status === 'active');
-      
-      const smtpSettings = getSmtpSettings(); // For prototype, get config from local storage
+      const smtpSettings = getSmtpSettings();
 
       for (const auto of onPurchaseAutomations) {
         await fetch('/api/email/send', {
@@ -722,31 +813,64 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center text-center py-8 space-y-6"
+                className="flex flex-col items-center text-center py-6 space-y-5"
               >
-                <div className="w-20 h-20 rounded-none bg-gold/10 border border-gold/25 flex items-center justify-center text-gold shadow-lg shadow-gold/5">
-                  <HiOutlineMail className="text-4xl animate-pulse" />
-                </div>
+                {/* Animated success icon */}
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', damping: 12, stiffness: 200, delay: 0.2 }}
+                  className="w-20 h-20 rounded-none bg-gradient-to-br from-gold/15 to-burgundy/5 border border-gold/30 flex items-center justify-center shadow-lg shadow-gold/10 relative"
+                >
+                  <div className="absolute inset-0.5 border border-gold/10 pointer-events-none" />
+                  <svg className="w-10 h-10 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <motion.path 
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ duration: 0.6, delay: 0.5 }}
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" 
+                    />
+                  </svg>
+                </motion.div>
 
-                <div className="space-y-2">
-                  <h4 className="font-serif text-2xl text-wine font-bold uppercase tracking-wider">TALEBİNİZ ALINDI</h4>
+                {/* Thank You Title */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="space-y-2"
+                >
+                  <h4 className="font-serif text-2xl text-wine font-bold uppercase tracking-wider">Teşekkür Ederiz ✨</h4>
                   <p className="text-xs text-gold font-bold uppercase tracking-[0.2em]">
-                    {product.type === 'call' ? 'RANDEVU & ÖDEME KAYDEDİLDİ' : 'SATIN ALMA TAMAMLANDI'}
+                    {product.type === 'call' ? 'RANDEVUNUZ KAYDEDİLDİ' : 'KAYDINI BAŞARIYLA ALDIK'}
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="w-full h-px bg-gold/15" />
+                <div className="w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
 
-                <div className="bg-white/50 border border-gold/10 rounded-none p-5 text-xs text-taupe/70 leading-relaxed font-medium space-y-3 max-w-xs relative">
+                {/* Thank you message */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="bg-white/50 border border-gold/10 rounded-none p-5 text-xs text-taupe/70 leading-relaxed font-medium space-y-4 w-full relative"
+                >
                   <div className="absolute inset-0.5 border border-gold/5 pointer-events-none" />
                   
-                  <p>
-                    Sevgili <strong>{formData.name}</strong>, başvuru detaylarınız ve ödeme onayınız <strong>{formData.email}</strong> adresine gönderildi.
+                  <p className="text-[0.85rem] text-wine font-semibold font-serif">
+                    Sevgili {formData.name},
+                  </p>
+
+                  <p className="text-[0.78rem] leading-relaxed">
+                    Bu yolculuğa adım attığınız için çok mutluyuz. Sizinle birlikte çalışmak bizim için büyük bir onur.
                   </p>
                   
                   {product.type === 'call' && selectedDate && selectedTime && (
-                    <div className="p-3 bg-burgundy/5 rounded-none border border-gold/15 text-wine font-semibold flex flex-col gap-1 items-center mt-2 relative">
+                    <div className="p-3 bg-burgundy/5 rounded-none border border-gold/15 text-wine font-semibold flex flex-col gap-1 items-center relative">
                       <div className="absolute inset-0.5 border border-gold/5 pointer-events-none" />
+                      <span className="text-[0.55rem] text-gold font-bold tracking-[0.2em] uppercase mb-1">RANDEVU TARİHİNİZ</span>
                       <div className="flex items-center gap-1.5 text-xs">
                         <HiOutlineCalendar className="text-gold" />
                         <span>
@@ -763,14 +887,37 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                       </div>
                     </div>
                   )}
-                  
-                  <p className="text-[0.68rem] text-taupe/40 font-semibold italic">
-                    {product.type === 'call' 
-                      ? 'Görüşme linki (Google Meet) ve hazırlık notları mail kutunuzda olacaktır.'
-                      : 'Eğitim erişim bilgileri ve içerikler mail kutunuza gönderilecektir.'
-                    }
-                  </p>
-                </div>
+                </motion.div>
+
+                {/* Check your email notice */}
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="w-full bg-gradient-to-br from-wine/[0.04] to-gold/[0.06] border border-gold/20 rounded-none p-5 relative"
+                >
+                  <div className="absolute inset-0.5 border border-gold/8 pointer-events-none" />
+                  <div className="flex items-start gap-3 relative z-10">
+                    <div className="w-10 h-10 rounded-none bg-gold/10 border border-gold/20 flex items-center justify-center shrink-0">
+                      <HiOutlineMail className="text-lg text-gold" />
+                    </div>
+                    <div className="text-left space-y-1">
+                      <p className="text-[0.7rem] text-wine font-bold uppercase tracking-wider">
+                        Lütfen E-postanızı Kontrol Edin
+                      </p>
+                      <p className="text-[0.68rem] text-taupe/60 leading-relaxed font-medium">
+                        <strong className="text-wine">{formData.email}</strong> adresine onay ve detay bilgileri içeren bir e-posta gönderdik.
+                        {product.type === 'call' 
+                          ? ' Görüşme linki (Google Meet) ve hazırlık notları da ayrıca iletilecektir.'
+                          : ' Eğitim erişim bilgileri ve içerikler de ayrıca paylaşılacaktır.'
+                        }
+                      </p>
+                      <p className="text-[0.6rem] text-taupe/40 font-semibold italic mt-1">
+                        Spam/gereksiz klasörünü de kontrol etmeyi unutmayın.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
 
                 {/* Google Calendar Button */}
                 {(() => {
@@ -812,12 +959,23 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                   );
                 })()}
 
+                {/* Close button */}
                 <button
                   onClick={onClose}
                   className="px-6 py-3 rounded-none border border-gold/30 hover:border-wine hover:bg-wine hover:text-white text-wine text-xs font-bold uppercase tracking-widest transition-all"
                 >
                   Kapat
                 </button>
+
+                {/* Signature */}
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1 }}
+                  className="text-[0.65rem] text-taupe/30 font-semibold italic pt-2"
+                >
+                  Işığınız yolunuzu aydınlatsın. — Lyra On Earth
+                </motion.p>
               </motion.div>
             )}
 
