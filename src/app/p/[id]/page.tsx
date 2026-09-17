@@ -12,12 +12,11 @@ import {
   HiOutlineClock,
   HiOutlineChevronLeft,
   HiOutlineChevronRight,
-  HiOutlineCreditCard,
-  HiOutlineLockClosed,
   HiOutlineX,
   HiOutlineExclamationCircle
 } from 'react-icons/hi';
 import { motion, AnimatePresence } from 'framer-motion';
+import PayTRIframe from '@/components/PayTRIframe';
 import { 
   getProducts, 
   ProductItem, 
@@ -50,13 +49,9 @@ export default function ProductDetailPage({ params }: PageProps) {
   const [kvkkConsent, setKvkkConsent] = useState(false);
   const [duplicateError, setDuplicateError] = useState<string | null>(null);
 
-  // Payment form state (UI only)
-  const [paymentData, setPaymentData] = useState({
-    cardName: '',
-    cardNumber: '',
-    expiry: '',
-    cvv: '',
-  });
+  const [paytrToken, setPaytrToken] = useState<string | null>(null);
+  const [isPaytrLoading, setIsPaytrLoading] = useState(false);
+  const [paytrError, setPaytrError] = useState<string | null>(null);
 
   // Calendar State
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -87,20 +82,7 @@ export default function ProductDetailPage({ params }: PageProps) {
     );
   }
 
-  // Format card number with spaces
-  const formatCardNumber = (value: string) => {
-    const digits = value.replace(/\D/g, '').slice(0, 16);
-    return digits.replace(/(\d{4})(?=\d)/g, '$1 ');
-  };
 
-  // Format expiry: MM/YY
-  const formatExpiry = (value: string) => {
-    const digits = value.replace(/\D/g, '').slice(0, 4);
-    if (digits.length >= 3) {
-      return digits.slice(0, 2) + '/' + digits.slice(2);
-    }
-    return digits;
-  };
 
   const completeOrder = async () => {
     if (product?.type === 'call' && selectedDate && selectedTime) {
@@ -225,9 +207,45 @@ export default function ProductDetailPage({ params }: PageProps) {
       if (product.priceType === 'free' || product.price === 'Görüşme ile' || product.price === 'İletişime Geçin') {
         completeOrder();
       } else {
-        setStep(3);
+        proceedToPayment();
       }
     }
+  };
+
+  const proceedToPayment = async () => {
+    setStep(3);
+    setIsPaytrLoading(true);
+    setPaytrError(null);
+    try {
+      if (!product) return;
+      // Convert e.g. "1.500 TL" or "1500" to kuruş (150000)
+      const priceNumeric = parseInt(product.price?.replace(/[^0-9]/g, '') || '0') * 100;
+      
+      const res = await fetch('/api/paytr/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          payment_amount: priceNumeric,
+          user_name: formData.name,
+          user_address: "Adres Belirtilmemiş",
+          user_phone: formData.phone,
+          user_basket: btoa(JSON.stringify([[product.title, (priceNumeric/100).toString(), 1]])),
+          merchant_oid: 'lyra_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+        })
+      });
+      const data = await res.json();
+      if (data.token) {
+        setPaytrToken(data.token);
+      } else {
+        console.error("PayTR Token Error:", data);
+        setPaytrError(data.error || "Ödeme sistemi başlatılamadı.");
+      }
+    } catch (e) {
+      console.error(e);
+      setPaytrError(e instanceof Error ? e.message : "Bir hata oluştu.");
+    }
+    setIsPaytrLoading(false);
   };
 
   const handleBookingConfirm = () => {
@@ -235,13 +253,8 @@ export default function ProductDetailPage({ params }: PageProps) {
     if (product.price === 'Görüşme ile' || product.price === 'İletişime Geçin') {
       completeOrder();
     } else {
-      setStep(3);
+      proceedToPayment();
     }
-  };
-
-  const handlePaymentSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    completeOrder();
   };
 
   const handleBack = () => {
@@ -793,101 +806,20 @@ export default function ProductDetailPage({ params }: PageProps) {
                         </div>
                       </div>
 
-                      {/* Payment Form */}
-                      <form onSubmit={handlePaymentSubmit} className="space-y-4">
-                        <h5 className="font-serif text-sm text-wine font-semibold border-b border-gold/15 pb-1.5 mb-2 uppercase tracking-wider flex items-center gap-2">
-                          <HiOutlineCreditCard className="text-gold text-base" />
-                          Kart Bilgileri
-                        </h5>
-
-                        <div className="flex items-center gap-3 pb-2">
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-gold/10 text-[0.6rem] font-bold text-taupe/50 uppercase tracking-wider">
-                            <span className="text-base">💳</span> Visa
-                          </div>
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-gold/10 text-[0.6rem] font-bold text-taupe/50 uppercase tracking-wider">
-                            <span className="text-base">💳</span> Mastercard
-                          </div>
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-gold/10 text-[0.6rem] font-bold text-taupe/50 uppercase tracking-wider">
-                            <span className="text-base">💳</span> Troy
-                          </div>
+                      {/* Payment Form / Iframe */}
+                      {isPaytrLoading ? (
+                        <div className="py-12 flex flex-col items-center justify-center gap-4">
+                          <div className="w-8 h-8 border-2 border-wine border-t-transparent rounded-full animate-spin" />
+                          <p className="text-xs text-taupe font-bold tracking-wider uppercase">Ödeme Altyapısı Yükleniyor...</p>
                         </div>
-
-                        <div className="flex flex-col gap-1">
-                          <label className="text-[0.6rem] font-bold uppercase tracking-wider text-taupe/50">Kart Üzerindeki İsim</label>
-                          <input
-                            type="text"
-                            required
-                            placeholder="AD SOYAD"
-                            value={paymentData.cardName}
-                            onChange={(e) => setPaymentData({ ...paymentData, cardName: e.target.value.toUpperCase() })}
-                            className="w-full px-4 py-2.5 rounded-none bg-white border border-gold/15 focus:border-gold/45 focus:outline-none text-xs text-wine font-medium uppercase"
-                          />
+                      ) : paytrError ? (
+                        <div className="p-4 bg-red-50 border border-red-200 text-red-700 text-sm font-medium text-center">
+                          {paytrError}
+                          <button onClick={proceedToPayment} className="mt-4 block w-full py-2 bg-red-700 text-white text-xs font-bold uppercase tracking-wider transition-colors hover:bg-red-800">Tekrar Dene</button>
                         </div>
-
-                        <div className="flex flex-col gap-1">
-                          <label className="text-[0.6rem] font-bold uppercase tracking-wider text-taupe/50">Kart Numarası</label>
-                          <div className="relative">
-                            <input
-                              type="text"
-                              required
-                              placeholder="0000 0000 0000 0000"
-                              value={paymentData.cardNumber}
-                              onChange={(e) => setPaymentData({ ...paymentData, cardNumber: formatCardNumber(e.target.value) })}
-                              maxLength={19}
-                              className="w-full px-4 py-2.5 rounded-none bg-white border border-gold/15 focus:border-gold/45 focus:outline-none text-xs text-wine font-medium tracking-widest pr-10"
-                            />
-                            <HiOutlineCreditCard className="absolute right-3 top-1/2 -translate-y-1/2 text-gold/40 text-lg" />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="flex flex-col gap-1">
-                            <label className="text-[0.6rem] font-bold uppercase tracking-wider text-taupe/50">Son Kullanma Tarihi</label>
-                            <input
-                              type="text"
-                              required
-                              placeholder="AA/YY"
-                              value={paymentData.expiry}
-                              onChange={(e) => setPaymentData({ ...paymentData, expiry: formatExpiry(e.target.value) })}
-                              maxLength={5}
-                              className="w-full px-4 py-2.5 rounded-none bg-white border border-gold/15 focus:border-gold/45 focus:outline-none text-xs text-wine font-medium tracking-widest"
-                            />
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <label className="text-[0.6rem] font-bold uppercase tracking-wider text-taupe/50">CVV / CVC</label>
-                            <div className="relative">
-                              <input
-                                type="password"
-                                required
-                                placeholder="•••"
-                                value={paymentData.cvv}
-                                onChange={(e) => setPaymentData({ ...paymentData, cvv: e.target.value.replace(/\D/g, '').slice(0, 4) })}
-                                maxLength={4}
-                                className="w-full px-4 py-2.5 rounded-none bg-white border border-gold/15 focus:border-gold/45 focus:outline-none text-xs text-wine font-medium tracking-widest"
-                              />
-                              <HiOutlineLockClosed className="absolute right-3 top-1/2 -translate-y-1/2 text-gold/40 text-sm" />
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-2 p-3 bg-white/50 border border-gold/10 mt-2">
-                          <HiOutlineLockClosed className="text-gold text-lg shrink-0" />
-                          <p className="text-[0.6rem] text-taupe/50 font-semibold leading-relaxed">
-                            Ödeme bilgileriniz SSL 256-bit şifreleme ile korunmaktadır.
-                          </p>
-                        </div>
-
-                        <button
-                          type="submit"
-                          className="w-full py-3.5 rounded-none bg-wine hover:bg-wine/90 text-white text-xs font-bold uppercase tracking-[0.2em] hover:shadow-lg hover:shadow-wine/10 hover:scale-[1.01] active:scale-98 transition-all duration-300 mt-4 border border-wine flex items-center justify-center gap-2"
-                        >
-                          <HiOutlineLockClosed className="text-sm" />
-                          {product.price && product.price !== 'Ücretsiz' && product.price !== 'Görüşme ile' && product.price !== 'İletişime Geçin'
-                            ? `${product.price} — Ödemeyi Tamamla`
-                            : 'Satın Almayı Tamamla'
-                          }
-                        </button>
-                      </form>
+                      ) : paytrToken ? (
+                        <PayTRIframe paytrToken={paytrToken} />
+                      ) : null}
                     </motion.div>
                   )}
                 </div>
