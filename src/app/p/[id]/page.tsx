@@ -221,6 +221,14 @@ export default function ProductDetailPage({ params }: PageProps) {
       // Convert e.g. "1.500 TL" or "1500" to kuruş (150000)
       const priceNumeric = parseInt(product.price?.replace(/[^0-9]/g, '') || '0') * 100;
       
+      const safeTitle = product.title
+        .replace(/ğ/g, 'g').replace(/Ğ/g, 'G')
+        .replace(/ü/g, 'u').replace(/Ü/g, 'U')
+        .replace(/ş/g, 's').replace(/Ş/g, 'S')
+        .replace(/ı/g, 'i').replace(/İ/g, 'I')
+        .replace(/ö/g, 'o').replace(/Ö/g, 'O')
+        .replace(/ç/g, 'c').replace(/Ç/g, 'C');
+      
       const res = await fetch('/api/paytr/token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -230,7 +238,7 @@ export default function ProductDetailPage({ params }: PageProps) {
           user_name: formData.name,
           user_address: "Adres Belirtilmemiş",
           user_phone: formData.phone,
-          user_basket: [[product.title, (priceNumeric/100).toString(), 1]],
+          user_basket: [[safeTitle, (priceNumeric/100).toFixed(2), 1]],
           merchant_oid: 'lyra' + Date.now() + Math.floor(Math.random()*1000),
         })
       });
