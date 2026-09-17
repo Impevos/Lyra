@@ -204,12 +204,13 @@ export const getProducts = async (): Promise<ProductItem[]> => {
 export const saveProducts = async (products: ProductItem[]) => {
   try {
     for (const prod of products) {
+      if (!prod) continue;
       const sanitizedProd = {
-        id: prod.id,
-        title: prod.title,
-        tagline: prod.tagline,
-        image: prod.image,
-        buttonText: prod.buttonText,
+        id: prod.id || Math.random().toString(36).substr(2, 9),
+        title: prod.title || 'İsimsiz Ürün',
+        tagline: prod.tagline || '',
+        image: prod.image || '',
+        buttonText: prod.buttonText || '',
         link: prod.link,
         price: prod.price,
         section: prod.section,

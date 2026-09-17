@@ -169,12 +169,13 @@ function AdminDashboardContent() {
       if (savedProducts) {
         const localProducts: ProductItem[] = JSON.parse(savedProducts);
         for (const prod of localProducts) {
+          if (!prod) continue;
           const sanitizedProd = {
-            id: prod.id,
-            title: prod.title,
-            tagline: prod.tagline,
-            image: prod.image,
-            buttonText: prod.buttonText,
+            id: prod.id || Math.random().toString(36).substr(2, 9),
+            title: prod.title || 'İsimsiz Ürün',
+            tagline: prod.tagline || '',
+            image: prod.image || '',
+            buttonText: prod.buttonText || '',
             link: prod.link,
             price: prod.price,
             section: prod.section,
