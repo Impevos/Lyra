@@ -20,9 +20,11 @@ export async function POST(request: Request) {
     const user_basket_encoded = Buffer.from(JSON.stringify(user_basket)).toString('base64');
 
     // --- ENV ---
-    const merchant_id   = process.env.PAYTR_MERCHANT_ID!;
-    const merchant_key  = process.env.PAYTR_MERCHANT_KEY!;
-    const merchant_salt = process.env.PAYTR_MERCHANT_SALT!;
+    const merchant_id   = (process.env.PAYTR_MERCHANT_ID || '').trim();
+    const merchant_key  = (process.env.PAYTR_MERCHANT_KEY || '').trim();
+    const merchant_salt = (process.env.PAYTR_MERCHANT_SALT || '').trim();
+    
+    const safeEmail = (email || '').trim();
 
     if (!merchant_id || !merchant_key || !merchant_salt) {
       return NextResponse.json(
@@ -59,7 +61,7 @@ export async function POST(request: Request) {
       merchant_id +
       user_ip +
       merchant_oid +
-      email +
+      safeEmail +
       String(payment_amount) +
       user_basket_encoded +
       no_installment +
@@ -77,7 +79,7 @@ export async function POST(request: Request) {
       merchant_id,
       user_ip,
       merchant_oid,
-      email,
+      email: safeEmail,
       payment_amount: String(payment_amount),
       paytr_token,
       user_basket: user_basket_encoded,
