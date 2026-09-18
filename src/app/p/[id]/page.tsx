@@ -219,7 +219,7 @@ export default function ProductDetailPage({ params }: PageProps) {
     setPaytrError(null);
     try {
       if (!product) return;
-      // Convert e.g. "1.500 TL" or "1500" to kuruş (150000)
+      // Convert e.g. "2.500 TL" to kuruş (250000)
       const priceNumeric = parseInt(product.price?.replace(/[^0-9]/g, '') || '0') * 100;
       
       const safeTitle = product.title
@@ -231,6 +231,10 @@ export default function ProductDetailPage({ params }: PageProps) {
         .replace(/ç/g, 'c').replace(/Ç/g, 'C');
       
       const merchant_oid = 'lyra' + Date.now() + Math.floor(Math.random()*1000);
+
+      // Sanitize phone: PayTR requires digits only, minimum 10 digits
+      const sanitizedPhone = formData.phone.replace(/[^0-9]/g, '');
+      const safePhone = sanitizedPhone.length >= 10 ? sanitizedPhone : sanitizedPhone.padEnd(10, '0');
 
       // Save pending order to Supabase
       const { error: dbError } = await supabase.from('orders').insert([{
@@ -246,10 +250,6 @@ export default function ProductDetailPage({ params }: PageProps) {
 
       if (dbError) {
         console.error("Supabase Order Insert Error:", dbError);
-        // Continue even if logging fails, or maybe throw error? 
-        // We will continue to avoid blocking payment for db errors, 
-        // but ideally we should only proceed if db is successful.
-        // Let's proceed to ensure payment works, but log it.
       }
       
       const res = await fetch('/api/paytr/token', {
@@ -259,8 +259,8 @@ export default function ProductDetailPage({ params }: PageProps) {
           email: formData.email,
           payment_amount: priceNumeric,
           user_name: formData.name,
-          user_address: "Adres Belirtilmemiş",
-          user_phone: formData.phone,
+          user_address: "Adres Belirtilmemis",
+          user_phone: safePhone,
           user_basket: [[safeTitle, (priceNumeric/100).toFixed(2), 1]],
           merchant_oid,
         })
@@ -552,6 +552,7 @@ export default function ProductDetailPage({ params }: PageProps) {
                     <div className="flex items-center gap-1">
                       {(() => {
                         const isPaymentDisabled = product.priceType === 'free' || product.price === 'Görüşme ile' || product.price === 'İletişime Geçin';
+                        const isCallProduct = product.type === 'call';
                         const visibleSteps = [];
                         visibleSteps.push({ s: 1, label: 'Bilgiler', stepNumber: 1 });
                         if (isCallProduct) visibleSteps.push({ s: 2, label: 'Tarih', stepNumber: 2 });

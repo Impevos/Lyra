@@ -489,7 +489,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                       required
                       placeholder="05xx xxx xx xx"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/[^0-9+\s-]/g, '') })}
                       className="w-full px-4 py-2.5 rounded-none bg-white border border-gold/15 focus:border-gold/45 focus:outline-none text-xs text-wine font-medium"
                     />
                   </div>
