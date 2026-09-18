@@ -20,6 +20,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
@@ -27,12 +29,54 @@
     color: var(--color-wine);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    /* Safari overscroll fix */
+    overscroll-behavior: none;
+  }
+
+  /* Safari: remove tap highlight on mobile */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Safari: fix backdrop-filter */
+  .backdrop-blur-md,
+  .backdrop-blur-xl,
+  .backdrop-blur-sm,
+  [class*="backdrop-blur"] {
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
+
+  /* Safari: fix position sticky */
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+  }
+
+  /* Safari: fix -webkit-overflow-scrolling for smooth scroll areas */
+  .overflow-y-auto,
+  .overflow-y-scroll {
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Force rounded-none globally for our new geometric design */
   button, input, select, textarea, a.btn {
     border-radius: 0px !important;
+    /* Safari form element reset */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Safari: input type tel and email sometimes have default styling */
+  input[type="tel"],
+  input[type="email"],
+  input[type="text"],
+  input[type="password"] {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
   }
 
   /* Selection style */
@@ -41,6 +85,7 @@
     color: var(--color-wine);
   }
 }
+
 
 @layer components {
   /* Product card base */
