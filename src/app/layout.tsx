@@ -55,7 +55,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="tr" className={`${cormorant.variable} ${inter.variable} antialiased`}>
-      <body className="min-h-screen flex flex-col bg-ivory text-charcoal">
+      <body className="min-h-[100dvh] flex flex-col bg-ivory text-charcoal">
         <LayoutWrapper>
           <main className="flex-grow">{children}</main>
         </LayoutWrapper>

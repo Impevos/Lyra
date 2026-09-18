@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function PaymentFailPage() {
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-4">
+    <main className="min-h-[100dvh] bg-ivory flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-black/50 border border-red-500/30 p-8 text-center shadow-2xl relative overflow-hidden">
         {/* Glow effect */}
         <div className="absolute inset-0 bg-red-500/5 blur-3xl -z-10" />
@@ -25,6 +25,6 @@ export default function PaymentFailPage() {
           Ana Sayfaya Dön
         </Link>
       </div>
-    </div>
+    </main>
   );
 }

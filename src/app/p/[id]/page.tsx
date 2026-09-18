@@ -77,7 +77,7 @@ export default function ProductDetailPage({ params }: PageProps) {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-ivory flex items-center justify-center">
+      <div className="min-h-[100dvh] bg-ivory flex items-center justify-center">
         <div className="w-12 h-12 rounded-full border-4 border-gold/20 border-t-gold animate-spin" />
       </div>
     );
@@ -336,7 +336,7 @@ export default function ProductDetailPage({ params }: PageProps) {
   const testimonials = product.testimonialImages || [];
 
   return (
-    <main className="min-h-screen bg-ivory">
+    <main className="min-h-[100dvh] bg-ivory">
       {/* Subtle background */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-b from-gold/[0.03] to-transparent rounded-full blur-[120px]" />

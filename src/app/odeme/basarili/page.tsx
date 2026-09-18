@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function PaymentSuccessPage() {
   return (
-    <div className="min-h-screen bg-ivory flex flex-col items-center justify-center p-4 relative">
+    <div className="min-h-[100dvh] bg-ivory flex flex-col items-center justify-center p-4 relative">
       {/* Subtle background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-to-b from-gold/[0.04] to-transparent rounded-full blur-[100px]" />

@@ -25,7 +25,7 @@ export default function HomePage() {
   const freeProducts = products.filter(p => p.priceType === 'free');
 
   return (
-    <main className="min-h-screen bg-ivory flex flex-col items-center">
+    <main className="min-h-[100dvh] bg-ivory flex flex-col items-center">
       {/* Subtle background texture */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-b from-gold/[0.03] to-transparent rounded-full blur-[120px]" />
