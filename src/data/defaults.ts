@@ -280,50 +280,237 @@ export interface AppointmentData {
   aboutSelf?: string;
 }
 
-export const getAppointments = (): AppointmentData[] => {
-  if (typeof window === 'undefined') return [];
-  const saved = localStorage.getItem('custom_appointments');
-  if (saved) return JSON.parse(saved);
-  return [];
-};
+export const getAppointments = async (): Promise<AppointmentData[]> => {
+  let list: AppointmentData[] = [];
 
-export const saveAppointment = (appointment: Omit<AppointmentData, 'id' | 'createdAt'>) => {
-  if (typeof window !== 'undefined') {
-    const appointments = getAppointments();
-    const newAppointment: AppointmentData = {
-      ...appointment,
-      id: 'ap_' + Math.random().toString(36).substr(2, 9),
-      createdAt: new Date().toISOString(),
-    };
-    localStorage.setItem('custom_appointments', JSON.stringify([...appointments, newAppointment]));
+  // 1. Try fetching from Supabase appointments table
+  try {
+    const { data, error } = await supabase.from('appointments').select('*').order('created_at', { ascending: false });
+    if (!error && data && data.length > 0) {
+      list = data.map((d: any) => ({
+        id: d.id,
+        productId: d.product_id,
+        productTitle: d.product_title,
+        name: d.name,
+        email: d.email,
+        phone: d.phone,
+        instagram: d.instagram,
+        date: d.date,
+        time: d.time,
+        createdAt: d.created_at,
+        expectations: d.expectations,
+        aboutSelf: d.about_self
+      }));
+    }
+  } catch (err) {
+    // Non-blocking fallback
   }
+
+  // 2. Also include registrations from Supabase orders table
+  try {
+    const { data: orderData, error: orderError } = await supabase.from('orders').select('*').order('created_at', { ascending: false });
+    if (!orderError && orderData && orderData.length > 0) {
+      const existingIds = new Set(list.map(a => a.id));
+      const existingEmailAndProduct = new Set(list.map(a => `${a.email}_${a.productId}`));
+
+      for (const ord of orderData) {
+        const key = `${ord.customer_email}_${ord.product_id}`;
+        if (!existingIds.has(ord.merchant_oid) && !existingEmailAndProduct.has(key)) {
+          list.push({
+            id: ord.merchant_oid || ord.id,
+            productId: ord.product_id || '',
+            productTitle: ord.product_title || 'Sipariş / Kayıt',
+            name: ord.customer_name || '',
+            email: ord.customer_email || '',
+            phone: ord.customer_phone || '',
+            instagram: '',
+            date: new Date(ord.created_at).toLocaleDateString('tr-TR'),
+            time: new Date(ord.created_at).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+            createdAt: ord.created_at,
+          });
+          existingEmailAndProduct.add(key);
+        }
+      }
+    }
+  } catch (err) {
+    // Non-blocking fallback
+  }
+
+  // 3. Merge with localStorage appointments to ensure nothing is missed
+  if (typeof window !== 'undefined') {
+    try {
+      const saved = localStorage.getItem('custom_appointments');
+      if (saved) {
+        const localList: AppointmentData[] = JSON.parse(saved);
+        const existingKeys = new Set(list.map(a => `${a.email}_${a.productId}`));
+        for (const item of localList) {
+          if (!existingKeys.has(`${item.email}_${item.productId}`)) {
+            list.push(item);
+          }
+        }
+      }
+    } catch (e) {
+      console.warn('localStorage getAppointments failed', e);
+    }
+  }
+
+  return list;
 };
 
-export const checkDuplicateFreeRegistration = async (email: string, phone: string, instagram: string): Promise<boolean> => {
-  if (typeof window === 'undefined') return false;
-  const appointments = getAppointments();
+export const saveAppointment = async (appointment: Omit<AppointmentData, 'id' | 'createdAt'>) => {
+  const newAppointment: AppointmentData = {
+    ...appointment,
+    id: 'ap_' + Math.random().toString(36).substr(2, 9),
+    createdAt: new Date().toISOString(),
+  };
+
+  // 1. Save to localStorage for instant local availability
+  if (typeof window !== 'undefined') {
+    try {
+      const saved = localStorage.getItem('custom_appointments');
+      const currentList = saved ? JSON.parse(saved) : [];
+      localStorage.setItem('custom_appointments', JSON.stringify([...currentList, newAppointment]));
+    } catch (e) {
+      console.warn('localStorage saveAppointment failed', e);
+    }
+  }
+
+  // 2. Persist customer registration to Supabase orders table
+  try {
+    const { error: orderError } = await supabase.from('orders').insert({
+      merchant_oid: `lead_${Date.now()}_${Math.random().toString(36).substr(2, 6)}`,
+      product_id: appointment.productId,
+      product_title: appointment.productTitle,
+      customer_name: appointment.name,
+      customer_email: appointment.email,
+      customer_phone: appointment.phone || appointment.instagram || '',
+      amount: 0,
+      status: 'completed'
+    });
+    if (orderError) console.warn('Supabase orders lead insert warning:', orderError);
+  } catch (err) {
+    console.warn('Could not save customer to orders table:', err);
+  }
+
+  // 3. Persist to Supabase appointments table if created
+  try {
+    const { error: apptError } = await supabase.from('appointments').insert({
+      id: newAppointment.id,
+      product_id: newAppointment.productId,
+      product_title: newAppointment.productTitle,
+      name: newAppointment.name,
+      email: newAppointment.email,
+      phone: newAppointment.phone,
+      instagram: newAppointment.instagram,
+      date: newAppointment.date,
+      time: newAppointment.time,
+      expectations: newAppointment.expectations || null,
+      about_self: newAppointment.aboutSelf || null,
+    });
+    if (apptError && !apptError.message.includes('Could not find')) {
+      console.warn('Supabase appointments insert warning:', apptError);
+    }
+  } catch (err) {
+    // Graceful fallback if table is not yet created in Supabase
+  }
+
+  return newAppointment;
+};
+
+export const checkDuplicateFreeCall = async (email: string, phone: string, instagram: string): Promise<boolean> => {
+  const normalizeIg = (ig: string) => ig ? ig.replace(/^@/, '').toLowerCase().trim() : '';
+  const normalizePhone = (ph: string) => ph ? ph.replace(/\s+/g, '').replace(/[^0-9+]/g, '').trim() : '';
+  const normalizeEmail = (em: string) => em ? em.toLowerCase().trim() : '';
+
+  const cleanEmail = normalizeEmail(email);
+  const cleanPhone = normalizePhone(phone);
+  const cleanIg = normalizeIg(instagram);
+
   const products = await getProducts();
-  const freeProductIds = new Set(products.filter(p => p.priceType === 'free').map(p => p.id));
-  
-  const freeAppointments = appointments.filter(a => freeProductIds.has(a.productId));
-  
-  const normalizeIg = (ig: string) => ig.replace(/^@/, '').toLowerCase().trim();
-  const normalizePhone = (ph: string) => ph.replace(/\s+/g, '').replace(/[^0-9+]/g, '').trim();
-  const normalizeEmail = (em: string) => em.toLowerCase().trim();
-  
-  return freeAppointments.some(a => {
-    if (email && a.email && normalizeEmail(a.email) === normalizeEmail(email)) return true;
-    if (phone && a.phone && normalizePhone(a.phone) === normalizePhone(phone)) return true;
-    if (instagram && a.instagram && normalizeIg(a.instagram) === normalizeIg(instagram)) return true;
+  const freeCallProductIds = new Set(
+    products
+      .filter(p => p.priceType === 'free' && p.type === 'call')
+      .map(p => p.id)
+  );
+
+  // If there are no free call products configured, nothing is blocked
+  if (freeCallProductIds.size === 0) {
     return false;
-  });
+  }
+
+  // 1. Check Supabase orders table
+  try {
+    const { data: orders } = await supabase.from('orders').select('*');
+    if (orders && orders.length > 0) {
+      const hasDuplicateOrder = orders.some((ord: any) => {
+        if (!freeCallProductIds.has(ord.product_id)) return false;
+        if (cleanEmail && ord.customer_email && normalizeEmail(ord.customer_email) === cleanEmail) return true;
+        if (cleanPhone && ord.customer_phone && normalizePhone(ord.customer_phone) === cleanPhone) return true;
+        return false;
+      });
+      if (hasDuplicateOrder) return true;
+    }
+  } catch (err) {
+    console.warn('Supabase checkDuplicateFreeCall order check warning:', err);
+  }
+
+  // 2. Check Supabase appointments table
+  try {
+    const { data: appts } = await supabase.from('appointments').select('*');
+    if (appts && appts.length > 0) {
+      const hasDuplicateAppt = appts.some((a: any) => {
+        if (!freeCallProductIds.has(a.product_id)) return false;
+        if (cleanEmail && a.email && normalizeEmail(a.email) === cleanEmail) return true;
+        if (cleanPhone && a.phone && normalizePhone(a.phone) === cleanPhone) return true;
+        if (cleanIg && a.instagram && normalizeIg(a.instagram) === cleanIg) return true;
+        return false;
+      });
+      if (hasDuplicateAppt) return true;
+    }
+  } catch (err) {
+    // Non-blocking
+  }
+
+  // 3. Check localStorage appointments
+  if (typeof window !== 'undefined') {
+    try {
+      const saved = localStorage.getItem('custom_appointments');
+      if (saved) {
+        const localAppts: AppointmentData[] = JSON.parse(saved);
+        const hasDuplicateLocal = localAppts.some(a => {
+          if (!freeCallProductIds.has(a.productId)) return false;
+          if (cleanEmail && a.email && normalizeEmail(a.email) === cleanEmail) return true;
+          if (cleanPhone && a.phone && normalizePhone(a.phone) === cleanPhone) return true;
+          if (cleanIg && a.instagram && normalizeIg(a.instagram) === cleanIg) return true;
+          return false;
+        });
+        if (hasDuplicateLocal) return true;
+      }
+    } catch (e) {}
+  }
+
+  return false;
 };
 
-export const deleteAppointment = (id: string) => {
+// Kept as alias for backwards compatibility
+export const checkDuplicateFreeRegistration = checkDuplicateFreeCall;
+
+export const deleteAppointment = async (id: string) => {
   if (typeof window !== 'undefined') {
-    const appointments = getAppointments();
-    localStorage.setItem('custom_appointments', JSON.stringify(appointments.filter((a) => a.id !== id)));
+    try {
+      const saved = localStorage.getItem('custom_appointments');
+      if (saved) {
+        const appointments: AppointmentData[] = JSON.parse(saved);
+        localStorage.setItem('custom_appointments', JSON.stringify(appointments.filter((a) => a.id !== id)));
+      }
+    } catch (e) {}
   }
+  try {
+    await supabase.from('appointments').delete().eq('id', id);
+  } catch (e) {}
+  try {
+    await supabase.from('orders').delete().or(`merchant_oid.eq.${id},id.eq.${id}`);
+  } catch (e) {}
 };
 
 export interface SmtpSettings {
@@ -396,8 +583,8 @@ export const getScheduledEmails = (): ScheduledEmail[] => {
       id: 'se_2',
       targetType: 'all',
       targetValue: 'all',
-      subject: 'Siparişiniz Alındı - Lyra On Earth ✨',
-      body: 'Merhaba,\n\nSatın alma işleminiz başarıyla tamamlanmıştır. Hizmet/Eğitim detaylarına erişim bilgileriniz ve ilgili dökümanlar yakında sizinle paylaşılacaktır.\n\nIşık ve sevgiyle,\nLyra On Earth',
+      subject: 'Kaydınız Alındı ✨ - Lyra On Earth',
+      body: 'Merhaba,\n\nLyra On Earth bünyesindeki program ve eğitimlerimize kaydınız başarıyla tamamlanmıştır.\n\nSürecin sonraki adımları, canlı oturum bağlantıları, ilgili çalışma dokümanları ve erişim detayları en kısa sürede bu e-posta adresiniz üzerinden sizinle paylaşılacaktır.\n\nHerhangi bir sorunuz veya danışmak istediğiniz bir husus olursa @lyra.onearth Instagram hesabımızdan veya info@lyraonearth.com üzerinden bize dilediğiniz an ulaşabilirsiniz.\n\nIşık ve sevgiyle,\nDeniz Bayraktar — Lyra On Earth',
       scheduleType: 'one-time',
       scheduleValue: 'Anında',
       status: 'active',

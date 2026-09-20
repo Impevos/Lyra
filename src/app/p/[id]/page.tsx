@@ -8,12 +8,13 @@ import {
   HiOutlineArrowLeft, 
   HiOutlineShieldCheck, 
   HiOutlineMail, 
-  HiOutlineCalendar,
+  HiOutlineCalendar, 
   HiOutlineClock,
   HiOutlineChevronLeft,
   HiOutlineChevronRight,
   HiOutlineX,
-  HiOutlineExclamationCircle
+  HiOutlineExclamationCircle,
+  HiCheck
 } from 'react-icons/hi';
 import { motion, AnimatePresence } from 'framer-motion';
 import PayTRIframe from '@/components/PayTRIframe';
@@ -22,6 +23,7 @@ import {
   ProductItem, 
   saveAppointment, 
   getAppointments,
+  checkDuplicateFreeCall,
   checkDuplicateFreeRegistration,
   getScheduledEmails,
   getSmtpSettings
@@ -83,16 +85,18 @@ export default function ProductDetailPage({ params }: PageProps) {
     );
   }
 
-
-
   const completeOrder = async () => {
+    let dateStr = '';
+    let timeStr = '';
+
     if (product?.type === 'call' && selectedDate && selectedTime) {
-      const dateStr = selectedDate.toLocaleDateString('tr-TR', {
+      dateStr = selectedDate.toLocaleDateString('tr-TR', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric'
       });
-      saveAppointment({
+      timeStr = selectedTime;
+      await saveAppointment({
         productId: product.id,
         productTitle: product.title,
         name: formData.name,
@@ -106,16 +110,16 @@ export default function ProductDetailPage({ params }: PageProps) {
       });
     } else if (product) {
       const now = new Date();
-      const dateStr = now.toLocaleDateString('tr-TR', {
+      dateStr = now.toLocaleDateString('tr-TR', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric'
       });
-      const timeStr = now.toLocaleTimeString('tr-TR', {
+      timeStr = now.toLocaleTimeString('tr-TR', {
         hour: '2-digit',
         minute: '2-digit'
       });
-      saveAppointment({
+      await saveAppointment({
         productId: product.id,
         productTitle: product.title,
         name: formData.name,
@@ -129,56 +133,36 @@ export default function ProductDetailPage({ params }: PageProps) {
       });
     }
 
-    // Google Calendar API'ye kaydet (Geçici olarak devre dışı bırakıldı)
-    /* 
-    if (product?.type === 'call' && selectedDate && selectedTime) {
-      try {
-        const dateStr = selectedDate.toLocaleDateString('tr-TR', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric'
-        });
-        await fetch('/api/calendar', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            productTitle: product.title,
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            instagram: formData.instagram,
-            expectations: formData.expectations,
-            aboutSelf: formData.aboutSelf,
-            date: dateStr,
-            time: selectedTime,
-          })
-        });
-      } catch (e) {
-        console.error('Failed to add to Google Calendar:', e);
-      }
-    }
-    */
-
-    // Trigger Sales Automation Email
+    // Trigger Sales Automation Email with Subject-Specific Details
     try {
-      const automations = getScheduledEmails();
-      const onPurchaseAutomations = automations.filter(e => e.triggerType === 'on_purchase' && e.status === 'active');
       const smtpSettings = getSmtpSettings();
 
-      for (const auto of onPurchaseAutomations) {
-        await fetch('/api/email/send', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            to: formData.email,
-            subject: auto.subject,
-            text: auto.body,
-            smtpConfig: smtpSettings
-          })
-        });
+      let emailSubject = `✨ Kaydınız Alındı: ${product.title}`;
+      let emailBody = '';
+
+      if (product.type === 'call') {
+        emailSubject = `✨ Randevu Onayı: ${product.title}`;
+        emailBody = `Sevgili ${formData.name},\n\n"${product.title}" için randevu başvurunuz ve kaydınız başarıyla tamamlanmıştır.\n\nRandevu Detayları:\nTarih: ${dateStr}\nSaat: ${timeStr}\n\nGörüşme Öncesi Bilgilendirme:\nBireysel görüşmemiz çevrimiçi platform (Zoom) üzerinden gerçekleştirilecektir. Oturum öncesinde sessiz, dikkatinizi dağıtmayacak bir alan oluşturmanız ve sürece niyetinizi belirleyerek başlamanız tavsiye edilir.\n\nHerhangi bir sorunuz olursa @lyra.onearth Instagram hesabımızdan veya info@lyraonearth.com e-posta adresimizden bize dilediğiniz zaman ulaşabilirsiniz.\n\nIşık ve sevgiyle,\nDeniz Bayraktar — Lyra On Earth`;
+      } else if (product.downloadUrl) {
+        emailSubject = `✨ İndirme Bağlantınız: ${product.title}`;
+        emailBody = `Sevgili ${formData.name},\n\n"${product.title}" rehberine kaydınız başarıyla tamamlanmıştır.\n\nRehberinizi aşağıdaki bağlantıya tıklayarak hemen indirebilirsiniz:\nhttps://lyraonearth.com${product.downloadUrl}\n\nİçerik Hakkında:\n${product.tagline || product.description}\n\nBu kadim bilginin yolculuğunuza ışık tutmasını diliyoruz. Herhangi bir sorunuz olursa @lyra.onearth Instagram hesabımızdan veya info@lyraonearth.com üzerinden dilediğiniz an bizimle iletişime geçebilirsiniz.\n\nIşık ve sevgiyle,\nDeniz Bayraktar — Lyra On Earth`;
+      } else {
+        emailSubject = `✨ Program Kaydınız Alındı: ${product.title}`;
+        emailBody = `Sevgili ${formData.name},\n\n"${product.title}" programımıza kaydınız başarıyla tamamlanmıştır.\n\nProgram Bilgisi & Süreç:\n${product.tagline}\n\nSonraki Adımlar:\nCanlı ders oturumları, grup davetiyesi ve çalışma materyalleriniz en kısa sürede bu e-posta adresiniz ve telefonunuz üzerinden sizinle paylaşılacaktır.\n\nHerhangi bir sorunuz olursa @lyra.onearth Instagram hesabımızdan veya info@lyraonearth.com e-posta adresimizden bize dilediğiniz zaman ulaşabilirsiniz.\n\nIşık ve sevgiyle,\nDeniz Bayraktar — Lyra On Earth`;
       }
+
+      await fetch('/api/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: formData.email,
+          subject: emailSubject,
+          text: emailBody,
+          smtpConfig: smtpSettings
+        })
+      });
     } catch (e) {
-      console.error('Failed to trigger sales automation:', e);
+      console.error('Failed to trigger tailored sales email:', e);
     }
 
     setStep(4);
@@ -188,16 +172,16 @@ export default function ProductDetailPage({ params }: PageProps) {
     e.preventDefault();
     setDuplicateError(null);
 
-    // Check duplicate for free products
-    if (product.priceType === 'free') {
-      // For free digital products, enforce one registration per person
-      const isDuplicate = await checkDuplicateFreeRegistration(
+    // Check duplicate: ONLY for free consultation / call products!
+    // Free digital products (guides, PDFs) are UNLIMITED as requested.
+    if (product.priceType === 'free' && product.type === 'call') {
+      const isDuplicate = await checkDuplicateFreeCall(
         formData.email,
         formData.phone,
         formData.instagram
       );
       if (isDuplicate) {
-        setDuplicateError('Daha önce ücretsiz eğitim hakkınızı kullandınız. Her kişi yalnızca 1 ücretsiz eğitim alabilir.');
+        setDuplicateError('Daha önce ücretsiz bireysel görüşme hakkınızdan faydalandınız. Her katılımcı yalnızca 1 kez ücretsiz görüşme alabilir.');
         return;
       }
     }
@@ -685,30 +669,57 @@ export default function ProductDetailPage({ params }: PageProps) {
                         />
                       </div>
 
-                      {/* Free product notice */}
-                      {isFreeProduct && (
-                        <div className="p-3 bg-gold/5 border border-gold/15 text-[0.7rem] text-wine/70 font-semibold flex items-start gap-2">
-                          <HiOutlineExclamationCircle className="text-gold text-lg shrink-0 mt-0.5" />
-                          Her kişi yalnızca 1 ücretsiz eğitim alabilir. Aynı e-posta, telefon veya Instagram ile tekrar kayıt yapılamaz.
+                      {/* Free call notice */}
+                      {isFreeProduct && isCallProduct && (
+                        <div className="p-3 bg-[#A39B94]/10 border border-[#A39B94]/25 text-[0.7rem] text-wine font-semibold flex items-start gap-2">
+                          <HiOutlineExclamationCircle className="text-[#A39B94] text-lg shrink-0 mt-0.5" />
+                          Ücretsiz bireysel görüşme hakkından her katılımcı yalnızca 1 kez faydalanabilir.
                         </div>
                       )}
 
-                      {/* KVKK Consent */}
-                      <div className="flex items-start gap-2.5 p-3 bg-white/50 border border-gold/10 mt-2">
-                        <input
-                          type="checkbox"
-                          id="kvkk-consent"
-                          required
-                          checked={kvkkConsent}
-                          onChange={(e) => setKvkkConsent(e.target.checked)}
-                          className="mt-0.5 accent-wine w-4 h-4 shrink-0 cursor-pointer"
-                        />
-                        <label htmlFor="kvkk-consent" className="text-[0.65rem] text-taupe/60 leading-relaxed cursor-pointer">
-                          <Link href="/sozlesmeler#mesafeli" target="_blank" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">Mesafeli Satış Sözleşmesi</Link>,{' '}
-                          <Link href="/teslimat-ve-iade" target="_blank" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">İptal, İade ve Teslimat Koşulları</Link>
+                      {/* KVKK Consent Interactive Box */}
+                      <div 
+                        onClick={() => setKvkkConsent(!kvkkConsent)}
+                        className={`flex items-start gap-3 p-3.5 bg-white/80 hover:bg-white border transition-all mt-2 cursor-pointer select-none ${
+                          kvkkConsent ? 'border-wine/40 bg-white/95 shadow-sm' : 'border-[#A39B94]/30 hover:border-[#A39B94]/60'
+                        }`}
+                      >
+                        <div 
+                          className={`w-5 h-5 min-w-[20px] mt-0.5 border flex items-center justify-center transition-all ${
+                            kvkkConsent 
+                              ? 'bg-wine border-wine text-white' 
+                              : 'bg-white border-[#A39B94]/60'
+                          }`}
+                        >
+                          {kvkkConsent && <HiCheck className="w-4 h-4 text-white stroke-[2.5]" />}
+                        </div>
+                        <span className="text-[0.7rem] text-charcoal/80 leading-relaxed select-none">
+                          <Link 
+                            href="/sozlesmeler#mesafeli" 
+                            target="_blank" 
+                            onClick={(e) => e.stopPropagation()} 
+                            className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors"
+                          >
+                            Mesafeli Satış Sözleşmesi
+                          </Link>,{' '}
+                          <Link 
+                            href="/teslimat-ve-iade" 
+                            target="_blank" 
+                            onClick={(e) => e.stopPropagation()} 
+                            className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors"
+                          >
+                            İptal, İade ve Teslimat Koşulları
+                          </Link>
                           {' '}ve{' '}
-                          <Link href="/kvkk" target="_blank" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">KVKK Aydınlatma Metni</Link>&apos;ni okudum, onaylıyorum.
-                        </label>
+                          <Link 
+                            href="/kvkk" 
+                            target="_blank" 
+                            onClick={(e) => e.stopPropagation()} 
+                            className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors"
+                          >
+                            KVKK Aydınlatma Metni
+                          </Link>&apos;ni okudum, onaylıyorum.
+                        </span>
                       </div>
 
                       <button

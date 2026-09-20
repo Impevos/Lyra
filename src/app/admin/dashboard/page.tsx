@@ -181,7 +181,7 @@ function AdminDashboardContent() {
       setProducts(await getProducts());
       setProfile(await getProfile());
       setVideos(getVideos());
-      setAppointments(getAppointments());
+      setAppointments(await getAppointments());
     };
     loadData();
     
@@ -417,9 +417,9 @@ function AdminDashboardContent() {
   };
 
   // Appointment Delete
-  const handleAppointmentDelete = (id: string) => {
+  const handleAppointmentDelete = async (id: string) => {
     if (window.confirm('Bu randevu başvurusunu silmek istediğinize emin misiniz?')) {
-      deleteAppointment(id);
+      await deleteAppointment(id);
       setAppointments(appointments.filter((a) => a.id !== id));
       showNotification('Başvuru silindi.');
     }

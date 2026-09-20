@@ -29,46 +29,56 @@ async function sendThankYouEmail(to: string, name: string, productTitle: string,
 <body style="background-color: #FDFCF7; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #FDFCF7; padding: 40px 10px;">
     <tr><td align="center">
-      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border: 1px solid #DFC15D; box-shadow: 0 10px 30px rgba(91,28,42,0.06); overflow: hidden;">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border: 1px solid #A39B94; box-shadow: 0 10px 30px rgba(91,28,42,0.06); overflow: hidden;">
         <!-- HEADER -->
-        <tr><td align="center" style="background: linear-gradient(135deg, #4A121E 0%, #5B1C2A 100%); padding: 45px 20px; border-bottom: 2px solid #DFC15D;">
+        <tr><td align="center" style="background: linear-gradient(135deg, #4A121E 0%, #5B1C2A 100%); padding: 45px 20px; border-bottom: 2px solid #A39B94;">
           <img src="https://lyraonearth.com/Lyra-Logo-White.png" alt="Lyra On Earth" style="height: 60px; width: auto; display: block; margin-bottom: 16px;" />
-          <p style="margin: 0; font-size: 11px; color: #DFC15D; letter-spacing: 0.3em; text-transform: uppercase; font-weight: bold;">TEŞEKKÜR EDERİZ</p>
+          <p style="margin: 0; font-size: 11px; color: #A39B94; letter-spacing: 0.3em; text-transform: uppercase; font-weight: bold;">TEŞEKKÜR EDERİZ</p>
         </td></tr>
         <!-- ACCENT LINE -->
-        <tr><td style="height: 3px; background: linear-gradient(90deg, #DFC15D, #A39B94, #DFC15D);"></td></tr>
+        <tr><td style="height: 3px; background: linear-gradient(90deg, #A39B94, #E5E0DC, #A39B94);"></td></tr>
         <!-- CONTENT -->
         <tr><td style="padding: 45px 35px 20px 35px; color: #3A3530; font-size: 15px;">
           <h1 style="margin: 0 0 8px 0; font-size: 22px; color: #3E0A16; font-family: Georgia, serif; font-weight: bold; text-align: center;">Sevgili ${name},</h1>
           <p style="margin: 0 0 24px 0; text-align: center; font-size: 13px; color: #A39B94; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">ÖDEMENİZ BAŞARIYLA ALINDI</p>
           <!-- PRODUCT BOX -->
           <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 24px;">
-            <tr><td style="padding: 20px 24px; background-color: #FBF8F4; border: 1px solid #EAD8C0;">
+            <tr><td style="padding: 20px 24px; background-color: #FBF8F4; border: 1px solid #E5E0DC;">
               <p style="margin: 0 0 4px 0; font-size: 11px; color: #A39B94; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">SATIN ALINAN</p>
               <p style="margin: 0; font-size: 18px; color: #3E0A16; font-weight: bold; font-family: Georgia, serif;">${productTitle}</p>
               ${amountStr ? `<p style="margin: 6px 0 0 0; font-size: 13px; color: #A39B94; font-weight: bold;">${amountStr}</p>` : ''}
             </td></tr>
           </table>
-          <p style="margin: 0 0 16px 0; line-height: 1.8; font-size: 14px; color: #4A443F;">Bu yolculuğa adım attığınız için çok mutluyuz. Sizinle birlikte çalışmak bizim için büyük bir onur.</p>
-          <p style="margin: 0 0 16px 0; line-height: 1.8; font-size: 14px; color: #4A443F;">Eğitim programınıza dair tüm bilgiler, erişim detayları ve içerikler en kısa sürede ayrı bir e-posta ile paylaşılacaktır.</p>
-          <p style="margin: 0 0 16px 0; line-height: 1.8; font-size: 14px; color: #4A443F;">Herhangi bir sorunuz olursa <strong>@lyra.onearth</strong> Instagram hesabından veya <strong>info@lyraonearth.com</strong> adresinden ulaşabilirsiniz.</p>
+          <p style="margin: 0 0 16px 0; line-height: 1.8; font-size: 14px; color: #4A443F;">Bu dönüşüm yolculuğuna adım attığınız için çok mutluyuz. Sizinle birlikte derinleşmek bizim için büyük bir onur.</p>
+          
+          <!-- PROGRAM BILGILENDIRME KARTI -->
+          <div style="margin: 24px 0; padding: 20px 22px; background-color: #FAF8F5; border-left: 3px solid #A39B94; font-size: 13px; color: #4A443F; line-height: 1.8;">
+            <p style="margin: 0 0 10px 0; font-weight: bold; color: #3E0A16; font-family: Georgia, serif; font-size: 14px;">Program Süreci ve Sonraki Adımlar:</p>
+            <ul style="margin: 0; padding-left: 18px; color: #5A544F;">
+              <li style="margin-bottom: 8px;"><strong>Grup & Canlı Oturum Bağlantıları:</strong> Zoom oturum bağlantıları ve özel grup davetiyesi, kayıt sırasında belirttiğiniz iletişim bilgileriniz üzerinden paylaşılacaktır.</li>
+              <li style="margin-bottom: 8px;"><strong>Materyaller & Kayıtlar:</strong> Program kapsamındaki pratik dokümanları, meditasyonlar ve çalışma yönergeleri periyodik olarak iletilecektir.</li>
+              <li><strong>Hazırlık:</strong> Ders ve seanslar öncesinde sessiz, dikkatinizi dağıtmayacak bir alan oluşturmanız ve sürece niyetinizi netleştirerek başlamanız önerilir.</li>
+            </ul>
+          </div>
+
+          <p style="margin: 0 0 16px 0; line-height: 1.8; font-size: 14px; color: #4A443F;">Herhangi bir sorunuz veya danışmak istediğiniz bir husus olursa <strong>@lyra.onearth</strong> Instagram hesabımızdan veya <strong>info@lyraonearth.com</strong> e-posta adresimizden bize dilediğiniz an ulaşabilirsiniz.</p>
         </td></tr>
         <!-- DIVIDER & SIGNATURE -->
         <tr><td align="center" style="padding: 0 35px 30px 35px;">
           <table border="0" cellpadding="0" cellspacing="0" width="100%"><tr><td align="center">
-            <div style="display:inline-block;width:50px;height:1px;background:#DFC15D;vertical-align:middle;"></div>
-            <span style="color:#DFC15D;font-size:14px;margin:0 10px;vertical-align:middle;">✦</span>
-            <div style="display:inline-block;width:50px;height:1px;background:#DFC15D;vertical-align:middle;"></div>
+            <div style="display:inline-block;width:50px;height:1px;background:#A39B94;vertical-align:middle;"></div>
+            <span style="color:#A39B94;font-size:14px;margin:0 10px;vertical-align:middle;">✦</span>
+            <div style="display:inline-block;width:50px;height:1px;background:#A39B94;vertical-align:middle;"></div>
           </td></tr></table>
           <p style="margin: 16px 0 0 0; font-size: 15px; color: #3E0A16; font-family: Georgia, serif; font-style: italic; text-align: center;">Işığınız yolunuzu aydınlatsın. ✨</p>
           <p style="margin: 8px 0 0 0; font-size: 13px; color: #A39B94; font-weight: bold;">Deniz Bayraktar</p>
           <p style="margin: 2px 0 0 0; font-size: 11px; color: #9A9590; letter-spacing: 0.1em;">LYRA ON EARTH</p>
         </td></tr>
         <!-- FOOTER -->
-        <tr><td align="center" style="background-color: #FAF8F5; border-top: 1px solid #EAD8C0; padding: 30px 20px; font-size: 11px; color: #9A9590;">
+        <tr><td align="center" style="background-color: #FAF8F5; border-top: 1px solid #E5E0DC; padding: 30px 20px; font-size: 11px; color: #9A9590;">
           <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 16px;"><tr><td align="center">
             <a href="https://lyraonearth.com" style="color: #5B1C2A; text-decoration: none; font-weight: bold; margin: 0 12px;">Web Sitesi</a>
-            <span style="color: #DFC15D;">•</span>
+            <span style="color: #A39B94;">•</span>
             <a href="https://www.instagram.com/lyra.onearth/" style="color: #5B1C2A; text-decoration: none; font-weight: bold; margin: 0 12px;">Instagram</a>
           </td></tr></table>
           <p style="margin: 0;">Bu e-posta Lyra On Earth tarafından otomatik olarak gönderilmiştir.<br>© 2026 Lyra On Earth. Tüm Hakları Saklıdır.</p>

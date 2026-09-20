@@ -23,11 +23,11 @@ function wrapInTemplate(text: string, subject: string) {
     <tr>
       <td align="center">
         <!-- OUTER BORDER BOX FOR LUXURY LOOK -->
-        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border: 1px solid #DFC15D; box-shadow: 0 10px 30px rgba(91, 28, 42, 0.06); overflow: hidden;">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border: 1px solid #A39B94; box-shadow: 0 10px 30px rgba(91, 28, 42, 0.06); overflow: hidden;">
           
           <!-- TOP GLOWING WINE HEADER -->
           <tr>
-            <td align="center" style="background: linear-gradient(135deg, #4A121E 0%, #5B1C2A 100%); background-color: #5B1C2A; padding: 40px 20px; border-bottom: 2px solid #DFC15D;">
+            <td align="center" style="background: linear-gradient(135deg, #4A121E 0%, #5B1C2A 100%); background-color: #5B1C2A; padding: 40px 20px; border-bottom: 2px solid #A39B94;">
               <img src="https://lyraonearth.com/Lyra-Logo-White.png" alt="Lyra On Earth" style="height: 70px; width: auto; display: block;" />
             </td>
           </tr>
@@ -41,9 +41,9 @@ function wrapInTemplate(text: string, subject: string) {
               <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin: 35px 0;">
                 <tr>
                   <td align="center">
-                    <div style="display: inline-block; width: 50px; height: 1px; background-color: #DFC15D; vertical-align: middle;"></div>
-                    <span style="color: #DFC15D; font-size: 14px; margin: 0 10px; vertical-align: middle;">✦</span>
-                    <div style="display: inline-block; width: 50px; height: 1px; background-color: #DFC15D; vertical-align: middle;"></div>
+                    <div style="display: inline-block; width: 50px; height: 1px; background-color: #A39B94; vertical-align: middle;"></div>
+                    <span style="color: #A39B94; font-size: 14px; margin: 0 10px; vertical-align: middle;">✦</span>
+                    <div style="display: inline-block; width: 50px; height: 1px; background-color: #A39B94; vertical-align: middle;"></div>
                   </td>
                 </tr>
               </table>
@@ -56,12 +56,12 @@ function wrapInTemplate(text: string, subject: string) {
           
           <!-- FOOTER -->
           <tr>
-            <td align="center" style="background-color: #FAF8F5; border-top: 1px solid #EAD8C0; padding: 35px 20px; color: #7A7570; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+            <td align="center" style="background-color: #FAF8F5; border-top: 1px solid #E5E0DC; padding: 35px 20px; color: #7A7570; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
               <table border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 20px; width: auto; margin-left: auto; margin-right: auto;">
                 <tr>
                   <td align="center">
                     <a href="https://lyraonearth.com" style="color: #5B1C2A; text-decoration: none; font-weight: bold; font-size: 12px; margin: 0 15px; letter-spacing: 0.05em;">Web Sitesi</a>
-                    <span style="color: #DFC15D; font-size: 14px;">•</span>
+                    <span style="color: #A39B94; font-size: 14px;">•</span>
                     <a href="https://www.instagram.com/lyra.onearth/" style="color: #5B1C2A; text-decoration: none; font-weight: bold; font-size: 12px; margin: 0 15px; letter-spacing: 0.05em;">Instagram</a>
                   </td>
                 </tr>
