@@ -119,7 +119,7 @@ export default function HomePage() {
 
                       {/* Content */}
                       <div className="flex-grow min-w-0 z-10">
-                        <span className="text-[0.65rem] font-bold text-gold tracking-widest uppercase block mb-1">
+                        <span className="text-[0.65rem] font-bold text-[#A39B94] tracking-widest uppercase block mb-1">
                           YOUTUBE BÖLÜMÜ
                         </span>
                         <h3 className="font-serif text-[0.95rem] text-wine font-semibold leading-snug mb-1 line-clamp-2 uppercase">

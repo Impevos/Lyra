@@ -41,7 +41,7 @@ export default function SozlesmelerPage() {
     <div className="pt-32 pb-20 px-6 lg:px-8 max-w-5xl mx-auto">
       {/* Header */}
       <div className="text-center mb-16">
-        <span className="text-[0.65rem] font-bold tracking-[0.4em] text-gold uppercase mb-3 block">Hukuki Metinler</span>
+        <span className="text-[0.65rem] font-bold tracking-[0.4em] text-[#A39B94] uppercase mb-3 block">Hukuki Metinler</span>
         <h1 className="font-serif text-3xl md:text-5xl text-wine font-bold mb-4 tracking-wide">
           Sözleşmeler & Yasal Metinler
         </h1>
@@ -430,7 +430,7 @@ export default function SozlesmelerPage() {
             <div className="text-center pt-4">
               <p className="text-xs text-taupe/50">
                 Detaylı KVKK metnimiz için{' '}
-                <Link href="/kvkk" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">
+                <Link href="/kvkk" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">
                   KVKK Sayfası
                 </Link>
                 &apos;nı ziyaret edebilirsiniz.

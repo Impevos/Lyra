@@ -12,7 +12,7 @@ export default function TeslimatVeIadePage() {
     <div className="pt-32 pb-20 px-6 lg:px-8 max-w-4xl mx-auto">
       {/* Header */}
       <div className="text-center mb-16">
-        <span className="text-[0.65rem] font-bold tracking-[0.4em] text-gold uppercase mb-3 block">Politikalarımız</span>
+        <span className="text-[0.65rem] font-bold tracking-[0.4em] text-[#A39B94] uppercase mb-3 block">Politikalarımız</span>
         <h1 className="font-serif text-3xl md:text-5xl text-wine font-bold mb-4 tracking-wide">
           Teslimat, İptal ve İade Politikası
         </h1>

@@ -438,7 +438,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[0.6rem] tracking-[0.3em] text-gold font-bold uppercase block">
+                  <span className="text-[0.6rem] tracking-[0.3em] text-[#A39B94] font-bold uppercase block">
                     {product.type === 'call' ? 'GÖRÜŞME & SEANS' : 'EĞİTİM & PROGRAM'}
                   </span>
                   <h4 className="font-serif text-xl text-wine font-bold leading-tight uppercase tracking-wide">{product.title}</h4>
@@ -517,10 +517,10 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                       className="mt-0.5 accent-wine w-4 h-4 shrink-0 cursor-pointer"
                     />
                     <label htmlFor="kvkk-consent" className="text-[0.65rem] text-taupe/60 leading-relaxed cursor-pointer">
-                      <Link href="/sozlesmeler" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">Hizmet Sözleşmesi</Link>,{' '}
-                      <Link href="/kvkk" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">KVKK Aydınlatma Metni</Link>{' '}
+                      <Link href="/sozlesmeler" target="_blank" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">Hizmet Sözleşmesi</Link>,{' '}
+                      <Link href="/kvkk" target="_blank" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">KVKK Aydınlatma Metni</Link>{' '}
                       ve{' '}
-                      <Link href="/sozlesmeler" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">Açık Rıza Beyanı</Link>&apos;nı okudum, kabul ediyorum.
+                      <Link href="/sozlesmeler" target="_blank" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">Açık Rıza Beyanı</Link>&apos;nı okudum, kabul ediyorum.
                     </label>
                   </div>
 
@@ -578,7 +578,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                   {/* Weekday columns */}
                   <div className="grid grid-cols-7 gap-1 text-center mb-2 relative z-10">
                     {weekdays.map((day) => (
-                      <span key={day} className="text-[0.65rem] font-bold text-gold tracking-wider uppercase">
+                      <span key={day} className="text-[0.65rem] font-bold text-[#A39B94] tracking-wider uppercase">
                         {day}
                       </span>
                     ))}
@@ -623,7 +623,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                     className="space-y-3"
                   >
                     <h5 className="font-serif text-sm text-wine font-semibold flex items-center gap-1.5 border-b border-gold/15 pb-1.5 uppercase tracking-wider">
-                      <HiOutlineClock className="text-gold" /> Müsait Saat Dilimleri
+                      <HiOutlineClock className="text-[#A39B94]" /> Müsait Saat Dilimleri
                     </h5>
                     <div className="grid grid-cols-3 gap-2">
                       {timeSlots.map((time) => {
@@ -634,8 +634,8 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                             onClick={() => setSelectedTime(time)}
                             className={`py-2 rounded-none text-xs font-bold transition-all border ${
                               isTimeSelected
-                                ? 'bg-gold border-gold text-white shadow-md'
-                                : 'bg-white border-gold/10 text-wine hover:border-gold/30 hover:bg-gold/5'
+                                ? 'bg-burgundy border-burgundy text-white shadow-md'
+                                : 'bg-white border-gold/10 text-wine hover:border-[#A39B94]/30 hover:bg-[#A39B94]/5'
                             }`}
                           >
                             {time}
@@ -687,7 +687,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                         {formData.name} • {formData.email}
                       </p>
                       {product.type === 'call' && selectedDate && selectedTime && (
-                        <p className="text-[0.6rem] text-gold font-bold mt-1 flex items-center gap-1">
+                        <p className="text-[0.6rem] text-[#A39B94] font-bold mt-1 flex items-center gap-1">
                           <HiOutlineCalendar className="text-xs" />
                           {selectedDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long' })} — {selectedTime}
                         </p>
@@ -706,7 +706,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                 {/* Payment Form */}
                 <form onSubmit={handlePaymentSubmit} className="space-y-4">
                   <h5 className="font-serif text-sm text-wine font-semibold border-b border-gold/15 pb-1.5 mb-2 uppercase tracking-wider flex items-center gap-2">
-                    <HiOutlineCreditCard className="text-gold text-base" />
+                    <HiOutlineCreditCard className="text-[#A39B94] text-base" />
                     Kart Bilgileri
                   </h5>
 
@@ -823,7 +823,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                   className="w-20 h-20 rounded-none bg-gradient-to-br from-gold/15 to-burgundy/5 border border-gold/30 flex items-center justify-center shadow-lg shadow-gold/10 relative"
                 >
                   <div className="absolute inset-0.5 border border-gold/10 pointer-events-none" />
-                  <svg className="w-10 h-10 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                  <svg className="w-10 h-10 text-[#A39B94]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                     <motion.path 
                       initial={{ pathLength: 0 }}
                       animate={{ pathLength: 1 }}
@@ -843,7 +843,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                   className="space-y-2"
                 >
                   <h4 className="font-serif text-2xl text-wine font-bold uppercase tracking-wider">Teşekkür Ederiz ✨</h4>
-                  <p className="text-xs text-gold font-bold uppercase tracking-[0.2em]">
+                  <p className="text-xs text-[#A39B94] font-bold uppercase tracking-[0.2em]">
                     {product.type === 'call' ? 'RANDEVUNUZ KAYDEDİLDİ' : 'KAYDINI BAŞARIYLA ALDIK'}
                   </p>
                 </motion.div>
@@ -870,9 +870,9 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                   {product.type === 'call' && selectedDate && selectedTime && (
                     <div className="p-3 bg-burgundy/5 rounded-none border border-gold/15 text-wine font-semibold flex flex-col gap-1 items-center relative">
                       <div className="absolute inset-0.5 border border-gold/5 pointer-events-none" />
-                      <span className="text-[0.55rem] text-gold font-bold tracking-[0.2em] uppercase mb-1">RANDEVU TARİHİNİZ</span>
+                      <span className="text-[0.55rem] text-[#A39B94] font-bold tracking-[0.2em] uppercase mb-1">RANDEVU TARİHİNİZ</span>
                       <div className="flex items-center gap-1.5 text-xs">
-                        <HiOutlineCalendar className="text-gold" />
+                        <HiOutlineCalendar className="text-[#A39B94]" />
                         <span>
                           {selectedDate.toLocaleDateString('tr-TR', {
                             day: 'numeric',
@@ -882,7 +882,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5 text-xs">
-                        <HiOutlineClock className="text-gold" />
+                        <HiOutlineClock className="text-[#A39B94]" />
                         <span>Saat {selectedTime}</span>
                       </div>
                     </div>
@@ -899,7 +899,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
                   <div className="absolute inset-0.5 border border-gold/8 pointer-events-none" />
                   <div className="flex items-start gap-3 relative z-10">
                     <div className="w-10 h-10 rounded-none bg-gold/10 border border-gold/20 flex items-center justify-center shrink-0">
-                      <HiOutlineMail className="text-lg text-gold" />
+                      <HiOutlineMail className="text-lg text-[#A39B94]" />
                     </div>
                     <div className="text-left space-y-1">
                       <p className="text-[0.7rem] text-wine font-bold uppercase tracking-wider">

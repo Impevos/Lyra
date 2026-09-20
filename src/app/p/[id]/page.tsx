@@ -362,13 +362,13 @@ export default function ProductDetailPage({ params }: PageProps) {
           >
             <div className="bg-white/80 border border-gold/15 rounded-none p-1 shadow-2xl shadow-gold/3 backdrop-blur-md">
               <div className="border border-gold/5 p-8 sm:p-12 flex flex-col items-center text-center space-y-6">
-                <div className="w-20 h-20 rounded-none bg-gold/10 border border-gold/25 flex items-center justify-center text-gold shadow-lg shadow-gold/5">
+                <div className="w-20 h-20 rounded-none bg-gold/10 border border-gold/25 flex items-center justify-center text-[#A39B94] shadow-lg shadow-gold/5">
                   <HiOutlineMail className="text-4xl animate-pulse" />
                 </div>
 
                 <div className="space-y-2">
                   <h1 className="font-serif text-2xl text-wine font-bold uppercase tracking-wider">TALEBİNİZ ALINDI</h1>
-                  <p className="text-xs text-gold font-bold uppercase tracking-[0.2em]">
+                  <p className="text-xs text-[#A39B94] font-bold uppercase tracking-[0.2em]">
                     {isCallProduct ? 'RANDEVU KAYDEDİLDİ' : isFreeProduct ? 'ÜCRETSİZ KAYDINIZ TAMAMLANDI' : 'SATIN ALMA TAMAMLANDI'}
                   </p>
                 </div>
@@ -385,13 +385,13 @@ export default function ProductDetailPage({ params }: PageProps) {
                     <div className="p-3 bg-burgundy/5 rounded-none border border-gold/15 text-wine font-semibold flex flex-col gap-1 items-center mt-2 relative">
                       <div className="absolute inset-0.5 border border-gold/5 pointer-events-none" />
                       <div className="flex items-center gap-1.5 text-xs">
-                        <HiOutlineCalendar className="text-gold" />
+                        <HiOutlineCalendar className="text-[#A39B94]" />
                         <span>
                           {selectedDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
                         </span>
                       </div>
                       <div className="flex items-center gap-1.5 text-xs">
-                        <HiOutlineClock className="text-gold" />
+                        <HiOutlineClock className="text-[#A39B94]" />
                         <span>Saat {selectedTime}</span>
                       </div>
                     </div>
@@ -497,14 +497,14 @@ export default function ProductDetailPage({ params }: PageProps) {
 
                 {/* Details */}
                 <div className="p-6 sm:p-8 relative z-10">
-                  <span className="text-[0.6rem] tracking-[0.3em] text-gold font-bold uppercase block mb-2">
+                  <span className="text-[0.6rem] tracking-[0.3em] text-[#A39B94] font-bold uppercase block mb-2">
                     {product.badgeText || (isCallProduct ? 'GÖRÜŞME & SEANS' : isFreeProduct ? 'ÜCRETSİZ KAYNAK' : 'EĞİTİM & PROGRAM')}
                   </span>
                   <h1 className="font-serif text-2xl sm:text-3xl text-wine font-light tracking-[0.1em] uppercase mb-3">
                     {product.title}
                   </h1>
                   
-                  <p className="text-[0.8rem] text-gold-dark font-semibold tracking-widest uppercase mb-5">
+                  <p className="text-[0.8rem] text-[#A39B94] font-semibold tracking-widest uppercase mb-5">
                     {product.tagline}
                   </p>
 
@@ -704,10 +704,10 @@ export default function ProductDetailPage({ params }: PageProps) {
                           className="mt-0.5 accent-wine w-4 h-4 shrink-0 cursor-pointer"
                         />
                         <label htmlFor="kvkk-consent" className="text-[0.65rem] text-taupe/60 leading-relaxed cursor-pointer">
-                          <Link href="/sozlesmeler#mesafeli" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">Mesafeli Satış Sözleşmesi</Link>,{' '}
-                          <Link href="/teslimat-ve-iade" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">İptal, İade ve Teslimat Koşulları</Link>
+                          <Link href="/sozlesmeler#mesafeli" target="_blank" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">Mesafeli Satış Sözleşmesi</Link>,{' '}
+                          <Link href="/teslimat-ve-iade" target="_blank" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">İptal, İade ve Teslimat Koşulları</Link>
                           {' '}ve{' '}
-                          <Link href="/kvkk" target="_blank" className="text-gold-dark hover:text-wine font-bold underline underline-offset-2 transition-colors">KVKK Aydınlatma Metni</Link>&apos;ni okudum, onaylıyorum.
+                          <Link href="/kvkk" target="_blank" className="text-[#A39B94] hover:text-wine font-bold underline underline-offset-2 transition-colors">KVKK Aydınlatma Metni</Link>&apos;ni okudum, onaylıyorum.
                         </label>
                       </div>
 
@@ -760,7 +760,7 @@ export default function ProductDetailPage({ params }: PageProps) {
 
                         <div className="grid grid-cols-7 gap-1 text-center mb-2 relative z-10">
                           {weekdays.map((day) => (
-                            <span key={day} className="text-[0.65rem] font-bold text-gold tracking-wider uppercase">{day}</span>
+                            <span key={day} className="text-[0.65rem] font-bold text-[#A39B94] tracking-wider uppercase">{day}</span>
                           ))}
                         </div>
 
@@ -793,7 +793,7 @@ export default function ProductDetailPage({ params }: PageProps) {
                       {selectedDate && (
                         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-3">
                           <h5 className="font-serif text-sm text-wine font-semibold flex items-center gap-1.5 border-b border-gold/15 pb-1.5 uppercase tracking-wider">
-                            <HiOutlineClock className="text-gold" /> Müsait Saat Dilimleri
+                            <HiOutlineClock className="text-[#A39B94]" /> Müsait Saat Dilimleri
                           </h5>
                           <div className="grid grid-cols-3 gap-2">
                             {timeSlots.map((time) => (

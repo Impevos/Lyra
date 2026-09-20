@@ -5,7 +5,7 @@ export default function KvkkPage() {
     <div className="pt-32 pb-20 px-6 lg:px-8 max-w-5xl mx-auto">
       {/* Header */}
       <div className="text-center mb-16">
-        <span className="text-[0.65rem] font-bold tracking-[0.4em] text-gold uppercase mb-3 block">Hukuki Metinler</span>
+        <span className="text-[0.65rem] font-bold tracking-[0.4em] text-[#A39B94] uppercase mb-3 block">Hukuki Metinler</span>
         <h1 className="font-serif text-3xl md:text-5xl text-wine font-bold mb-4 tracking-wide">
           Kişisel Verilerin Korunması
         </h1>
@@ -26,10 +26,24 @@ export default function KvkkPage() {
           {/* Section */}
           <div className="border-t border-gold/10 pt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
             <div className="col-span-1">
-              <h2 className="text-lg font-bold text-wine tracking-wide">İşlenen Veriler</h2>
+              <h2 className="text-lg font-bold text-wine tracking-wide">Veri Sorumlusu</h2>
             </div>
             <div className="col-span-2 text-charcoal/80 leading-loose text-sm md:text-base">
-              <p>Ad, soyad, telefon numarası, e-posta adresi, ödeme bilgileri ve görüşmeler sırasında tarafınızca paylaşılan bilgiler.</p>
+              <p>
+                Kişisel verileriniz, veri sorumlusu olarak Deniz Bayraktar tarafından 6698 sayılı Kanun kapsamında işlenmektedir.
+              </p>
+            </div>
+          </div>
+
+          {/* Section */}
+          <div className="border-t border-gold/10 pt-8 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+            <div className="col-span-1">
+              <h2 className="text-lg font-bold text-wine tracking-wide">İşlenen Kişisel Veriler</h2>
+            </div>
+            <div className="col-span-2 text-charcoal/80 leading-loose text-sm md:text-base">
+              <p>
+                Ad, soyad, e-posta adresi, telefon numarası, randevu saatleri, görüşme notları ve ödeme işlem kayıtları (kart bilgileri saklanmaz, güvenli ödeme sağlayıcı PayTR altyapısı üzerinden işlenir).
+              </p>
             </div>
           </div>
 
@@ -96,7 +110,7 @@ export default function KvkkPage() {
             <div className="col-span-2 text-charcoal/80 leading-loose text-sm md:text-base">
               <p>
                 Başvurularınızı{" "}
-                <a href="mailto:denizbayraktar.lyra@gmail.com" className="text-gold hover:text-wine font-medium transition-colors">
+                <a href="mailto:denizbayraktar.lyra@gmail.com" className="text-[#A39B94] hover:text-wine font-medium transition-colors">
                   denizbayraktar.lyra@gmail.com
                 </a>{" "}
                 adresine iletebilirsiniz.

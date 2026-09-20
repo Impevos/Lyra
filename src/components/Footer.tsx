@@ -27,31 +27,31 @@ export default function Footer() {
         {/* Copyright & Links */}
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 max-w-md">
-            <Link href="/offers" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+            <Link href="/offers" className="text-[0.6rem] text-[#A39B94] tracking-widest hover:text-wine transition-colors uppercase">
               Teklifler
             </Link>
-            <span className="w-px h-2.5 bg-gold/20" />
-            <Link href="/offers/paid" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+            <span className="w-px h-2.5 bg-[#A39B94]/30" />
+            <Link href="/offers/paid" className="text-[0.6rem] text-[#A39B94] tracking-widest hover:text-wine transition-colors uppercase">
               Ücretli Programlar
             </Link>
-            <span className="w-px h-2.5 bg-gold/20" />
-            <Link href="/offers/free" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+            <span className="w-px h-2.5 bg-[#A39B94]/30" />
+            <Link href="/offers/free" className="text-[0.6rem] text-[#A39B94] tracking-widest hover:text-wine transition-colors uppercase">
               Ücretsiz Kaynaklar
             </Link>
-            <span className="w-px h-2.5 bg-gold/20" />
-            <Link href="/sozlesmeler" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+            <span className="w-px h-2.5 bg-[#A39B94]/30" />
+            <Link href="/sozlesmeler" className="text-[0.6rem] text-[#A39B94] tracking-widest hover:text-wine transition-colors uppercase">
               Sözleşmeler
             </Link>
-            <span className="w-px h-2.5 bg-gold/20" />
-            <Link href="/sozlesmeler#mesafeli" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+            <span className="w-px h-2.5 bg-[#A39B94]/30" />
+            <Link href="/sozlesmeler#mesafeli" className="text-[0.6rem] text-[#A39B94] tracking-widest hover:text-wine transition-colors uppercase">
               Mesafeli Satış Sözleşmesi
             </Link>
-            <span className="w-px h-2.5 bg-gold/20" />
-            <Link href="/teslimat-ve-iade" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+            <span className="w-px h-2.5 bg-[#A39B94]/30" />
+            <Link href="/teslimat-ve-iade" className="text-[0.6rem] text-[#A39B94] tracking-widest hover:text-wine transition-colors uppercase">
               İptal, İade ve Teslimat
             </Link>
-            <span className="w-px h-2.5 bg-gold/20" />
-            <Link href="/kvkk" className="text-[0.6rem] text-gold/60 tracking-widest hover:text-wine transition-colors uppercase">
+            <span className="w-px h-2.5 bg-[#A39B94]/30" />
+            <Link href="/kvkk" className="text-[0.6rem] text-[#A39B94] tracking-widest hover:text-wine transition-colors uppercase">
               KVKK
             </Link>
           </div>

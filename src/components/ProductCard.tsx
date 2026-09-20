@@ -60,7 +60,7 @@ export default function ProductCard({ product, index }: ProductCardProps) {
         <div className="flex flex-col flex-grow min-w-0 z-10 justify-between py-1">
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-2 flex-wrap">
-              <span className="text-[0.55rem] font-bold tracking-[0.3em] text-gold-dark uppercase">
+              <span className="text-[0.55rem] font-bold tracking-[0.3em] text-[#A39B94] uppercase">
                 {product.badgeText || (product.priceType === 'free' ? 'ÜCRETSİZ KAYNAK' : 'ÖZEL EĞİTİM & SEANS')}
               </span>
             </div>
@@ -75,11 +75,11 @@ export default function ProductCard({ product, index }: ProductCardProps) {
 
           {/* Action CTA Button - full-width outlined style similar to Rishani */}
           <div className="pt-4 mt-4 border-t border-gold/10 sm:border-t-0 sm:pt-0 sm:mt-0">
-            <div className="w-full py-3 px-5 rounded-none border border-gold/25 text-center transition-all duration-300 group-hover:border-burgundy group-hover:bg-burgundy group-hover:text-white flex items-center justify-center gap-2">
-              <span className="text-[0.65rem] font-bold uppercase tracking-[0.25em] text-gold-dark group-hover:text-white transition-colors">
+            <div className="w-full py-3 px-5 rounded-none border border-[#A39B94]/30 text-center transition-all duration-300 group-hover:border-burgundy group-hover:bg-burgundy group-hover:text-white flex items-center justify-center gap-2">
+              <span className="text-[0.65rem] font-bold uppercase tracking-[0.25em] text-[#A39B94] group-hover:text-white transition-colors">
                 {product.buttonText}
               </span>
-              <HiOutlineArrowRight className="text-[0.7rem] text-gold-dark group-hover:text-white group-hover:translate-x-1 transition-all" />
+              <HiOutlineArrowRight className="text-[0.7rem] text-[#A39B94] group-hover:text-white group-hover:translate-x-1 transition-all" />
             </div>
           </div>
         </div>
