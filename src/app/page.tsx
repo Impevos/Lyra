@@ -30,17 +30,6 @@ export default function HomePage() {
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-b from-gold/[0.03] to-transparent rounded-full blur-[120px]" />
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[400px] bg-gradient-to-t from-burgundy/[0.02] to-transparent rounded-full blur-[100px]" />
-        
-        {/* Glowing Golden Wings Watermark */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-[800px] aspect-square opacity-[0.035] select-none pointer-events-none">
-          <Image
-            src="/wings_golden_fire.png"
-            alt="Lyra Wings"
-            fill
-            className="object-contain animate-[pulse_10s_ease-in-out_infinite]"
-            loading="lazy"
-          />
-        </div>
       </div>
 
       {/* Content Container */}

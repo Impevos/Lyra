@@ -119,7 +119,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
       const smtpSettings = getSmtpSettings();
 
       const dateInfo = product?.type === 'call' && selectedDate && selectedTime
-        ? `<tr><td style="padding: 16px 24px; background-color: #FBF8F4; border: 1px solid #EAD8C0; text-align: center;"><p style="margin: 0 0 4px 0; font-size: 11px; color: #B8956A; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">RANDEVU TARİHİNİZ</p><p style="margin: 0; font-size: 16px; color: #3E0A16; font-weight: bold; font-family: Georgia, serif;">${selectedDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })} — Saat ${selectedTime}</p></td></tr>`
+        ? `<tr><td style="padding: 16px 24px; background-color: #FBF8F4; border: 1px solid #EAD8C0; text-align: center;"><p style="margin: 0 0 4px 0; font-size: 11px; color: #A39B94; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">RANDEVU TARİHİNİZ</p><p style="margin: 0; font-size: 16px; color: #3E0A16; font-weight: bold; font-family: Georgia, serif;">${selectedDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })} — Saat ${selectedTime}</p></td></tr>`
         : '';
 
       const thankYouHtml = `<!DOCTYPE html>
@@ -137,17 +137,17 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
         </td></tr>
         
         <!-- GOLDEN ACCENT LINE -->
-        <tr><td style="height: 3px; background: linear-gradient(90deg, #DFC15D, #B8956A, #DFC15D);"></td></tr>
+        <tr><td style="height: 3px; background: linear-gradient(90deg, #DFC15D, #A39B94, #DFC15D);"></td></tr>
         
         <!-- CONTENT -->
         <tr><td style="padding: 45px 35px 20px 35px; color: #3A3530; font-size: 15px;">
           <h1 style="margin: 0 0 8px 0; font-size: 22px; color: #3E0A16; font-family: Georgia, serif; font-weight: bold; text-align: center;">Sevgili ${formData.name},</h1>
-          <p style="margin: 0 0 24px 0; text-align: center; font-size: 13px; color: #B8956A; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">KAYDINIZ BAŞARIYLA ALINDI</p>
+          <p style="margin: 0 0 24px 0; text-align: center; font-size: 13px; color: #A39B94; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">KAYDINIZ BAŞARIYLA ALINDI</p>
           
           <!-- PRODUCT INFO BOX -->
           <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 24px;">
             <tr><td style="padding: 20px 24px; background-color: #FBF8F4; border: 1px solid #EAD8C0;">
-              <p style="margin: 0 0 4px 0; font-size: 11px; color: #B8956A; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">SATIN ALINAN</p>
+              <p style="margin: 0 0 4px 0; font-size: 11px; color: #A39B94; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">SATIN ALINAN</p>
               <p style="margin: 0; font-size: 18px; color: #3E0A16; font-weight: bold; font-family: Georgia, serif;">${product.title}</p>
             </td></tr>
             ${dateInfo}
@@ -170,7 +170,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
             <div style="display: inline-block; width: 50px; height: 1px; background-color: #DFC15D; vertical-align: middle;"></div>
           </td></tr></table>
           <p style="margin: 16px 0 0 0; font-size: 15px; color: #3E0A16; font-family: Georgia, serif; font-style: italic; text-align: center;">Işığınız yolunuzu aydınlatsın. ✨</p>
-          <p style="margin: 8px 0 0 0; font-size: 13px; color: #B8956A; font-weight: bold; letter-spacing: 0.05em;">Deniz Bayraktar</p>
+          <p style="margin: 8px 0 0 0; font-size: 13px; color: #A39B94; font-weight: bold; letter-spacing: 0.05em;">Deniz Bayraktar</p>
           <p style="margin: 2px 0 0 0; font-size: 11px; color: #9A9590; letter-spacing: 0.1em;">LYRA ON EARTH</p>
         </td></tr>
         

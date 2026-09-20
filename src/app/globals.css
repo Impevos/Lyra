@@ -4,9 +4,9 @@
   --color-ivory: #FDFBF7;
   --color-beige: #F5F1E9;
   --color-cream: #FAF7F2;
-  --color-gold: #B8956A;
-  --color-gold-dark: #8C6D45;
-  --color-gold-light: #DAC17C;
+  --color-gold: #A39B94;
+  --color-gold-dark: #A39B94;
+  --color-gold-light: #B8B1AA;
   --color-burgundy: #6E1525;
   --color-wine: #3E0A16;
   --color-charcoal: #1A1A1A;
@@ -82,7 +82,7 @@
 
   /* Selection style */
   ::selection {
-    background-color: rgba(184, 149, 106, 0.2);
+    background-color: rgba(163, 155, 148, 0.2);
     color: var(--color-wine);
   }
 }
@@ -134,7 +134,7 @@
 /* Subtle gradient text for accents */
 .gradient-text {
   @apply bg-clip-text text-transparent;
-  background-image: linear-gradient(to right, #5a4e49, #8C6D45, #5a4e49);
+  background-image: linear-gradient(to right, #5a4e49, #A39B94, #5a4e49);
   background-size: 200% auto;
   animation: shine 8s linear infinite;
 }

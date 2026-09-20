@@ -36,17 +36,17 @@ async function sendThankYouEmail(to: string, name: string, productTitle: string,
           <p style="margin: 0; font-size: 11px; color: #DFC15D; letter-spacing: 0.3em; text-transform: uppercase; font-weight: bold;">TEŞEKKÜR EDERİZ</p>
         </td></tr>
         <!-- ACCENT LINE -->
-        <tr><td style="height: 3px; background: linear-gradient(90deg, #DFC15D, #B8956A, #DFC15D);"></td></tr>
+        <tr><td style="height: 3px; background: linear-gradient(90deg, #DFC15D, #A39B94, #DFC15D);"></td></tr>
         <!-- CONTENT -->
         <tr><td style="padding: 45px 35px 20px 35px; color: #3A3530; font-size: 15px;">
           <h1 style="margin: 0 0 8px 0; font-size: 22px; color: #3E0A16; font-family: Georgia, serif; font-weight: bold; text-align: center;">Sevgili ${name},</h1>
-          <p style="margin: 0 0 24px 0; text-align: center; font-size: 13px; color: #B8956A; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">ÖDEMENİZ BAŞARIYLA ALINDI</p>
+          <p style="margin: 0 0 24px 0; text-align: center; font-size: 13px; color: #A39B94; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">ÖDEMENİZ BAŞARIYLA ALINDI</p>
           <!-- PRODUCT BOX -->
           <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-bottom: 24px;">
             <tr><td style="padding: 20px 24px; background-color: #FBF8F4; border: 1px solid #EAD8C0;">
-              <p style="margin: 0 0 4px 0; font-size: 11px; color: #B8956A; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">SATIN ALINAN</p>
+              <p style="margin: 0 0 4px 0; font-size: 11px; color: #A39B94; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">SATIN ALINAN</p>
               <p style="margin: 0; font-size: 18px; color: #3E0A16; font-weight: bold; font-family: Georgia, serif;">${productTitle}</p>
-              ${amountStr ? `<p style="margin: 6px 0 0 0; font-size: 13px; color: #B8956A; font-weight: bold;">${amountStr}</p>` : ''}
+              ${amountStr ? `<p style="margin: 6px 0 0 0; font-size: 13px; color: #A39B94; font-weight: bold;">${amountStr}</p>` : ''}
             </td></tr>
           </table>
           <p style="margin: 0 0 16px 0; line-height: 1.8; font-size: 14px; color: #4A443F;">Bu yolculuğa adım attığınız için çok mutluyuz. Sizinle birlikte çalışmak bizim için büyük bir onur.</p>
@@ -61,7 +61,7 @@ async function sendThankYouEmail(to: string, name: string, productTitle: string,
             <div style="display:inline-block;width:50px;height:1px;background:#DFC15D;vertical-align:middle;"></div>
           </td></tr></table>
           <p style="margin: 16px 0 0 0; font-size: 15px; color: #3E0A16; font-family: Georgia, serif; font-style: italic; text-align: center;">Işığınız yolunuzu aydınlatsın. ✨</p>
-          <p style="margin: 8px 0 0 0; font-size: 13px; color: #B8956A; font-weight: bold;">Deniz Bayraktar</p>
+          <p style="margin: 8px 0 0 0; font-size: 13px; color: #A39B94; font-weight: bold;">Deniz Bayraktar</p>
           <p style="margin: 2px 0 0 0; font-size: 11px; color: #9A9590; letter-spacing: 0.1em;">LYRA ON EARTH</p>
         </td></tr>
         <!-- FOOTER -->
