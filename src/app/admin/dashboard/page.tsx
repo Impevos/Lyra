@@ -26,7 +26,9 @@ import {
 } from 'react-icons/hi';
 import { 
   getProducts, 
+  saveProduct,
   saveProducts, 
+  deleteProduct,
   getProfile, 
   saveProfile, 
   getVideos, 
@@ -254,11 +256,16 @@ function AdminDashboardContent() {
   };
 
   // Profile Save
-  const handleProfileSave = (e: React.FormEvent) => {
+  const handleProfileSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!profile) return;
-    saveProfile(profile);
-    showNotification('Profil ayarları başarıyla kaydedildi.');
+    try {
+      await saveProfile(profile);
+      showNotification('Profil ayarları başarıyla kaydedildi.');
+    } catch (err: any) {
+      console.error(err);
+      showNotification(`Hata: ${err.message || 'Profil kaydedilemedi.'}`, 'error');
+    }
   };
 
   const updateProfileSocial = (key: string, value: string) => {
@@ -273,34 +280,47 @@ function AdminDashboardContent() {
   };
 
   // Product Submit (Add / Edit)
-  const handleProductSubmit = (e: React.FormEvent) => {
+  const handleProductSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let updatedProducts: ProductItem[] = [];
-    if (editingProduct) {
-      updatedProducts = products.map((p) => p.id === editingProduct.id ? { ...editingProduct, ...productForm } : p);
-      showNotification('Ürün başarıyla güncellendi.');
-    } else {
-      const nextId = (Math.max(0, ...products.map((p) => parseInt(p.id) || 0)) + 1).toString();
-      const newProduct: ProductItem = {
-        ...productForm,
-        id: nextId,
-        link: productForm.link || `/p/${nextId}`
-      };
-      updatedProducts = [...products, newProduct];
-      showNotification('Yeni ürün başarıyla eklendi.');
+    try {
+      let productToSave: ProductItem;
+      let updatedProducts: ProductItem[] = [];
+
+      if (editingProduct) {
+        productToSave = { ...editingProduct, ...productForm };
+        updatedProducts = products.map((p) => p.id === editingProduct.id ? productToSave : p);
+      } else {
+        const nextId = (Math.max(0, ...products.map((p) => parseInt(p.id) || 0)) + 1).toString();
+        productToSave = {
+          ...productForm,
+          id: nextId,
+          link: productForm.link || `/p/${nextId}`
+        };
+        updatedProducts = [...products, productToSave];
+      }
+
+      await saveProduct(productToSave);
+      setProducts(updatedProducts);
+      showNotification(editingProduct ? 'Ürün başarıyla güncellendi (Supabase).' : 'Yeni ürün başarıyla eklendi (Supabase).', 'success');
+      setIsProductModalOpen(false);
+      setEditingProduct(null);
+    } catch (err: any) {
+      console.error(err);
+      showNotification(`Hata: ${err.message || 'Ürün kaydedilemedi.'}`, 'error');
     }
-    setProducts(updatedProducts);
-    saveProducts(updatedProducts);
-    setIsProductModalOpen(false);
-    setEditingProduct(null);
   };
 
-  const handleProductDelete = (id: string) => {
+  const handleProductDelete = async (id: string) => {
     if (window.confirm('Bu ürünü silmek istediğinize emin misiniz?')) {
-      const updatedProducts = products.filter((p) => p.id !== id);
-      setProducts(updatedProducts);
-      saveProducts(updatedProducts);
-      showNotification('Ürün silindi.');
+      try {
+        await deleteProduct(id);
+        const updatedProducts = products.filter((p) => p.id !== id);
+        setProducts(updatedProducts);
+        showNotification('Ürün silindi (Supabase).', 'success');
+      } catch (err: any) {
+        console.error(err);
+        showNotification(`Hata: ${err.message || 'Ürün silinemedi.'}`, 'error');
+      }
     }
   };
 

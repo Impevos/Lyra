@@ -22,6 +22,7 @@ export default function HomePage() {
 
   const eyeAmNova = products.find(p => p.id === 'eye-am-nova');
   const mastersoul = products.find(p => p.id === 'mastersoul');
+  const otherPaidProducts = products.filter(p => p.priceType !== 'free' && p.id !== 'eye-am-nova' && p.id !== 'mastersoul');
   const freeProducts = products.filter(p => p.priceType === 'free');
 
   return (
@@ -46,7 +47,7 @@ export default function HomePage() {
           {/* EYE AM NOVA - Featured Training */}
           {eyeAmNova && (
             <div>
-              <SectionDivider title="EYE AM NOVA" />
+              <SectionDivider title={eyeAmNova.title} />
               <ProductCard product={eyeAmNova} index={0} />
             </div>
           )}
@@ -54,10 +55,18 @@ export default function HomePage() {
           {/* MASTERSOUL - Featured Training */}
           {mastersoul && (
             <div>
-              <SectionDivider title="MASTERSOUL" />
+              <SectionDivider title={mastersoul.title} />
               <ProductCard product={mastersoul} index={1} />
             </div>
           )}
+
+          {/* Additional Programs / Trainings */}
+          {otherPaidProducts.map((product, index) => (
+            <div key={product.id || `other-paid-${index}`}>
+              <SectionDivider title={product.title} />
+              <ProductCard product={product} index={index + 2} />
+            </div>
+          ))}
 
           {/* Ücretsiz Kaynaklar */}
           {freeProducts.length > 0 && (

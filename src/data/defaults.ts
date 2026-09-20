@@ -50,7 +50,7 @@ export const defaultProducts: ProductItem[] = [
     title: 'EYE AM NOVA',
     tagline: 'Dişil ve eril enerjilerin birleşimine dayanan, kişinin kendisini iddia ve ilan etmesini destekleyen, Antik Mısır öğretileri ışığında tasarlanmış 3 aylık dönüşüm portalı.',
     image: 'https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&q=80&w=600',
-    buttonText: 'Hemen Satın Al',
+    buttonText: 'Dönüşüm Yolculuğuna Başla',
     link: '/p/eye-am-nova',
     price: '2.500 TL',
     priceType: 'paid',
@@ -64,7 +64,7 @@ export const defaultProducts: ProductItem[] = [
     title: 'MASTERSOUL',
     tagline: '90 günde, yavaş yavaş değil derinlemesine. Sıkıştığını hissediyorsan, Mastersoul tam da o nokta için tasarlandı.',
     image: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&q=80&w=600',
-    buttonText: 'Hemen Satın Al',
+    buttonText: 'Özel Grupta Yerini Ayırt',
     link: '/p/mastersoul',
     price: '2.500 TL',
     priceType: 'paid',
@@ -132,9 +132,67 @@ export const saveProfile = async (profile: ProfileData) => {
       socials: profile.socials
     };
     const { error } = await supabase.from('profile').upsert(sanitizedProfile);
-    if (error) console.error('Supabase saveProfile error:', error);
+    if (error) {
+      console.error('Supabase saveProfile error:', error);
+      throw error;
+    }
   } catch (err) {
     console.error(err);
+    throw err;
+  }
+};
+
+export const saveProduct = async (prod: ProductItem) => {
+  try {
+    const sanitizedProd = {
+      id: prod.id || Math.random().toString(36).substr(2, 9),
+      title: prod.title || 'İsimsiz Ürün',
+      tagline: prod.tagline || '',
+      image: prod.image || '',
+      buttonText: prod.buttonText || '',
+      link: prod.link || `/p/${prod.id}`,
+      price: prod.price || '',
+      section: prod.section || 'main',
+      description: prod.description || '',
+      type: prod.type || 'digital',
+      priceType: prod.priceType || 'paid',
+      testimonialImages: prod.testimonialImages || [],
+      badgeText: prod.badgeText || (prod as any).badge || null,
+      downloadUrl: prod.downloadUrl || null
+    };
+    const { error } = await supabase.from('products').upsert(sanitizedProd);
+    if (error) {
+      console.error('Supabase saveProduct error on item:', prod.id, error);
+      throw error;
+    }
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+export const saveProducts = async (products: ProductItem[]) => {
+  try {
+    for (const prod of products) {
+      if (!prod) continue;
+      await saveProduct(prod);
+    }
+  } catch (err) {
+    console.error('saveProducts error:', err);
+    throw err;
+  }
+};
+
+export const deleteProduct = async (id: string) => {
+  try {
+    const { error } = await supabase.from('products').delete().eq('id', id);
+    if (error) {
+      console.error('Supabase deleteProduct error on item:', id, error);
+      throw error;
+    }
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 };
 
@@ -150,37 +208,16 @@ export const getProducts = async (): Promise<ProductItem[]> => {
       const free = data.filter((p: ProductItem) => p.priceType === 'free');
       return [...paid, ...free];
     }
+    // If Supabase products table is empty (0 rows), auto-seed with defaultProducts
+    if (data && data.length === 0) {
+      console.log('Supabase products empty, auto-seeding defaultProducts...');
+      await saveProducts(defaultProducts);
+      return defaultProducts;
+    }
   } catch (err) {
     console.warn(err);
   }
   return defaultProducts;
-};
-
-export const saveProducts = async (products: ProductItem[]) => {
-  try {
-    for (const prod of products) {
-      if (!prod) continue;
-      const sanitizedProd = {
-        id: prod.id || Math.random().toString(36).substr(2, 9),
-        title: prod.title || 'İsimsiz Ürün',
-        tagline: prod.tagline || '',
-        image: prod.image || '',
-        buttonText: prod.buttonText || '',
-        link: prod.link,
-        price: prod.price,
-        section: prod.section,
-        description: prod.description,
-        type: prod.type,
-        priceType: prod.priceType,
-        testimonialImages: prod.testimonialImages,
-        badgeText: prod.badgeText || (prod as any).badge || null
-      };
-      const { error } = await supabase.from('products').upsert(sanitizedProd);
-      if (error) console.error('Supabase saveProducts error on item:', prod.id, error);
-    }
-  } catch (err) {
-    console.error(err);
-  }
 };
 
 export interface FeaturedVideoItem {

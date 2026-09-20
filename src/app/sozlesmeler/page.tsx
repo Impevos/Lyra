@@ -1,6 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { 
+  HiOutlineScale, 
+  HiOutlineDocumentText, 
+  HiOutlineAcademicCap, 
+  HiOutlineShieldCheck, 
+  HiOutlineClipboardCheck 
+} from 'react-icons/hi';
 
 export const metadata: Metadata = {
   title: 'Sözleşmeler',
@@ -12,27 +19,27 @@ const contracts = [
   {
     id: 'mesafeli',
     title: 'Mesafeli Satış Sözleşmesi',
-    icon: '⚖️',
+    icon: HiOutlineScale,
   },
   {
     id: 'hizmet',
     title: 'İçerik Hizmetleri Sözleşmesi',
-    icon: '📜',
+    icon: HiOutlineDocumentText,
   },
   {
     id: 'masterclass',
     title: 'Masterclass Hizmet Sözleşmesi',
-    icon: '🎓',
+    icon: HiOutlineAcademicCap,
   },
   {
     id: 'kvkk',
     title: 'KVKK Aydınlatma & Açık Rıza Metni',
-    icon: '🔒',
+    icon: HiOutlineShieldCheck,
   },
   {
     id: 'onay',
     title: 'Görüşme Öncesi Bilgilendirme ve Onay Formu',
-    icon: '✅',
+    icon: HiOutlineClipboardCheck,
   },
 ];
 
@@ -50,17 +57,20 @@ export default function SozlesmelerPage() {
 
       {/* Quick Navigation */}
       <div className="flex flex-wrap justify-center gap-3 mb-12">
-        {contracts.map((c) => (
-          <a
-            key={c.id}
-            href={`#${c.id}`}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-white/60 border border-gold/15 hover:border-gold/40 hover:bg-white/90 transition-all text-xs font-bold tracking-widest text-wine uppercase"
-          >
-            <span>{c.icon}</span>
-            <span className="hidden sm:inline">{c.title}</span>
-            <span className="sm:hidden">{c.title.split(' ').slice(0, 2).join(' ')}</span>
-          </a>
-        ))}
+        {contracts.map((c) => {
+          const Icon = c.icon;
+          return (
+            <a
+              key={c.id}
+              href={`#${c.id}`}
+              className="inline-flex items-center gap-2.5 px-4 py-2.5 bg-white/60 border border-[#A39B94]/20 hover:border-wine hover:bg-white/90 transition-all text-xs font-bold tracking-widest text-wine uppercase group"
+            >
+              <Icon className="w-4 h-4 text-[#A39B94] group-hover:text-wine transition-colors" />
+              <span className="hidden sm:inline">{c.title}</span>
+              <span className="sm:hidden">{c.title.split(' ').slice(0, 2).join(' ')}</span>
+            </a>
+          );
+        })}
       </div>
 
       <div className="space-y-16">
@@ -68,8 +78,10 @@ export default function SozlesmelerPage() {
         {/* ===== 0. MESAFELİ SATIŞ SÖZLEŞMESİ ===== */}
         <section id="mesafeli" className="scroll-mt-28">
           <div className="bg-white/40 backdrop-blur-sm border border-gold/10 rounded-2xl p-8 md:p-12 shadow-sm space-y-10">
-            <div className="text-center border-b border-gold/10 pb-8">
-              <span className="text-4xl mb-4 block">⚖️</span>
+            <div className="text-center border-b border-gold/10 pb-8 flex flex-col items-center">
+              <div className="w-14 h-14 rounded-none bg-white/60 border border-[#A39B94]/30 flex items-center justify-center text-wine mb-4 shadow-sm">
+                <HiOutlineScale className="w-7 h-7 text-[#A39B94]" />
+              </div>
               <h2 className="font-serif text-2xl md:text-3xl text-wine font-bold tracking-wide">MESAFELİ SATIŞ SÖZLEŞMESİ</h2>
             </div>
 
@@ -147,8 +159,10 @@ export default function SozlesmelerPage() {
         {/* ===== 1. İÇERİK HİZMETLERİ SÖZLEŞMESİ ===== */}
         <section id="hizmet" className="scroll-mt-28">
           <div className="bg-white/40 backdrop-blur-sm border border-gold/10 rounded-2xl p-8 md:p-12 shadow-sm space-y-10">
-            <div className="text-center border-b border-gold/10 pb-8">
-              <span className="text-4xl mb-4 block">📜</span>
+            <div className="text-center border-b border-gold/10 pb-8 flex flex-col items-center">
+              <div className="w-14 h-14 rounded-none bg-white/60 border border-[#A39B94]/30 flex items-center justify-center text-wine mb-4 shadow-sm">
+                <HiOutlineDocumentText className="w-7 h-7 text-[#A39B94]" />
+              </div>
               <h2 className="font-serif text-2xl md:text-3xl text-wine font-bold tracking-wide">İÇERİK HİZMETLERİ SÖZLEŞMESİ</h2>
             </div>
 
@@ -283,8 +297,10 @@ export default function SozlesmelerPage() {
         {/* ===== 2. MASTERCLASS HİZMET SÖZLEŞMESİ ===== */}
         <section id="masterclass" className="scroll-mt-28">
           <div className="bg-white/40 backdrop-blur-sm border border-gold/10 rounded-2xl p-8 md:p-12 shadow-sm space-y-10">
-            <div className="text-center border-b border-gold/10 pb-8">
-              <span className="text-4xl mb-4 block">🎓</span>
+            <div className="text-center border-b border-gold/10 pb-8 flex flex-col items-center">
+              <div className="w-14 h-14 rounded-none bg-white/60 border border-[#A39B94]/30 flex items-center justify-center text-wine mb-4 shadow-sm">
+                <HiOutlineAcademicCap className="w-7 h-7 text-[#A39B94]" />
+              </div>
               <h2 className="font-serif text-2xl md:text-3xl text-wine font-bold tracking-wide">MASTERCLASS HİZMET SÖZLEŞMESİ</h2>
             </div>
 
@@ -400,8 +416,10 @@ export default function SozlesmelerPage() {
         {/* ===== 3. KVKK AYDINLATMA & AÇIK RIZA METNİ ===== */}
         <section id="kvkk" className="scroll-mt-28">
           <div className="bg-white/40 backdrop-blur-sm border border-gold/10 rounded-2xl p-8 md:p-12 shadow-sm space-y-10">
-            <div className="text-center border-b border-gold/10 pb-8">
-              <span className="text-4xl mb-4 block">🔒</span>
+            <div className="text-center border-b border-gold/10 pb-8 flex flex-col items-center">
+              <div className="w-14 h-14 rounded-none bg-white/60 border border-[#A39B94]/30 flex items-center justify-center text-wine mb-4 shadow-sm">
+                <HiOutlineShieldCheck className="w-7 h-7 text-[#A39B94]" />
+              </div>
               <h2 className="font-serif text-2xl md:text-3xl text-wine font-bold tracking-wide">KİŞİSEL VERİLERİN KORUNMASI AYDINLATMA METNİ</h2>
             </div>
 
@@ -442,8 +460,10 @@ export default function SozlesmelerPage() {
         {/* ===== 4. ONAY FORMU ===== */}
         <section id="onay" className="scroll-mt-28">
           <div className="bg-white/40 backdrop-blur-sm border border-gold/10 rounded-2xl p-8 md:p-12 shadow-sm space-y-10">
-            <div className="text-center border-b border-gold/10 pb-8">
-              <span className="text-4xl mb-4 block">✅</span>
+            <div className="text-center border-b border-gold/10 pb-8 flex flex-col items-center">
+              <div className="w-14 h-14 rounded-none bg-white/60 border border-[#A39B94]/30 flex items-center justify-center text-wine mb-4 shadow-sm">
+                <HiOutlineClipboardCheck className="w-7 h-7 text-[#A39B94]" />
+              </div>
               <h2 className="font-serif text-2xl md:text-3xl text-wine font-bold tracking-wide">GÖRÜŞME ÖNCESİ BİLGİLENDİRME VE ONAY FORMU</h2>
             </div>
 
