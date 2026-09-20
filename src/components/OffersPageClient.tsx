@@ -64,7 +64,7 @@ export default function OffersPageClient({ filterType }: OffersPageClientProps) 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-5">
         {/* Page Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 flex flex-col items-center">
-          <span className="text-[0.65rem] font-bold text-gold tracking-[0.4em] uppercase mb-3 block">
+          <span className="text-[0.65rem] font-bold text-[#A39B94] tracking-[0.4em] uppercase mb-3 block">
             LYRA ON EARTH • TEKLİFLER
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl text-wine font-light tracking-[0.1em] uppercase mb-4">

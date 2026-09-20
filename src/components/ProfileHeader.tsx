@@ -62,7 +62,7 @@ export default function ProfileHeader() {
         <h1 className="font-serif text-2xl lg:text-3xl tracking-[0.1em] text-wine font-semibold mb-1">
           {profile.name}
         </h1>
-        <span className="text-[0.65rem] lg:text-[0.7rem] tracking-[0.3em] text-gold font-bold uppercase block">
+        <span className="text-[0.65rem] lg:text-[0.7rem] tracking-[0.3em] text-[#A39B94] font-bold uppercase block">
           {profile.brandName}
         </span>
       </motion.div>

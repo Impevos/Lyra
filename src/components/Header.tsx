@@ -60,7 +60,7 @@ export default function Header() {
             }`}>
               LYRA
             </span>
-            <span className="text-[0.55rem] tracking-[0.4em] text-gold font-bold uppercase -mt-0.5">
+            <span className="text-[0.55rem] tracking-[0.4em] text-[#A39B94] font-bold uppercase -mt-0.5">
               ON EARTH
             </span>
           </div>
