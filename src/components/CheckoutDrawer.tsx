@@ -116,7 +116,7 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
 
     // Send branded thank you email
     try {
-      const smtpSettings = getSmtpSettings();
+      const smtpSettings = await getSmtpSettings();
 
       const dateInfo = product?.type === 'call' && selectedDate && selectedTime
         ? `<tr><td style="padding: 16px 24px; background-color: #FBF8F4; border: 1px solid #EAD8C0; text-align: center;"><p style="margin: 0 0 4px 0; font-size: 11px; color: #A39B94; font-weight: bold; letter-spacing: 0.15em; text-transform: uppercase;">RANDEVU TARİHİNİZ</p><p style="margin: 0; font-size: 16px; color: #3E0A16; font-weight: bold; font-family: Georgia, serif;">${selectedDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })} — Saat ${selectedTime}</p></td></tr>`
@@ -208,9 +208,9 @@ export default function CheckoutDrawer({ product, onClose }: CheckoutDrawerProps
 
     // Also trigger any sales automation emails
     try {
-      const automations = getScheduledEmails();
+      const automations = await getScheduledEmails();
       const onPurchaseAutomations = automations.filter(e => e.triggerType === 'on_purchase' && e.status === 'active');
-      const smtpSettings = getSmtpSettings();
+      const smtpSettings = await getSmtpSettings();
 
       for (const auto of onPurchaseAutomations) {
         await fetch('/api/email/send', {

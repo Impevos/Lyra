@@ -9,7 +9,8 @@ import {
   HiOutlineCalendar,
   HiOutlineMail,
   HiOutlineVideoCamera,
-  HiOutlineUser 
+  HiOutlineUser,
+  HiOutlineDocumentText
 } from 'react-icons/hi';
 import { useEffect, Suspense } from 'react';
 
@@ -30,6 +31,12 @@ function AdminNav() {
       label: 'ÇALIŞMALAR & ÜRÜNLER',
       href: '/admin/dashboard?tab=products',
       icon: HiOutlineShoppingBag,
+    },
+    {
+      tab: 'content',
+      label: 'SİTE METİNLERİ & CMS',
+      href: '/admin/dashboard?tab=content',
+      icon: HiOutlineDocumentText,
     },
     {
       tab: 'appointments',

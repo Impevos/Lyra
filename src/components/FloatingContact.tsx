@@ -18,8 +18,8 @@ export default function FloatingContact() {
             transition={{ duration: 0.25 }}
             className="absolute bottom-full right-0 mb-3 whitespace-nowrap"
           >
-            <div className="glass-dark rounded-xl px-4 py-2.5 text-[0.78rem] text-ivory/90 font-medium shadow-xl">
-              Hemen Yaz →
+            <div className="bg-wine/95 backdrop-blur-md border border-gold/30 px-3.5 py-2 text-[0.65rem] text-ivory font-cinzel font-semibold tracking-widest shadow-xl uppercase select-none">
+              BİZE ULAŞIN →
             </div>
           </motion.div>
         )}

@@ -63,47 +63,50 @@ export default function OffersPageClient({ filterType }: OffersPageClientProps) 
 
       <div className="relative z-10 w-full max-w-6xl mx-auto px-5">
         {/* Page Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 flex flex-col items-center">
-          <span className="text-[0.65rem] font-bold text-[#A39B94] tracking-[0.4em] uppercase mb-3 block">
-            LYRA ON EARTH • TEKLİFLER
-          </span>
-          <h1 className="font-serif text-4xl sm:text-5xl text-wine font-light tracking-[0.1em] uppercase mb-4">
+        <div className="text-center max-w-2xl mx-auto mb-14 flex flex-col items-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 border-2 border-wine/25 bg-white/70 shadow-xs mb-5">
+            <span className="w-1.5 h-1.5 rounded-full bg-burgundy animate-ping" />
+            <span className="font-cinzel text-[0.65rem] font-bold text-burgundy tracking-[0.35em] uppercase">
+              LYRA ON EARTH • SİMYA KATALOĞU
+            </span>
+          </div>
+          <h1 className="font-serif text-4xl sm:text-6xl text-wine font-light tracking-[0.05em] uppercase mb-4">
             {title}
           </h1>
-          <div className="w-16 h-px bg-gold/30 mb-5" />
-          <p className="text-sm sm:text-base text-taupe/65 leading-relaxed font-medium">
+          <div className="w-16 h-0.5 bg-burgundy mb-5" />
+          <p className="text-xs sm:text-sm text-taupe/80 leading-relaxed font-normal max-w-lg">
             {subtitle}
           </p>
         </div>
 
-        {/* Navigation Tabs (Sharp design) */}
-        <div className="flex justify-center border-b border-gold/15 mb-12 max-w-md mx-auto">
+        {/* Navigation Tabs (Sharp & high contrast) */}
+        <div className="flex justify-center border-b-2 border-wine/15 mb-14 max-w-md mx-auto">
           <Link
             href="/offers"
-            className={`pb-4 px-6 text-[0.65rem] tracking-[0.2em] uppercase font-bold transition-all border-b ${
+            className={`pb-3.5 px-6 text-[0.68rem] tracking-[0.25em] uppercase font-bold transition-all border-b-2 -mb-[2px] ${
               filterType === 'all' 
-                ? 'border-burgundy text-burgundy' 
-                : 'border-transparent text-taupe/40 hover:text-wine'
+                ? 'border-wine text-wine font-cinzel' 
+                : 'border-transparent text-taupe/50 hover:text-wine'
             }`}
           >
             TÜMÜ
           </Link>
           <Link
             href="/offers/paid"
-            className={`pb-4 px-6 text-[0.65rem] tracking-[0.2em] uppercase font-bold transition-all border-b ${
+            className={`pb-3.5 px-6 text-[0.68rem] tracking-[0.25em] uppercase font-bold transition-all border-b-2 -mb-[2px] ${
               filterType === 'paid' 
-                ? 'border-burgundy text-burgundy' 
-                : 'border-transparent text-taupe/40 hover:text-wine'
+                ? 'border-wine text-wine font-cinzel' 
+                : 'border-transparent text-taupe/50 hover:text-wine'
             }`}
           >
             ÜCRETLİ
           </Link>
           <Link
             href="/offers/free"
-            className={`pb-4 px-6 text-[0.65rem] tracking-[0.2em] uppercase font-bold transition-all border-b ${
+            className={`pb-3.5 px-6 text-[0.68rem] tracking-[0.25em] uppercase font-bold transition-all border-b-2 -mb-[2px] ${
               filterType === 'free' 
-                ? 'border-burgundy text-burgundy' 
-                : 'border-transparent text-taupe/40 hover:text-wine'
+                ? 'border-wine text-wine font-cinzel' 
+                : 'border-transparent text-taupe/50 hover:text-wine'
             }`}
           >
             ÜCRETSİZ

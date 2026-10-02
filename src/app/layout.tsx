@@ -2,13 +2,23 @@ import type { Metadata } from "next";
 import "./globals.css";
 import FloatingContact from "@/components/FloatingContact";
 import LayoutWrapper from "@/components/LayoutWrapper";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import SmoothScroll from "@/components/SmoothScroll";
+import AmbientAura from "@/components/AmbientAura";
+import { Cormorant_Garamond, Inter, Cinzel } from "next/font/google";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin", "latin-ext"],
   weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
   variable: "--font-cormorant",
+});
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-cinzel",
 });
 
 const inter = Inter({
@@ -54,12 +64,15 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="tr" className={`${cormorant.variable} ${inter.variable} antialiased`}>
-      <body className="min-h-[100dvh] flex flex-col bg-ivory text-charcoal">
-        <LayoutWrapper>
-          <main className="flex-grow">{children}</main>
-        </LayoutWrapper>
-        <FloatingContact />
+    <html lang="tr" className={`${cormorant.variable} ${cinzel.variable} ${inter.variable} antialiased`}>
+      <body className="min-h-[100dvh] flex flex-col bg-ivory text-charcoal selection:bg-gold/20 selection:text-wine">
+        <SmoothScroll>
+          <AmbientAura />
+          <LayoutWrapper>
+            <main className="flex-grow relative z-10">{children}</main>
+          </LayoutWrapper>
+          <FloatingContact />
+        </SmoothScroll>
       </body>
     </html>
   );

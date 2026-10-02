@@ -11,7 +11,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   return (
     <>
       {!isAdmin && <Header />}
-      <div className={!isAdmin ? 'pt-24 lg:pt-28' : ''}>
+      <div className={!isAdmin ? 'pt-28 lg:pt-36' : ''}>
         {children}
       </div>
       {!isAdmin && <Footer />}

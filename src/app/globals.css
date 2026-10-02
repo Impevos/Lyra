@@ -14,8 +14,9 @@
   --color-rose: #E8C4C8;
   --color-greige: #A39B94;
 
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", serif;
-  --font-sans: var(--font-inter), "Inter", sans-serif;
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-cinzel: var(--font-cinzel), "Cinzel", serif;
+  --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 @layer base {
@@ -140,6 +141,163 @@
     box-shadow: 0 0 0 1px var(--color-gold);
     background-color: rgba(255, 255, 255, 0.95);
   }
+
+  /* Prada / Editorial luxury frame */
+  .editorial-frame {
+    position: relative;
+    border: 1px solid rgba(163, 155, 148, 0.22);
+    background: rgba(253, 251, 247, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .editorial-frame:hover {
+    border-color: rgba(163, 155, 148, 0.45);
+    box-shadow: 0 20px 40px -15px rgba(62, 10, 22, 0.05);
+  }
+
+  .editorial-frame::before {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(163, 155, 148, 0.08);
+    pointer-events: none;
+    transition: border-color 0.4s ease;
+  }
+
+  .editorial-frame:hover::before {
+    border-color: rgba(163, 155, 148, 0.2);
+  }
+
+  /* Luxury primary button */
+  .btn-luxury-primary {
+    @apply relative inline-flex items-center justify-center px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.25em] uppercase text-white bg-wine border border-wine transition-all duration-500 overflow-hidden cursor-pointer select-none;
+  }
+
+  .btn-luxury-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .btn-luxury-primary:hover {
+    @apply bg-burgundy border-burgundy shadow-lg shadow-burgundy/15;
+    transform: translateY(-1px);
+  }
+
+  .btn-luxury-primary:hover::after {
+    transform: translateX(100%);
+  }
+
+  /* Luxury outline button */
+  .btn-luxury-outline {
+    @apply relative inline-flex items-center justify-center px-7 py-3.5 text-[0.7rem] font-bold tracking-[0.25em] uppercase text-wine bg-white/70 border border-gold/30 hover:border-wine hover:bg-wine hover:text-white transition-all duration-500 cursor-pointer select-none backdrop-blur-sm;
+  }
+
+  .btn-luxury-outline:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px -5px rgba(62, 10, 22, 0.1);
+  }
+
+  /* Sharp Reborn-style High-Ticket Button */
+  .btn-reborn-sharp {
+    @apply relative inline-flex items-center justify-center px-8 py-4 text-xs sm:text-sm font-bold tracking-[0.22em] uppercase text-white bg-wine border-2 border-wine hover:bg-burgundy hover:border-burgundy transition-all duration-300 cursor-pointer select-none overflow-hidden;
+    animation: pulseGlow 3s infinite ease-in-out;
+  }
+
+  .btn-reborn-sharp:hover {
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  /* Sharp Reborn Light Card */
+  .sharp-card-light {
+    border: 2px solid rgba(62, 10, 22, 0.15);
+    background-color: #FFFFFF;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .sharp-card-light:hover {
+    border-color: rgba(62, 10, 22, 0.6);
+    box-shadow: 0 20px 40px -15px rgba(62, 10, 22, 0.1);
+    transform: translateY(-3px);
+  }
+
+  /* Sharp Reborn Dark Card */
+  .sharp-card-dark {
+    border: 2px solid rgba(163, 155, 148, 0.35);
+    background-color: var(--color-wine);
+    color: #FFFFFF;
+    transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .sharp-card-dark:hover {
+    border-color: var(--color-gold);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.35), 0 0 25px rgba(163, 155, 148, 0.15);
+    transform: translateY(-3px);
+  }
+}
+
+/* Enhanced Animation Keyframes */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(62, 10, 22, 0.45), 0 10px 30px -5px rgba(62, 10, 22, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 14px rgba(62, 10, 22, 0), 0 15px 40px -5px rgba(62, 10, 22, 0.5);
+  }
+}
+
+@keyframes pulseGoldGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(163, 155, 148, 0.4), 0 8px 24px -4px rgba(163, 155, 148, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 12px rgba(163, 155, 148, 0), 0 12px 32px -4px rgba(163, 155, 148, 0.4);
+  }
+}
+
+@keyframes floatSoft {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes marqueeInfinite {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+.animate-pulse-gold {
+  animation: pulseGoldGlow 3s infinite ease-in-out;
+}
+
+.animate-float {
+  animation: floatSoft 4s ease-in-out infinite;
+}
+
+.animate-marquee-infinite {
+  display: flex;
+  width: max-content;
+  animation: marqueeInfinite 28s linear infinite;
+}
+
+.animate-marquee-infinite:hover {
+  animation-play-state: paused;
 }
 
 /* Subtle gradient text for accents */
@@ -182,3 +340,4 @@
 .text-gold-light {
   color: #A39B94 !important;
 }
+

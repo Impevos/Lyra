@@ -49,8 +49,13 @@ import {
   clearSentEmailLogs,
   SmtpSettings,
   ScheduledEmail,
-  SentEmailLog
+  SentEmailLog,
+  getSiteContent,
+  saveSiteContent,
+  SiteContent,
+  defaultSiteContent
 } from '@/data/defaults';
+import SiteContentEditor from '@/components/admin/SiteContentEditor';
 import { supabase } from '@/lib/supabase';
 
 export default function AdminDashboard() {
@@ -63,11 +68,11 @@ export default function AdminDashboard() {
 
 function AdminDashboardContent() {
   const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'profile' | 'videos' | 'appointments' | 'emails' | 'purchases'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'products' | 'profile' | 'videos' | 'appointments' | 'emails' | 'purchases' | 'content'>('overview');
 
   useEffect(() => {
     const tab = searchParams.get('tab');
-    if (tab && ['overview', 'products', 'profile', 'videos', 'appointments', 'emails', 'purchases'].includes(tab)) {
+    if (tab && ['overview', 'products', 'profile', 'videos', 'appointments', 'emails', 'purchases', 'content'].includes(tab)) {
       setActiveTab(tab as any);
     }
   }, [searchParams]);
@@ -77,6 +82,7 @@ function AdminDashboardContent() {
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [videos, setVideos] = useState<FeaturedVideoItem[]>([]);
   const [appointments, setAppointments] = useState<AppointmentData[]>([]);
+  const [siteContent, setSiteContent] = useState<SiteContent>(defaultSiteContent);
 
   const [orders, setOrders] = useState<any[]>([]);
 
@@ -91,31 +97,49 @@ function AdminDashboardContent() {
   }, []);
 
   const fetchData = async () => {
-    const productsData = await getProducts();
-    const profileData = await getProfile();
-    const videosData = await getVideos();
-    const appointmentsData = await getAppointments();
-    
-    // Fetch Email Data
-    const smtpData = await getSmtpSettings();
-    const scheduledData = await getScheduledEmails();
-    const logsData = await getSentEmailLogs();
+    try {
+      const [
+        productsData, 
+        profileData, 
+        videosData, 
+        appointmentsData, 
+        smtpData, 
+        scheduledData, 
+        logsData,
+        siteContentData
+      ] = await Promise.all([
+        getProducts(),
+        getProfile(),
+        getVideos(),
+        getAppointments(),
+        getSmtpSettings(),
+        getScheduledEmails(),
+        getSentEmailLogs(),
+        getSiteContent(),
+      ]);
 
-    // Fetch orders
-    const { data: ordersData } = await supabase
-      .from('orders')
-      .select('*')
-      .order('created_at', { ascending: false });
+      // Fetch orders
+      const { data: ordersData } = await supabase
+        .from('orders')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    setProducts(productsData || []);
-    setProfile(profileData);
-    setVideos(videosData || []);
-    setAppointments(appointmentsData || []);
-    if (ordersData) setOrders(ordersData);
-    
-    if (smtpData) setSmtpSettings(smtpData);
-    setScheduledEmails(scheduledData || []);
-    setSentLogs(logsData || []);
+      setProducts(productsData || []);
+      setProfile(profileData);
+      setVideos(videosData || []);
+      setAppointments(appointmentsData || []);
+      if (ordersData) setOrders(ordersData);
+      if (siteContentData) setSiteContent(siteContentData);
+      
+      if (smtpData) {
+        setSmtpSettings(smtpData);
+        setSmtpForm(smtpData);
+      }
+      setScheduledEmails(scheduledData || []);
+      setSentLogs(logsData || []);
+    } catch (e) {
+      console.warn('fetchData error:', e);
+    }
   };
 
   // Email Form State
@@ -176,21 +200,6 @@ function AdminDashboardContent() {
       .then(r => r.json())
       .then(d => { if (d.images) setPublicImages(d.images) })
       .catch(e => console.error('Error fetching images:', e));
-
-    const loadData = async () => {
-      setProducts(await getProducts());
-      setProfile(await getProfile());
-      setVideos(getVideos());
-      setAppointments(await getAppointments());
-    };
-    loadData();
-    
-    // Load email database properties
-    const smtp = getSmtpSettings();
-    setSmtpSettings(smtp);
-    if (smtp) setSmtpForm(smtp);
-    setScheduledEmails(getScheduledEmails());
-    setSentLogs(getSentEmailLogs());
   }, []);
 
   // Migration Function
@@ -206,24 +215,7 @@ function AdminDashboardContent() {
         const localProducts: ProductItem[] = JSON.parse(savedProducts);
         for (const prod of localProducts) {
           if (!prod) continue;
-          const sanitizedProd = {
-            id: prod.id || Math.random().toString(36).substr(2, 9),
-            title: prod.title || 'İsimsiz Ürün',
-            tagline: prod.tagline || '',
-            image: prod.image || '',
-            buttonText: prod.buttonText || '',
-            link: prod.link,
-            price: prod.price,
-            section: prod.section,
-            description: prod.description,
-            type: prod.type,
-            priceType: prod.priceType,
-            testimonialImages: prod.testimonialImages,
-            badgeText: prod.badgeText || (prod as any).badge || null,
-            downloadUrl: prod.downloadUrl || ''
-          };
-          const { error } = await supabase.from('products').upsert(sanitizedProd);
-          if (error) throw error;
+          await saveProduct(prod);
         }
       }
       
@@ -231,16 +223,21 @@ function AdminDashboardContent() {
       const savedProfile = localStorage.getItem('custom_profile');
       if (savedProfile) {
         const localProfile: ProfileData = JSON.parse(savedProfile);
-        const sanitizedProfile = {
-          id: 'default',
-          name: localProfile.name,
-          brandName: localProfile.brandName,
-          bio: localProfile.bio,
-          avatar: localProfile.avatar,
-          socials: localProfile.socials
-        };
-        const { error } = await supabase.from('profile').upsert(sanitizedProfile);
-        if (error) throw error;
+        await saveProfile(localProfile);
+      }
+
+      // Migrate Videos
+      const savedVideos = localStorage.getItem('custom_videos');
+      if (savedVideos) {
+        const localVideos = JSON.parse(savedVideos);
+        await saveVideos(localVideos);
+      }
+
+      // Migrate Site Content
+      const savedContent = localStorage.getItem('custom_site_content');
+      if (savedContent) {
+        const localContent = JSON.parse(savedContent);
+        await saveSiteContent(localContent);
       }
 
       showNotification("VERİLER BAŞARIYLA SUPABASE'E AKTARILDI! Lütfen sayfayı yenileyin.", "success");
@@ -365,32 +362,41 @@ function AdminDashboardContent() {
   };
 
   // Video Submit (Add / Edit)
-  const handleVideoSubmit = (e: React.FormEvent) => {
+  const handleVideoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let updatedVideos: FeaturedVideoItem[] = [];
-    if (editingVideo) {
-      updatedVideos = videos.map((v) => v.id === editingVideo.id ? { ...editingVideo, ...videoForm } : v);
-      showNotification('Video başarıyla güncellendi.');
-    } else {
-      const newVideo: FeaturedVideoItem = {
-        ...videoForm,
-        id: 'v_' + Math.random().toString(36).substr(2, 9)
-      };
-      updatedVideos = [...videos, newVideo];
-      showNotification('Yeni video başarıyla eklendi.');
+    try {
+      let updatedVideos: FeaturedVideoItem[] = [];
+      if (editingVideo) {
+        updatedVideos = videos.map((v) => v.id === editingVideo.id ? { ...editingVideo, ...videoForm } : v);
+      } else {
+        const newVideo: FeaturedVideoItem = {
+          ...videoForm,
+          id: 'v_' + Math.random().toString(36).substr(2, 9)
+        };
+        updatedVideos = [...videos, newVideo];
+      }
+      setVideos(updatedVideos);
+      await saveVideos(updatedVideos);
+      showNotification(editingVideo ? 'Video başarıyla güncellendi (Supabase).' : 'Yeni video başarıyla eklendi (Supabase).', 'success');
+      setIsVideoModalOpen(false);
+      setEditingVideo(null);
+    } catch (err: any) {
+      console.error(err);
+      showNotification(`Hata: ${err.message || 'Video kaydedilemedi.'}`, 'error');
     }
-    setVideos(updatedVideos);
-    saveVideos(updatedVideos);
-    setIsVideoModalOpen(false);
-    setEditingVideo(null);
   };
 
-  const handleVideoDelete = (id: string) => {
+  const handleVideoDelete = async (id: string) => {
     if (window.confirm('Bu videoyu silmek istediğinize emin misiniz?')) {
-      const updatedVideos = videos.filter((v) => v.id !== id);
-      setVideos(updatedVideos);
-      saveVideos(updatedVideos);
-      showNotification('Video silindi.');
+      try {
+        const updatedVideos = videos.filter((v) => v.id !== id);
+        setVideos(updatedVideos);
+        await saveVideos(updatedVideos);
+        showNotification('Video silindi (Supabase).', 'success');
+      } catch (err: any) {
+        console.error(err);
+        showNotification(`Hata: ${err.message || 'Video silinemedi.'}`, 'error');
+      }
     }
   };
 
@@ -685,6 +691,12 @@ function AdminDashboardContent() {
                   E-Posta & Otomasyon
                 </button>
                 <button
+                  onClick={() => setActiveTab('content')}
+                  className="bg-gold hover:bg-gold-dark text-white px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all shadow-md"
+                >
+                  Site Metinleri (CMS)
+                </button>
+                <button
                   onClick={() => setActiveTab('products')}
                   className="border border-gold/25 hover:bg-gold/5 text-wine px-5 py-2.5 rounded-full text-xs font-bold tracking-widest uppercase transition-all"
                 >
@@ -768,6 +780,18 @@ function AdminDashboardContent() {
               ))}
             </div>
           </div>
+        )}
+
+        {/* PANEL: SITE METİNLERİ (CMS) */}
+        {activeTab === 'content' && (
+          <SiteContentEditor
+            initialContent={siteContent}
+            onSaveSuccess={(msg) => {
+              showNotification(msg, 'success');
+              getSiteContent().then((c) => setSiteContent(c));
+            }}
+            onSaveError={(msg) => showNotification(msg, 'error')}
+          />
         )}
 
         {/* PANEL: APPOINTMENTS */}

@@ -135,7 +135,7 @@ export default function ProductDetailPage({ params }: PageProps) {
 
     // Trigger Sales Automation Email with Subject-Specific Details
     try {
-      const smtpSettings = getSmtpSettings();
+      const smtpSettings = await getSmtpSettings();
 
       let emailSubject = `✨ Kaydınız Alındı: ${product.title}`;
       let emailBody = '';
@@ -481,16 +481,18 @@ export default function ProductDetailPage({ params }: PageProps) {
 
                 {/* Details */}
                 <div className="p-6 sm:p-8 relative z-10">
-                  <span className="text-[0.6rem] tracking-[0.3em] text-[#A39B94] font-bold uppercase block mb-2">
+                  <span className="font-cinzel text-[0.62rem] tracking-[0.35em] text-[#A39B94] font-semibold uppercase block mb-2.5">
                     {product.badgeText || (isCallProduct ? 'GÖRÜŞME & SEANS' : isFreeProduct ? 'ÜCRETSİZ KAYNAK' : 'EĞİTİM & PROGRAM')}
                   </span>
-                  <h1 className="font-serif text-2xl sm:text-3xl text-wine font-light tracking-[0.1em] uppercase mb-3">
+                  <h1 className="font-serif text-3xl sm:text-4xl text-wine font-light tracking-[0.05em] uppercase mb-3">
                     {product.title}
                   </h1>
                   
-                  <p className="text-[0.8rem] text-[#A39B94] font-semibold tracking-widest uppercase mb-5">
-                    {product.tagline}
-                  </p>
+                  {product.tagline && (
+                    <p className="font-serif italic text-sm sm:text-base text-taupe/80 mb-5">
+                      &ldquo;{product.tagline}&rdquo;
+                    </p>
+                  )}
 
                   <div className="w-full h-px bg-gold/15 mb-5" />
 
